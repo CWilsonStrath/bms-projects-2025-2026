@@ -752,6 +752,16 @@
                                 <option value="">All supervisors</option>
                             </select>
                         </div>
+                        <div class="filter-group">
+                            <label for="sortFilter">Sort by</label>
+                            <select id="sortFilter">
+                                <option value="random">Random (fair)</option>
+                                <option value="title">Project title A-Z</option>
+                                <option value="supervisor">Supervisor A-Z</option>
+                                <option value="type">Project type</option>
+                                <option value="id">Project ID</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -793,16 +803,72 @@
         </div>
     </div>
 
-    <!-- Load projects data -->
-    <script src="projects.js"></script>
     <script>
-        // Projects data is loaded from projects.js
+        // Sample projects data - replace with your actual projects.js
+        const projects = [
+            {
+                id: "BM001",
+                title: "Machine Learning Approaches to Drug Discovery",
+                type: "Data Science: Data Analysis",
+                subjects: ["Biochemistry", "Pharmacology"],
+                primarySupervisor: "Dr. Sarah Johnson",
+                secondarySupervisor: "Prof. Michael Chen",
+                students: "1-2",
+                aim: "To develop machine learning models for predicting drug-target interactions and identifying novel therapeutic compounds.",
+                outline: "This project will explore the application of various machine learning algorithms to pharmaceutical data, including molecular descriptors, protein structures, and chemical compound libraries. Students will work with real-world datasets from pharmaceutical companies and develop predictive models for drug efficacy and toxicity.",
+                techniques: ["Python", "TensorFlow", "Molecular modeling", "Data visualization", "Statistical analysis"],
+                references: [
+                    "Chen et al. (2024) 'AI in Drug Discovery', Nature Reviews Drug Discovery",
+                    "Johnson & Smith (2023) 'Machine Learning for Pharmaceutical Research', Journal of Chemical Information"
+                ]
+            },
+            {
+                id: "BM002",
+                title: "CRISPR-Cas9 Gene Editing in Cancer Cell Lines",
+                type: "Experimental Research Projects (Laboratory)",
+                subjects: ["Biochemistry", "Biomedical Science"],
+                primarySupervisor: "Prof. Emma Williams",
+                secondarySupervisor: "Dr. James Martinez",
+                students: "1",
+                aim: "To investigate the therapeutic potential of CRISPR-Cas9 gene editing for targeting oncogenes in cancer cell models.",
+                outline: "This laboratory-based project involves designing and implementing CRISPR-Cas9 experiments to knock out specific oncogenes in cancer cell lines. Students will learn advanced molecular biology techniques, cell culture methods, and gene editing protocols while investigating the effects on cell proliferation and apoptosis.",
+                techniques: ["CRISPR-Cas9", "Cell culture", "Western blotting", "PCR", "Flow cytometry", "Microscopy"],
+                references: [
+                    "Williams et al. (2024) 'CRISPR Applications in Cancer Research', Cell",
+                    "Martinez & Brown (2023) 'Gene Editing Techniques', Nature Biotechnology"
+                ]
+            },
+            {
+                id: "BM003",
+                title: "Microbiome Analysis in Inflammatory Bowel Disease",
+                type: "Data Science: Bioinformatics",
+                subjects: ["Microbiology", "Biomedical Science"],
+                primarySupervisor: "Dr. Rachel Anderson",
+                secondarySupervisor: null,
+                students: "2",
+                aim: "To analyze gut microbiome composition and diversity in patients with inflammatory bowel disease using next-generation sequencing data.",
+                outline: "This bioinformatics project involves analyzing 16S rRNA sequencing data from IBD patients and healthy controls. Students will use computational tools to identify microbial biomarkers, perform taxonomic classification, and investigate functional pathways associated with disease progression.",
+                techniques: ["16S rRNA sequencing", "QIIME2", "R/Bioconductor", "Phylogenetic analysis", "Statistical modeling"],
+                references: [
+                    "Anderson et al. (2024) 'Microbiome in IBD', Nature Medicine",
+                    "Thompson & Davis (2023) 'Bioinformatics Approaches to Microbiome Analysis', Bioinformatics"
+                ]
+            }
+        ];
+
+        // Global variables
         let filteredProjects = [...projects];
         let savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
+        let randomSeed = Math.random(); // Fixed seed for consistent random order during session
 
         document.addEventListener('DOMContentLoaded', function() {
             populateSupervisorFilter();
-            displayProjects(projects);
+            
+            // Apply initial random sort
+            shuffleArray(projects, randomSeed);
+            filteredProjects = [...projects];
+            
+            displayProjects(filteredProjects);
             setupEventListeners();
             updateSavedDisplay();
             
@@ -864,6 +930,7 @@
             document.getElementById('typeFilter').value = '';
             document.getElementById('subjectFilter').value = '';
             document.getElementById('supervisorFilter').value = '';
+            document.getElementById('sortFilter').value = 'random';
             
             filterProjects();
         }
@@ -873,6 +940,54 @@
             document.getElementById('typeFilter').addEventListener('change', filterProjects);
             document.getElementById('subjectFilter').addEventListener('change', filterProjects);
             document.getElementById('supervisorFilter').addEventListener('change', filterProjects);
+            document.getElementById('sortFilter').addEventListener('change', filterProjects);
+        }
+
+        // Seeded random shuffle for consistent random order during session
+        function shuffleArray(array, seed) {
+            let currentIndex = array.length;
+            
+            // Simple seeded random number generator
+            function seededRandom() {
+                const x = Math.sin(seed++) * 10000;
+                return x - Math.floor(x);
+            }
+            
+            while (currentIndex !== 0) {
+                const randomIndex = Math.floor(seededRandom() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            
+            return array;
+        }
+
+        function sortProjects(projectArray, sortBy) {
+            switch (sortBy) {
+                case 'title':
+                    projectArray.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'supervisor':
+                    projectArray.sort((a, b) => a.primarySupervisor.localeCompare(b.primarySupervisor));
+                    break;
+                case 'type':
+                    projectArray.sort((a, b) => a.type.localeCompare(b.type));
+                    break;
+                case 'id':
+                    projectArray.sort((a, b) => a.id.localeCompare(b.id));
+                    break;
+                case 'random':
+                default:
+                    // Use the original random order established at page load
+                    const originalOrder = [...projects];
+                    shuffleArray(originalOrder, randomSeed);
+                    projectArray.sort((a, b) => {
+                        const indexA = originalOrder.findIndex(p => p.id === a.id);
+                        const indexB = originalOrder.findIndex(p => p.id === b.id);
+                        return indexA - indexB;
+                    });
+                    break;
+            }
         }
 
         function filterProjects() {
@@ -880,6 +995,7 @@
             const typeFilter = document.getElementById('typeFilter').value;
             const subjectFilter = document.getElementById('subjectFilter').value;
             const supervisorFilter = document.getElementById('supervisorFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
 
             filteredProjects = projects.filter(project => {
                 const matchesSearch = !searchTerm || 
@@ -897,6 +1013,8 @@
                 return matchesSearch && matchesType && matchesSubject && matchesSupervisor;
             });
 
+            // Apply sorting
+            sortProjects(filteredProjects, sortFilter);
             displayProjects(filteredProjects);
         }
 

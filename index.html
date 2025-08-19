@@ -89,9 +89,9 @@
             display: flex;
             flex-direction: column;
             height: fit-content;
-            max-height: calc(100vh - 200px);
+            max-height: calc(100vh - 250px);
             position: sticky;
-            top: 120px;
+            top: 160px;
         }
 
         /* Mobile saved panel */
@@ -686,24 +686,6 @@
             
             .container {
                 padding: 0 12px;
-            }
-
-            .saved-panel {
-                position: fixed;
-                bottom: -100vh;
-                left: 0;
-                right: 0;
-                height: 70vh;
-                max-height: 70vh;
-                border-radius: 16px 16px 0 0;
-                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-                transition: bottom 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
-                top: auto;
-            }
-
-            .saved-panel.open {
-                bottom: 0;
             }
 
             .saved-toggle {

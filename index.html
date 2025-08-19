@@ -5,221 +5,360 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BM432 Final Year Projects 2025-26</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #ffffff;
-            color: #333;
-            line-height: 1.4;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Material Design 3 Color System */
+            --md-sys-color-primary: #1565C0;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #D3E3FD;
+            --md-sys-color-on-primary-container: #001C3B;
+            
+            --md-sys-color-secondary: #5A6069;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #DEE3EA;
+            --md-sys-color-on-secondary-container: #171B20;
+            
+            --md-sys-color-tertiary: #7B5800;
+            --md-sys-color-on-tertiary: #FFFFFF;
+            --md-sys-color-tertiary-container: #FFDF9C;
+            --md-sys-color-on-tertiary-container: #261900;
+            
+            --md-sys-color-surface: #FEFBFF;
+            --md-sys-color-on-surface: #1B1B1F;
+            --md-sys-color-surface-variant: #E0E2EC;
+            --md-sys-color-on-surface-variant: #44474E;
+            
+            --md-sys-color-surface-container: #F0F4F9;
+            --md-sys-color-surface-container-low: #F6FAFE;
+            --md-sys-color-surface-container-high: #E9F0F5;
+            --md-sys-color-surface-container-highest: #E3EAF0;
+            
+            --md-sys-color-outline: #74777F;
+            --md-sys-color-outline-variant: #C4C6CF;
+            
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-on-error: #FFFFFF;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error-container: #410002;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: var(--md-sys-color-on-surface);
+            background-color: var(--md-sys-color-surface);
         }
 
         .header {
-            background-color: #003366;
-            color: white;
-            padding: 20px;
-            margin: -20px -20px 30px -20px;
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 24px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
         }
 
         .header h1 {
-            margin: 0;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0;
         }
 
         .header p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
+            font-size: 16px;
+            opacity: 0.87;
+            font-weight: 400;
         }
 
-        .search-section {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
+        .filters {
+            background-color: var(--md-sys-color-surface-container);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 12px;
+            border: 1px solid var(--md-sys-color-outline-variant);
         }
 
-        .search-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
         }
 
-        .search-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .search-group label {
+        .filter-group label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 3px;
-            font-size: 13px;
-        }
-
-        .search-group input,
-        .search-group select {
-            width: 100%;
-            padding: 6px;
-            border: 1px solid #999;
-            font-size: 13px;
-        }
-
-        .results-info {
-            margin: 15px 0;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--md-sys-color-on-surface);
             font-size: 14px;
-            color: #666;
         }
 
-        .project {
-            border: 1px solid #ccc;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: white;
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--md-sys-color-primary);
+            border-width: 2px;
+        }
+
+        .results-summary {
+            text-align: center;
+            margin: 16px 0;
+            padding: 12px;
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            background-color: var(--md-sys-color-surface-container-low);
+            border-radius: 8px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .project-card {
+            background-color: var(--md-sys-color-surface-container-high);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: all 0.2s ease;
+        }
+
+        .project-card:hover {
+            background-color: var(--md-sys-color-surface-container-highest);
+            border-color: var(--md-sys-color-outline);
         }
 
         .project-title {
             font-size: 16px;
-            font-weight: bold;
-            color: #003366;
-            margin: 0 0 10px 0;
-        }
-
-        .project-info {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .project-info span {
-            margin-right: 15px;
-        }
-
-        .subjects {
-            margin-bottom: 10px;
-        }
-
-        .subject {
-            background-color: #e6f2ff;
-            padding: 2px 6px;
-            margin-right: 5px;
-            font-size: 11px;
-            border: 1px solid #b3d9ff;
-        }
-
-        .project-outline {
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
             margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .meta-badge {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .meta-badge.type {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .meta-badge.students {
+            background-color: var(--md-sys-color-tertiary-container);
+            color: var(--md-sys-color-on-tertiary-container);
+        }
+
+        .subject-tags {
+            margin-bottom: 12px;
+        }
+
+        .subject-tag {
+            display: inline-block;
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            padding: 4px 12px;
+            margin: 2px 4px 2px 0;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .project-description {
+            margin-bottom: 12px;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
             font-size: 14px;
         }
 
         .project-aim {
-            background-color: #f9f9f9;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-left: 3px solid #003366;
-            font-size: 13px;
+            background-color: var(--md-sys-color-surface-container);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--md-sys-color-primary);
         }
 
-        .techniques {
-            margin-bottom: 10px;
+        .project-aim strong {
+            color: var(--md-sys-color-primary);
+            font-weight: 500;
         }
 
-        .techniques strong {
-            font-size: 13px;
+        .techniques-section {
+            margin-bottom: 16px;
         }
 
-        .technique-list {
+        .techniques-section h4 {
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 8px;
             font-size: 12px;
-            color: #555;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .supervisors {
+        .techniques-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .technique {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 400;
+        }
+
+        .supervisor-info {
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            padding-top: 12px;
             font-size: 12px;
-            color: #666;
-            border-top: 1px solid #eee;
-            padding-top: 8px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .supervisor-info strong {
+            color: var(--md-sys-color-on-surface);
+            font-weight: 500;
         }
 
         .no-results {
             text-align: center;
-            padding: 40px;
-            color: #666;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+            padding: 48px 24px;
+            background-color: var(--md-sys-color-surface-container);
+            border-radius: 12px;
+            color: var(--md-sys-color-on-surface-variant);
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
+        .no-results h3 {
+            margin-bottom: 8px;
+            color: var(--md-sys-color-on-surface);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
             }
             
-            .header {
-                margin: -10px -10px 20px -10px;
+            .projects-grid {
+                grid-template-columns: 1fr;
             }
             
-            .search-row {
-                flex-direction: column;
+            .filter-grid {
+                grid-template-columns: 1fr;
             }
+            
+            .container {
+                padding: 0 12px;
+            }
+        }
+
+        /* Material Design 3 Focus Indicator */
+        .filter-group input:focus-visible,
+        .filter-group select:focus-visible {
+            outline: 2px solid var(--md-sys-color-primary);
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>BM432 Final Year Projects 2025-26</h1>
-        <p>Biomolecular Science - Available Projects</p>
-    </div>
-
-    <div class="search-section">
-        <div class="search-row">
-            <div class="search-group">
-                <label for="searchInput">Search:</label>
-                <input type="text" id="searchInput" placeholder="Search projects...">
-            </div>
-            <div class="search-group">
-                <label for="typeFilter">Project Type:</label>
-                <select id="typeFilter">
-                    <option value="">All Types</option>
-                    <option value="Data Science: Data Analysis">Data Analysis</option>
-                    <option value="Data Science: Bioinformatics">Bioinformatics</option>
-                    <option value="Data Science: Computational">Computational</option>
-                    <option value="Experimental Research Projects (Laboratory)">Laboratory Research</option>
-                    <option value="Industrial/Societal: Education">Education</option>
-                    <option value="Industrial/Societal: Knowledge Exchange">Knowledge Exchange</option>
-                    <option value="Industrial/Societal: SciComm & Public Engagement">Science Communication</option>
-                    <option value="Literature: Critical Analysis">Literature Review</option>
-                    <option value="Literature: Meta-analysis">Meta-analysis</option>
-                </select>
-            </div>
-            <div class="search-group">
-                <label for="subjectFilter">Subject:</label>
-                <select id="subjectFilter">
-                    <option value="">All Subjects</option>
-                    <option value="Biochemistry">Biochemistry</option>
-                    <option value="Immunology">Immunology</option>
-                    <option value="Microbiology">Microbiology</option>
-                    <option value="Pharmacology">Pharmacology</option>
-                    <option value="Biomedical Science">Biomedical Science</option>
-                </select>
-            </div>
-            <div class="search-group">
-                <label for="supervisorFilter">Supervisor:</label>
-                <select id="supervisorFilter">
-                    <option value="">All Supervisors</option>
-                </select>
-            </div>
+        <div class="container">
+            <h1>BM432 Final Year Projects</h1>
+            <p>Biomolecular Science • 2025-2026</p>
         </div>
     </div>
 
-    <div class="results-info">
-        Showing <span id="resultCount">0</span> projects
-    </div>
+    <div class="container">
+        <div class="filters">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label for="searchInput">Search projects</label>
+                    <input type="text" id="searchInput" placeholder="Search by title, keywords, techniques...">
+                </div>
+                <div class="filter-group">
+                    <label for="typeFilter">Project type</label>
+                    <select id="typeFilter">
+                        <option value="">All types</option>
+                        <option value="Data Science: Data Analysis">Data Analysis</option>
+                        <option value="Data Science: Bioinformatics">Bioinformatics</option>
+                        <option value="Data Science: Computational">Computational</option>
+                        <option value="Experimental Research Projects (Laboratory)">Laboratory Research</option>
+                        <option value="Industrial/Societal: Education">Education</option>
+                        <option value="Industrial/Societal: Knowledge Exchange">Knowledge Exchange</option>
+                        <option value="Industrial/Societal: SciComm & Public Engagement">Science Communication</option>
+                        <option value="Literature: Critical Analysis">Literature Review</option>
+                        <option value="Literature: Meta-analysis">Meta-analysis</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="subjectFilter">Subject area</label>
+                    <select id="subjectFilter">
+                        <option value="">All subjects</option>
+                        <option value="Biochemistry">Biochemistry</option>
+                        <option value="Immunology">Immunology</option>
+                        <option value="Microbiology">Microbiology</option>
+                        <option value="Pharmacology">Pharmacology</option>
+                        <option value="Biomedical Science">Biomedical Science</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="supervisorFilter">Supervisor</label>
+                    <select id="supervisorFilter">
+                        <option value="">All supervisors</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
-    <div id="projectsContainer">
-        <!-- Projects will be loaded here -->
-    </div>
+        <div class="results-summary">
+            Showing <strong><span id="resultCount">0</span></strong> available projects
+        </div>
 
-    <div class="no-results" id="noResults" style="display: none;">
-        No projects match your search criteria.
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded here -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No projects found</h3>
+            <p>Try adjusting your search criteria or filters to see more results.</p>
+        </div>
     </div>
 
     <script>
@@ -353,49 +492,54 @@
         }
 
         function displayProjects(projectsToShow) {
-            const projectsContainer = document.getElementById('projectsContainer');
+            const projectsGrid = document.getElementById('projectsGrid');
             const noResults = document.getElementById('noResults');
             const resultCount = document.getElementById('resultCount');
 
             resultCount.textContent = projectsToShow.length;
 
             if (projectsToShow.length === 0) {
-                projectsContainer.style.display = 'none';
+                projectsGrid.style.display = 'none';
                 noResults.style.display = 'block';
                 return;
             }
 
-            projectsContainer.style.display = 'block';
+            projectsGrid.style.display = 'grid';
             noResults.style.display = 'none';
 
-            projectsContainer.innerHTML = projectsToShow.map(project => `
-                <div class="project">
-                    <div class="project-title">${project.title}</div>
+            projectsGrid.innerHTML = projectsToShow.map(project => `
+                <div class="project-card">
+                    <h3 class="project-title">${project.title}</h3>
                     
-                    <div class="project-info">
-                        <span><strong>Type:</strong> ${project.type}</span>
-                        <span><strong>Students:</strong> ${project.students}</span>
+                    <div class="project-meta">
+                        <span class="meta-badge type">${project.type}</span>
+                        <span class="meta-badge students">${project.students} student${project.students > 1 ? 's' : ''}</span>
                     </div>
 
-                    <div class="subjects">
-                        <strong>Subject areas:</strong>
-                        ${project.subjects.map(subject => `<span class="subject">${subject}</span>`).join('')}
+                    <div class="subject-tags">
+                        ${project.subjects.map(subject => `
+                            <span class="subject-tag">${subject}</span>
+                        `).join('')}
                     </div>
 
-                    <div class="project-outline">
+                    <div class="project-description">
                         ${project.outline}
                     </div>
 
                     <div class="project-aim">
-                        <strong>Aim:</strong> ${project.aim}
+                        <strong>Project aim:</strong> ${project.aim}
                     </div>
 
-                    <div class="techniques">
-                        <strong>Key techniques:</strong>
-                        <div class="technique-list">${project.techniques.join(', ')}</div>
+                    <div class="techniques-section">
+                        <h4>Key techniques</h4>
+                        <div class="techniques-list">
+                            ${project.techniques.map(technique => `
+                                <span class="technique">${technique}</span>
+                            `).join('')}
+                        </div>
                     </div>
 
-                    <div class="supervisors">
+                    <div class="supervisor-info">
                         <strong>Primary supervisor:</strong> ${project.primarySupervisor}
                         ${project.secondarySupervisor ? `<br><strong>Secondary supervisor:</strong> ${project.secondarySupervisor}` : ''}
                     </div>

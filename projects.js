@@ -3245,4 +3245,5 @@ const projects = [
     }
 ];
 
-export default projects;
+// Make projects available globally
+window.projects = projects;

@@ -297,7 +297,7 @@
 
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
             gap: 16px;
         }
 
@@ -437,13 +437,13 @@
         }
 
         .meta-chip.type[data-type*="Experimental"] {
-            background-color: #FFF3E0;
-            color: #F57C00;
+            background-color: #F3E5F5;
+            color: #7B1FA2;
         }
 
         .meta-chip.type[data-type*="Industrial"] {
-            background-color: #F3E5F5;
-            color: #8E24AA;
+            background-color: #E1F5FE;
+            color: #0277BD;
         }
 
         .meta-chip.type[data-type*="Literature"] {
@@ -703,7 +703,7 @@
 
     <!-- Floating Toggle Button - Only visible on mobile -->
     <button class="saved-toggle" onclick="toggleSavedPanel()">
-        ♥
+        +
         <span class="saved-badge" id="savedBadge" style="display: none;">0</span>
     </button>
 
@@ -982,6 +982,10 @@
                     project.title.toLowerCase().includes(searchTerm) ||
                     project.outline.toLowerCase().includes(searchTerm) ||
                     project.aim.toLowerCase().includes(searchTerm) ||
+                    project.type.toLowerCase().includes(searchTerm) ||
+                    project.primarySupervisor.toLowerCase().includes(searchTerm) ||
+                    (project.secondarySupervisor && project.secondarySupervisor.toLowerCase().includes(searchTerm)) ||
+                    project.subjects.some(subject => subject.toLowerCase().includes(searchTerm)) ||
                     project.techniques.some(tech => tech.toLowerCase().includes(searchTerm));
 
                 const matchesType = !typeFilter || project.type === typeFilter;
@@ -1141,7 +1145,7 @@ ${projectIds}`;
                     <div class="project-card ${isSaved ? 'saved' : ''}" id="card-${index}">
                         <div class="card-header">
                             <button class="save-button ${isSaved ? 'saved' : ''}" onclick="toggleSaveProject('${project.id}')" title="${isSaved ? 'Remove from saved' : 'Save project'}">
-                                ${isSaved ? '♥' : '♡'}
+                                ${isSaved ? '−' : '+'}
                             </button>
                             <h3 class="project-title">${project.title}</h3>
                             

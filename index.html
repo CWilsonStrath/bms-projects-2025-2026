@@ -795,7 +795,7 @@
                     </div>
                 </div>
                 <div class="saved-panel-actions">
-                    <button class="panel-button primary" onclick="exportProjectList()">Export Project IDs</button>
+                    <button class="panel-button primary" onclick="exportProjectList()">Submit via Microsoft Forms</button>
                     <button class="panel-button secondary" onclick="copyProjectList()">Copy to Clipboard</button>
                     <button class="panel-button danger" onclick="clearAllSaved()">Clear All</button>
                 </div>
@@ -1094,18 +1094,22 @@
                 return;
             }
             
-            const projectIds = savedProjects.map(p => p.id);
-            const content = `BM432 Final Year Project Preferences\nStudent: [Enter your name]\nDate: ${new Date().toLocaleDateString()}\n\nProject preferences (in order):\n${projectIds.map((id, index) => `${index + 1}. ${id}`).join('\n')}\n\nProject details:\n${savedProjects.map((p, index) => `${index + 1}. ${p.id}: ${p.title}\n   Supervisor: ${p.primarySupervisor}`).join('\n\n')}`;
+            const projectIds = savedProjects.map(p => p.id).join('\n');
             
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'BM432_project_preferences.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            // Open Microsoft Forms - the form will need to be manually filled
+            // Pre-filling Microsoft Forms requires specific field IDs which vary by form
+            const formsUrl = 'https://forms.office.com/e/vnjxNDXfhd';
+            
+            // Copy project IDs to clipboard for easy pasting into the form
+            navigator.clipboard.writeText(projectIds).then(() => {
+                // Open the form and show instructions
+                window.open(formsUrl, '_blank');
+                alert('Your project IDs have been copied to clipboard. Paste them into the Microsoft Form that just opened.');
+            }).catch(() => {
+                // Fallback if clipboard fails
+                window.open(formsUrl, '_blank');
+                alert('Microsoft Form opened in new tab. Copy your project IDs from the list below and paste them into the form.\n\nProject IDs:\n' + projectIds);
+            });
         }
 
         function copyProjectList() {

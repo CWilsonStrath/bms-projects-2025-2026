@@ -1096,19 +1096,26 @@
             
             const projectIds = savedProjects.map(p => p.id).join('\n');
             
-            // Open Microsoft Forms - the form will need to be manually filled
-            // Pre-filling Microsoft Forms requires specific field IDs which vary by form
+            // Create formatted text for easy form filling
+            const formattedText = projectIds;
+            const instructionText = `Instructions:
+1. Your project preferences are copied to clipboard
+2. In the Microsoft Form, paste them in the "Project Preferences" field
+3. Add your Student ID
+4. Submit the form
+
+Project IDs (in order of preference):
+${projectIds}`;
+            
             const formsUrl = 'https://forms.office.com/e/vnjxNDXfhd';
             
-            // Copy project IDs to clipboard for easy pasting into the form
-            navigator.clipboard.writeText(projectIds).then(() => {
-                // Open the form and show instructions
+            // Copy to clipboard and open form
+            navigator.clipboard.writeText(formattedText).then(() => {
                 window.open(formsUrl, '_blank');
-                alert('Your project IDs have been copied to clipboard. Paste them into the Microsoft Form that just opened.');
+                alert('Project IDs copied to clipboard! Paste them into the "Project Preferences" field in the form that just opened.');
             }).catch(() => {
-                // Fallback if clipboard fails
                 window.open(formsUrl, '_blank');
-                alert('Microsoft Form opened in new tab. Copy your project IDs from the list below and paste them into the form.\n\nProject IDs:\n' + projectIds);
+                alert(instructionText);
             });
         }
 

@@ -63,6 +63,13 @@
             padding: 0 16px;
         }
 
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 24px;
+            align-items: start;
+        }
+
         .header h1 {
             font-size: 28px;
             font-weight: 400;
@@ -74,23 +81,38 @@
             opacity: 0.87;
         }
 
-        /* Saved Projects Panel */
+        /* Saved Projects Panel - Desktop: Always visible, Mobile: Bottom panel */
         .saved-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
             background-color: white;
-            box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
-            transition: right 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
-            z-index: 1000;
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-1);
             display: flex;
             flex-direction: column;
+            height: fit-content;
+            max-height: calc(100vh - 100px);
+            position: sticky;
+            top: 20px;
         }
 
-        .saved-panel.open {
-            right: 0;
+        /* Mobile saved panel */
+        @media (max-width: 1024px) {
+            .saved-panel {
+                position: fixed;
+                bottom: -100vh;
+                left: 0;
+                right: 0;
+                height: 70vh;
+                max-height: 70vh;
+                border-radius: 16px 16px 0 0;
+                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                transition: bottom 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
+                top: auto;
+            }
+
+            .saved-panel.open {
+                bottom: 0;
+            }
         }
 
         .saved-panel-header {
@@ -98,6 +120,13 @@
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
+            border-radius: 12px 12px 0 0;
+        }
+
+        @media (max-width: 1024px) {
+            .saved-panel-header {
+                border-radius: 16px 16px 0 0;
+            }
         }
 
         .saved-panel-title {
@@ -188,12 +217,11 @@
             color: var(--md-sys-color-on-error);
         }
 
-        /* Panel Toggle Button */
+        /* Panel Toggle Button - Only visible on mobile */
         .saved-toggle {
             position: fixed;
-            top: 50%;
-            right: 16px;
-            transform: translateY(-50%);
+            bottom: 20px;
+            right: 20px;
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
             border: none;
@@ -203,7 +231,7 @@
             box-shadow: var(--md-elevation-3);
             cursor: pointer;
             z-index: 999;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             font-size: 24px;
@@ -211,7 +239,13 @@
         }
 
         .saved-toggle:hover {
-            transform: translateY(-50%) scale(1.1);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 1024px) {
+            .saved-toggle {
+                display: flex;
+            }
         }
 
         .saved-badge {
@@ -609,7 +643,7 @@
             opacity: 0.4;
         }
 
-        /* Close button for saved panel */
+        /* Close button for saved panel - Only visible on mobile */
         .close-panel-button {
             position: absolute;
             top: 16px;
@@ -622,7 +656,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
         }
@@ -631,7 +665,17 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .close-panel-button {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
             .projects-grid {
                 grid-template-columns: 1fr;
             }
@@ -645,12 +689,25 @@
             }
 
             .saved-panel {
-                width: 100vw;
-                right: -100vw;
+                position: fixed;
+                bottom: -100vh;
+                left: 0;
+                right: 0;
+                height: 70vh;
+                max-height: 70vh;
+                border-radius: 16px 16px 0 0;
+                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                transition: bottom 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
+                top: auto;
+            }
+
+            .saved-panel.open {
+                bottom: 0;
             }
 
             .saved-toggle {
-                right: 16px;
+                display: flex;
             }
         }
     </style>
@@ -663,91 +720,95 @@
         </div>
     </div>
 
-    <!-- Saved Projects Panel -->
-    <div class="saved-panel" id="savedPanel">
-        <div class="saved-panel-header">
-            <button class="close-panel-button" onclick="toggleSavedPanel()">×</button>
-            <div class="saved-panel-title">My Project List</div>
-            <div class="saved-panel-subtitle">Drag to reorder by preference</div>
-        </div>
-        <div class="saved-panel-content">
-            <div id="savedProjectsList">
-                <div class="no-saved-projects">
-                    <h3>No projects saved yet</h3>
-                    <p>Click the heart icon on projects you're interested in to add them to your list.</p>
-                </div>
-            </div>
-        </div>
-        <div class="saved-panel-actions">
-            <button class="panel-button primary" onclick="exportProjectList()">Export Project IDs</button>
-            <button class="panel-button secondary" onclick="copyProjectList()">Copy to Clipboard</button>
-            <button class="panel-button danger" onclick="clearAllSaved()">Clear All</button>
-        </div>
-    </div>
-
-    <!-- Floating Toggle Button -->
+    <!-- Floating Toggle Button - Only visible on mobile -->
     <button class="saved-toggle" onclick="toggleSavedPanel()">
         ♥
         <span class="saved-badge" id="savedBadge" style="display: none;">0</span>
     </button>
 
     <div class="container">
-        <div class="filters">
-            <div class="filters-header">
-                <h2 style="font-size: 18px; font-weight: 500; color: var(--md-sys-color-on-surface); margin: 0;">Filter Projects</h2>
-                <button class="reset-button" onclick="resetAllFilters()">Reset all filters</button>
+        <div class="main-content">
+            <div class="content-section">
+                <div class="filters">
+                    <div class="filters-header">
+                        <h2 style="font-size: 18px; font-weight: 500; color: var(--md-sys-color-on-surface); margin: 0;">Filter Projects</h2>
+                        <button class="reset-button" onclick="resetAllFilters()">Reset all filters</button>
+                    </div>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label for="searchInput">Search projects</label>
+                            <input type="text" id="searchInput" placeholder="Search by title, keywords, techniques...">
+                        </div>
+                        <div class="filter-group">
+                            <label for="typeFilter">Project type</label>
+                            <select id="typeFilter">
+                                <option value="">All types</option>
+                                <option value="Data Science: Data Analysis">Data Analysis</option>
+                                <option value="Data Science: Bioinformatics">Bioinformatics</option>
+                                <option value="Data Science: Computational">Computational</option>
+                                <option value="Experimental Research Projects (Laboratory)">Laboratory Research</option>
+                                <option value="Industrial/Societal: Education">Education</option>
+                                <option value="Industrial/Societal: Knowledge Exchange">Knowledge Exchange</option>
+                                <option value="Industrial/Societal: SciComm & Public Engagement">Science Communication</option>
+                                <option value="Literature: Critical Analysis">Literature Review</option>
+                                <option value="Literature: Meta-analysis">Meta-analysis</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="subjectFilter">Subject area</label>
+                            <select id="subjectFilter">
+                                <option value="">All subjects</option>
+                                <option value="Biochemistry">Biochemistry</option>
+                                <option value="Immunology">Immunology</option>
+                                <option value="Microbiology">Microbiology</option>
+                                <option value="Pharmacology">Pharmacology</option>
+                                <option value="Biomedical Science">Biomedical Science</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="supervisorFilter">Supervisor</label>
+                            <select id="supervisorFilter">
+                                <option value="">All supervisors</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-summary">
+                    Showing <strong><span id="resultCount">0</span></strong> available projects
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Projects will be loaded here -->
+                </div>
+
+                <div class="no-results" id="noResults" style="display: none;">
+                    <h3>No projects found</h3>
+                    <p>Try adjusting your search criteria or filters to see more results.</p>
+                </div>
             </div>
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label for="searchInput">Search projects</label>
-                    <input type="text" id="searchInput" placeholder="Search by title, keywords, techniques...">
+
+            <!-- Saved Projects Panel - Always visible on desktop -->
+            <div class="saved-panel" id="savedPanel">
+                <div class="saved-panel-header">
+                    <button class="close-panel-button" onclick="toggleSavedPanel()">×</button>
+                    <div class="saved-panel-title">My Project List</div>
+                    <div class="saved-panel-subtitle">Drag to reorder by preference</div>
                 </div>
-                <div class="filter-group">
-                    <label for="typeFilter">Project type</label>
-                    <select id="typeFilter">
-                        <option value="">All types</option>
-                        <option value="Data Science: Data Analysis">Data Analysis</option>
-                        <option value="Data Science: Bioinformatics">Bioinformatics</option>
-                        <option value="Data Science: Computational">Computational</option>
-                        <option value="Experimental Research Projects (Laboratory)">Laboratory Research</option>
-                        <option value="Industrial/Societal: Education">Education</option>
-                        <option value="Industrial/Societal: Knowledge Exchange">Knowledge Exchange</option>
-                        <option value="Industrial/Societal: SciComm & Public Engagement">Science Communication</option>
-                        <option value="Literature: Critical Analysis">Literature Review</option>
-                        <option value="Literature: Meta-analysis">Meta-analysis</option>
-                    </select>
+                <div class="saved-panel-content">
+                    <div id="savedProjectsList">
+                        <div class="no-saved-projects">
+                            <h3>No projects saved yet</h3>
+                            <p>Click the heart icon on projects you're interested in to add them to your list.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label for="subjectFilter">Subject area</label>
-                    <select id="subjectFilter">
-                        <option value="">All subjects</option>
-                        <option value="Biochemistry">Biochemistry</option>
-                        <option value="Immunology">Immunology</option>
-                        <option value="Microbiology">Microbiology</option>
-                        <option value="Pharmacology">Pharmacology</option>
-                        <option value="Biomedical Science">Biomedical Science</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="supervisorFilter">Supervisor</label>
-                    <select id="supervisorFilter">
-                        <option value="">All supervisors</option>
-                    </select>
+                <div class="saved-panel-actions">
+                    <button class="panel-button primary" onclick="exportProjectList()">Export Project IDs</button>
+                    <button class="panel-button secondary" onclick="copyProjectList()">Copy to Clipboard</button>
+                    <button class="panel-button danger" onclick="clearAllSaved()">Clear All</button>
                 </div>
             </div>
-        </div>
-
-        <div class="results-summary">
-            Showing <strong><span id="resultCount">0</span></strong> available projects
-        </div>
-
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Projects will be loaded here -->
-        </div>
-
-        <div class="no-results" id="noResults" style="display: none;">
-            <h3>No projects found</h3>
-            <p>Try adjusting your search criteria or filters to see more results.</p>
         </div>
     </div>
 

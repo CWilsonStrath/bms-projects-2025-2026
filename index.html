@@ -803,60 +803,29 @@
         </div>
     </div>
 
+    <!-- Load projects data -->
+    <script src="projects.js"></script>
     <script>
-        // Sample projects data - replace with your actual projects.js
-        const projects = [
-            {
-                id: "BM001",
-                title: "Machine Learning Approaches to Drug Discovery",
-                type: "Data Science: Data Analysis",
-                subjects: ["Biochemistry", "Pharmacology"],
-                primarySupervisor: "Dr. Sarah Johnson",
-                secondarySupervisor: "Prof. Michael Chen",
-                students: "1-2",
-                aim: "To develop machine learning models for predicting drug-target interactions and identifying novel therapeutic compounds.",
-                outline: "This project will explore the application of various machine learning algorithms to pharmaceutical data, including molecular descriptors, protein structures, and chemical compound libraries. Students will work with real-world datasets from pharmaceutical companies and develop predictive models for drug efficacy and toxicity.",
-                techniques: ["Python", "TensorFlow", "Molecular modeling", "Data visualization", "Statistical analysis"],
-                references: [
-                    "Chen et al. (2024) 'AI in Drug Discovery', Nature Reviews Drug Discovery",
-                    "Johnson & Smith (2023) 'Machine Learning for Pharmaceutical Research', Journal of Chemical Information"
-                ]
-            },
-            {
-                id: "BM002",
-                title: "CRISPR-Cas9 Gene Editing in Cancer Cell Lines",
-                type: "Experimental Research Projects (Laboratory)",
-                subjects: ["Biochemistry", "Biomedical Science"],
-                primarySupervisor: "Prof. Emma Williams",
-                secondarySupervisor: "Dr. James Martinez",
-                students: "1",
-                aim: "To investigate the therapeutic potential of CRISPR-Cas9 gene editing for targeting oncogenes in cancer cell models.",
-                outline: "This laboratory-based project involves designing and implementing CRISPR-Cas9 experiments to knock out specific oncogenes in cancer cell lines. Students will learn advanced molecular biology techniques, cell culture methods, and gene editing protocols while investigating the effects on cell proliferation and apoptosis.",
-                techniques: ["CRISPR-Cas9", "Cell culture", "Western blotting", "PCR", "Flow cytometry", "Microscopy"],
-                references: [
-                    "Williams et al. (2024) 'CRISPR Applications in Cancer Research', Cell",
-                    "Martinez & Brown (2023) 'Gene Editing Techniques', Nature Biotechnology"
-                ]
-            },
-            {
-                id: "BM003",
-                title: "Microbiome Analysis in Inflammatory Bowel Disease",
-                type: "Data Science: Bioinformatics",
-                subjects: ["Microbiology", "Biomedical Science"],
-                primarySupervisor: "Dr. Rachel Anderson",
-                secondarySupervisor: null,
-                students: "2",
-                aim: "To analyze gut microbiome composition and diversity in patients with inflammatory bowel disease using next-generation sequencing data.",
-                outline: "This bioinformatics project involves analyzing 16S rRNA sequencing data from IBD patients and healthy controls. Students will use computational tools to identify microbial biomarkers, perform taxonomic classification, and investigate functional pathways associated with disease progression.",
-                techniques: ["16S rRNA sequencing", "QIIME2", "R/Bioconductor", "Phylogenetic analysis", "Statistical modeling"],
-                references: [
-                    "Anderson et al. (2024) 'Microbiome in IBD', Nature Medicine",
-                    "Thompson & Davis (2023) 'Bioinformatics Approaches to Microbiome Analysis', Bioinformatics"
-                ]
-            }
-        ];
-
-        // Global variables
+        // Fallback if projects.js doesn't load
+        if (typeof projects === 'undefined') {
+            console.warn('projects.js not found. Using sample data.');
+            window.projects = [
+                {
+                    id: "BM001",
+                    title: "Sample Project - Replace with your data",
+                    type: "Data Science: Data Analysis",
+                    subjects: ["Biochemistry"],
+                    primarySupervisor: "Dr. Sample",
+                    secondarySupervisor: null,
+                    students: "1",
+                    aim: "This is sample data. Replace with your actual projects.js file.",
+                    outline: "Create a projects.js file with your actual project data.",
+                    techniques: ["Replace", "With", "Real", "Data"]
+                }
+            ];
+        }
+        
+        // Projects data is loaded from projects.js
         let filteredProjects = [...projects];
         let savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
         

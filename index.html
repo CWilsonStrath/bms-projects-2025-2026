@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM432 Final Year Projects 2025-2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .stats {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #667eea;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-tag {
+            background: #f1f3f4;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .meta-tag.type {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .meta-tag.students {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .subject-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-outline {
+            margin-bottom: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .project-aim {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #667eea;
+        }
+
+        .project-aim strong {
+            color: #667eea;
+        }
+
+        .techniques {
+            margin-bottom: 1rem;
+        }
+
+        .techniques h4 {
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .technique-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .technique {
+            background: #fff3e0;
+            color: #ef6c00;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .supervisor-info {
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>BM432 Final Year Projects</h1>
+            <p>Biomolecular Science Projects 2025-2026</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="searchInput">Search Projects</label>
+                    <input type="text" id="searchInput" placeholder="Search by title, keywords, techniques...">
+                </div>
+                <div class="filter-group">
+                    <label for="typeFilter">Project Type</label>
+                    <select id="typeFilter">
+                        <option value="">All Types</option>
+                        <option value="Data Science: Data Analysis">Data Science: Data Analysis</option>
+                        <option value="Data Science: Bioinformatics">Data Science: Bioinformatics</option>
+                        <option value="Data Science: Computational">Data Science: Computational</option>
+                        <option value="Experimental Research Projects (Laboratory)">Experimental Research (Laboratory)</option>
+                        <option value="Industrial/Societal: Education">Industrial/Societal: Education</option>
+                        <option value="Industrial/Societal: Knowledge Exchange">Industrial/Societal: Knowledge Exchange</option>
+                        <option value="Industrial/Societal: SciComm & Public Engagement">Industrial/Societal: SciComm & Public Engagement</option>
+                        <option value="Literature: Critical Analysis">Literature: Critical Analysis</option>
+                        <option value="Literature: Meta-analysis">Literature: Meta-analysis</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="subjectFilter">Subject Area</label>
+                    <select id="subjectFilter">
+                        <option value="">All Subjects</option>
+                        <option value="Biochemistry">Biochemistry</option>
+                        <option value="Immunology">Immunology</option>
+                        <option value="Microbiology">Microbiology</option>
+                        <option value="Pharmacology">Pharmacology</option>
+                        <option value="Biomedical Science">Biomedical Science</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="supervisorFilter">Supervisor</label>
+                    <select id="supervisorFilter">
+                        <option value="">All Supervisors</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            Showing <span id="resultCount">0</span> projects
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded here -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No projects found</h3>
+            <p>Try adjusting your search criteria or filters.</p>
+        </div>
+    </div>
+
+    <script>
+        // Sample project data - replace this with your actual data
+        const projects = [
+            {
+                title: "Investigating Novel Antimicrobial Peptides from Marine Organisms",
+                students: 2,
+                type: "Experimental Research Projects (Laboratory)",
+                subjects: ["Biochemistry", "Microbiology", "Pharmacology"],
+                outline: "Marine organisms produce unique antimicrobial peptides that could revolutionize antibiotic development. This project explores the discovery, characterization, and potential therapeutic applications of these natural compounds against drug-resistant pathogens.",
+                aim: "To identify, purify, and characterize antimicrobial peptides from marine sources and evaluate their efficacy against clinically relevant bacterial strains.",
+                techniques: ["Protein purification", "Mass spectrometry", "Antimicrobial assays", "Cell culture", "Molecular cloning"],
+                primarySupervisor: "Dr. Sarah Johnson",
+                secondarySupervisor: "Prof. Michael Chen",
+                references: ["Nature Microbiology (2024)", "Journal of Marine Biotechnology (2023)", "Antimicrobial Agents and Chemotherapy (2024)"]
+            },
+            {
+                title: "Machine Learning Approaches to Predict Drug-Target Interactions",
+                students: 3,
+                type: "Data Science: Computational",
+                subjects: ["Pharmacology", "Biochemistry", "Biomedical Science"],
+                outline: "Using artificial intelligence to accelerate drug discovery by predicting how pharmaceutical compounds interact with their molecular targets. This computational approach could dramatically reduce the time and cost of developing new medicines.",
+                aim: "To develop and validate machine learning models that accurately predict drug-target interactions using molecular descriptors and network analysis.",
+                techniques: ["Python programming", "Machine learning", "Network analysis", "Data visualization", "Statistical modeling"],
+                primarySupervisor: "Dr. Alex Kumar",
+                secondarySupervisor: "Dr. Lisa Wang",
+                references: ["Nature Machine Intelligence (2024)", "Bioinformatics (2023)", "Drug Discovery Today (2024)"]
+            },
+            {
+                title: "The Role of Gut Microbiome in Immune System Development",
+                students: 2,
+                type: "Literature: Meta-analysis",
+                subjects: ["Immunology", "Microbiology", "Biomedical Science"],
+                outline: "A comprehensive analysis of how gut bacteria influence the development and function of our immune system. This project synthesizes cutting-edge research to understand the microbiome-immunity connection with implications for personalized medicine.",
+                aim: "To systematically review and meta-analyze the relationship between gut microbiome composition and immune system maturation across different populations.",
+                techniques: ["Systematic review methods", "Meta-analysis", "Statistical analysis", "Data extraction", "Critical appraisal"],
+                primarySupervisor: "Prof. Emma Thompson",
+                secondarySupervisor: "Dr. Robert Martinez",
+                references: ["Cell Host & Microbe (2024)", "Nature Reviews Immunology (2023)", "Gut (2024)"]
+            },
+            {
+                title: "Enzyme Engineering for Sustainable Biofuel Production",
+                students: 1,
+                type: "Experimental Research Projects (Laboratory)",
+                subjects: ["Biochemistry", "Microbiology"],
+                outline: "Engineering enzymes to efficiently convert plant waste into biofuels, contributing to sustainable energy solutions. This project combines protein engineering with environmental applications to address climate change challenges.",
+                aim: "To optimize enzyme efficiency for cellulose breakdown and evaluate the potential for scaled biofuel production from agricultural waste.",
+                techniques: ["Protein engineering", "Enzyme assays", "Fermentation", "Chromatography", "Molecular modeling"],
+                primarySupervisor: "Dr. James Wilson",
+                secondarySupervisor: "",
+                references: ["Nature Biotechnology (2024)", "Biotechnology for Biofuels (2023)", "Applied and Environmental Microbiology (2024)"]
+            },
+            {
+                title: "Educational Outreach: Making Biomolecular Science Accessible",
+                students: 4,
+                type: "Industrial/Societal: SciComm & Public Engagement",
+                subjects: ["Biochemistry", "Immunology", "Microbiology", "Pharmacology"],
+                outline: "Developing innovative educational materials and programs to communicate complex biomolecular concepts to diverse audiences. This project focuses on science communication, public engagement, and educational impact assessment.",
+                aim: "To create and evaluate effective science communication strategies for biomolecular science topics targeting secondary school students and the general public.",
+                techniques: ["Educational design", "Science communication", "Survey design", "Impact assessment", "Digital media creation"],
+                primarySupervisor: "Dr. Rachel Green",
+                secondarySupervisor: "Prof. David Lee",
+                references: ["Public Understanding of Science (2024)", "Science Communication (2023)", "Journal of Science Education (2024)"]
+            }
+        ];
+
+        let filteredProjects = [...projects];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSupervisorFilter();
+            displayProjects(projects);
+            setupEventListeners();
+        });
+
+        function populateSupervisorFilter() {
+            const supervisorFilter = document.getElementById('supervisorFilter');
+            const supervisors = new Set();
+            
+            projects.forEach(project => {
+                supervisors.add(project.primarySupervisor);
+                if (project.secondarySupervisor) {
+                    supervisors.add(project.secondarySupervisor);
+                }
+            });
+
+            Array.from(supervisors).sort().forEach(supervisor => {
+                const option = document.createElement('option');
+                option.value = supervisor;
+                option.textContent = supervisor;
+                supervisorFilter.appendChild(option);
+            });
+        }
+
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', filterProjects);
+            document.getElementById('typeFilter').addEventListener('change', filterProjects);
+            document.getElementById('subjectFilter').addEventListener('change', filterProjects);
+            document.getElementById('supervisorFilter').addEventListener('change', filterProjects);
+        }
+
+        function filterProjects() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const subjectFilter = document.getElementById('subjectFilter').value;
+            const supervisorFilter = document.getElementById('supervisorFilter').value;
+
+            filteredProjects = projects.filter(project => {
+                const matchesSearch = !searchTerm || 
+                    project.title.toLowerCase().includes(searchTerm) ||
+                    project.outline.toLowerCase().includes(searchTerm) ||
+                    project.aim.toLowerCase().includes(searchTerm) ||
+                    project.techniques.some(tech => tech.toLowerCase().includes(searchTerm));
+
+                const matchesType = !typeFilter || project.type === typeFilter;
+                const matchesSubject = !subjectFilter || project.subjects.includes(subjectFilter);
+                const matchesSupervisor = !supervisorFilter || 
+                    project.primarySupervisor === supervisorFilter ||
+                    project.secondarySupervisor === supervisorFilter;
+
+                return matchesSearch && matchesType && matchesSubject && matchesSupervisor;
+            });
+
+            displayProjects(filteredProjects);
+        }
+
+        function displayProjects(projectsToShow) {
+            const projectsGrid = document.getElementById('projectsGrid');
+            const noResults = document.getElementById('noResults');
+            const resultCount = document.getElementById('resultCount');
+
+            resultCount.textContent = projectsToShow.length;
+
+            if (projectsToShow.length === 0) {
+                projectsGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            projectsGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            projectsGrid.innerHTML = projectsToShow.map(project => `
+                <div class="project-card">
+                    <h3 class="project-title">${project.title}</h3>
+                    
+                    <div class="project-meta">
+                        <span class="meta-tag type">${project.type}</span>
+                        <span class="meta-tag students">${project.students} student${project.students > 1 ? 's' : ''}</span>
+                    </div>
+
+                    <div class="subject-tags">
+                        ${project.subjects.map(subject => `
+                            <span class="subject-tag">${subject}</span>
+                        `).join('')}
+                    </div>
+
+                    <div class="project-outline">
+                        ${project.outline}
+                    </div>
+
+                    <div class="project-aim">
+                        <strong>Aim:</strong> ${project.aim}
+                    </div>
+
+                    <div class="techniques">
+                        <h4>Key Techniques:</h4>
+                        <div class="technique-list">
+                            ${project.techniques.map(technique => `
+                                <span class="technique">${technique}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="supervisor-info">
+                        <strong>Primary Supervisor:</strong> ${project.primarySupervisor}
+                        ${project.secondarySupervisor ? `<br><strong>Secondary Supervisor:</strong> ${project.secondarySupervisor}` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

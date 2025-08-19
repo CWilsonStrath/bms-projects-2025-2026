@@ -3,293 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BM432 Final Year Projects 2025-2026</title>
+    <title>BM432 Final Year Projects 2025-26</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
             color: #333;
-            background-color: #f8f9fa;
+            line-height: 1.4;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #003366;
             color: white;
-            padding: 2rem 0;
-            text-align: center;
+            padding: 20px;
+            margin: -20px -20px 30px -20px;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            margin: 0;
+            font-size: 24px;
         }
 
         .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            margin: 5px 0 0 0;
+            font-size: 14px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
+        .search-section {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
         }
 
-        .filters {
-            background: white;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .filter-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .filter-group {
+        .search-row {
             display: flex;
-            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
-        .filter-group label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #555;
+        .search-group {
+            flex: 1;
+            min-width: 200px;
         }
 
-        .filter-group input,
-        .filter-group select {
-            padding: 0.75rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+        .search-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+            font-size: 13px;
         }
 
-        .filter-group input:focus,
-        .filter-group select:focus {
-            outline: none;
-            border-color: #667eea;
+        .search-group input,
+        .search-group select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #999;
+            font-size: 13px;
         }
 
-        .stats {
-            text-align: center;
-            margin: 1rem 0;
-            font-size: 1.1rem;
+        .results-info {
+            margin: 15px 0;
+            font-size: 14px;
             color: #666;
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 4px solid #667eea;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        .project {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
         }
 
         .project-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 1rem;
+            font-size: 16px;
+            font-weight: bold;
+            color: #003366;
+            margin: 0 0 10px 0;
         }
 
-        .project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+        .project-info {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
         }
 
-        .meta-tag {
-            background: #f1f3f4;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+        .project-info span {
+            margin-right: 15px;
         }
 
-        .meta-tag.type {
-            background: #e3f2fd;
-            color: #1565c0;
+        .subjects {
+            margin-bottom: 10px;
         }
 
-        .meta-tag.students {
-            background: #f3e5f5;
-            color: #7b1fa2;
-        }
-
-        .subject-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .subject-tag {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
+        .subject {
+            background-color: #e6f2ff;
+            padding: 2px 6px;
+            margin-right: 5px;
+            font-size: 11px;
+            border: 1px solid #b3d9ff;
         }
 
         .project-outline {
-            margin-bottom: 1rem;
-            color: #555;
-            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 14px;
         }
 
         .project-aim {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            border-left: 3px solid #667eea;
-        }
-
-        .project-aim strong {
-            color: #667eea;
+            background-color: #f9f9f9;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #003366;
+            font-size: 13px;
         }
 
         .techniques {
-            margin-bottom: 1rem;
+            margin-bottom: 10px;
         }
 
-        .techniques h4 {
-            color: #555;
-            margin-bottom: 0.5rem;
+        .techniques strong {
+            font-size: 13px;
         }
 
         .technique-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
+            font-size: 12px;
+            color: #555;
         }
 
-        .technique {
-            background: #fff3e0;
-            color: #ef6c00;
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-        }
-
-        .supervisor-info {
-            border-top: 1px solid #eee;
-            padding-top: 1rem;
-            font-size: 0.9rem;
+        .supervisors {
+            font-size: 12px;
             color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
         }
 
         .no-results {
             text-align: center;
-            padding: 3rem;
+            padding: 40px;
             color: #666;
-            font-size: 1.1rem;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
         }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
             }
             
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .header {
+                margin: -10px -10px 20px -10px;
             }
             
-            .filter-row {
-                grid-template-columns: 1fr;
+            .search-row {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="container">
-            <h1>BM432 Final Year Projects</h1>
-            <p>Biomolecular Science Projects 2025-2026</p>
+        <h1>BM432 Final Year Projects 2025-26</h1>
+        <p>Biomolecular Science - Available Projects</p>
+    </div>
+
+    <div class="search-section">
+        <div class="search-row">
+            <div class="search-group">
+                <label for="searchInput">Search:</label>
+                <input type="text" id="searchInput" placeholder="Search projects...">
+            </div>
+            <div class="search-group">
+                <label for="typeFilter">Project Type:</label>
+                <select id="typeFilter">
+                    <option value="">All Types</option>
+                    <option value="Data Science: Data Analysis">Data Analysis</option>
+                    <option value="Data Science: Bioinformatics">Bioinformatics</option>
+                    <option value="Data Science: Computational">Computational</option>
+                    <option value="Experimental Research Projects (Laboratory)">Laboratory Research</option>
+                    <option value="Industrial/Societal: Education">Education</option>
+                    <option value="Industrial/Societal: Knowledge Exchange">Knowledge Exchange</option>
+                    <option value="Industrial/Societal: SciComm & Public Engagement">Science Communication</option>
+                    <option value="Literature: Critical Analysis">Literature Review</option>
+                    <option value="Literature: Meta-analysis">Meta-analysis</option>
+                </select>
+            </div>
+            <div class="search-group">
+                <label for="subjectFilter">Subject:</label>
+                <select id="subjectFilter">
+                    <option value="">All Subjects</option>
+                    <option value="Biochemistry">Biochemistry</option>
+                    <option value="Immunology">Immunology</option>
+                    <option value="Microbiology">Microbiology</option>
+                    <option value="Pharmacology">Pharmacology</option>
+                    <option value="Biomedical Science">Biomedical Science</option>
+                </select>
+            </div>
+            <div class="search-group">
+                <label for="supervisorFilter">Supervisor:</label>
+                <select id="supervisorFilter">
+                    <option value="">All Supervisors</option>
+                </select>
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="filters">
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label for="searchInput">Search Projects</label>
-                    <input type="text" id="searchInput" placeholder="Search by title, keywords, techniques...">
-                </div>
-                <div class="filter-group">
-                    <label for="typeFilter">Project Type</label>
-                    <select id="typeFilter">
-                        <option value="">All Types</option>
-                        <option value="Data Science: Data Analysis">Data Science: Data Analysis</option>
-                        <option value="Data Science: Bioinformatics">Data Science: Bioinformatics</option>
-                        <option value="Data Science: Computational">Data Science: Computational</option>
-                        <option value="Experimental Research Projects (Laboratory)">Experimental Research (Laboratory)</option>
-                        <option value="Industrial/Societal: Education">Industrial/Societal: Education</option>
-                        <option value="Industrial/Societal: Knowledge Exchange">Industrial/Societal: Knowledge Exchange</option>
-                        <option value="Industrial/Societal: SciComm & Public Engagement">Industrial/Societal: SciComm & Public Engagement</option>
-                        <option value="Literature: Critical Analysis">Literature: Critical Analysis</option>
-                        <option value="Literature: Meta-analysis">Literature: Meta-analysis</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="subjectFilter">Subject Area</label>
-                    <select id="subjectFilter">
-                        <option value="">All Subjects</option>
-                        <option value="Biochemistry">Biochemistry</option>
-                        <option value="Immunology">Immunology</option>
-                        <option value="Microbiology">Microbiology</option>
-                        <option value="Pharmacology">Pharmacology</option>
-                        <option value="Biomedical Science">Biomedical Science</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="supervisorFilter">Supervisor</label>
-                    <select id="supervisorFilter">
-                        <option value="">All Supervisors</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+    <div class="results-info">
+        Showing <span id="resultCount">0</span> projects
+    </div>
 
-        <div class="stats" id="stats">
-            Showing <span id="resultCount">0</span> projects
-        </div>
+    <div id="projectsContainer">
+        <!-- Projects will be loaded here -->
+    </div>
 
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Projects will be loaded here -->
-        </div>
-
-        <div class="no-results" id="noResults" style="display: none;">
-            <h3>No projects found</h3>
-            <p>Try adjusting your search criteria or filters.</p>
-        </div>
+    <div class="no-results" id="noResults" style="display: none;">
+        No projects match your search criteria.
     </div>
 
     <script>
@@ -304,8 +234,7 @@
                 aim: "To identify, purify, and characterize antimicrobial peptides from marine sources and evaluate their efficacy against clinically relevant bacterial strains.",
                 techniques: ["Protein purification", "Mass spectrometry", "Antimicrobial assays", "Cell culture", "Molecular cloning"],
                 primarySupervisor: "Dr. Sarah Johnson",
-                secondarySupervisor: "Prof. Michael Chen",
-                references: ["Nature Microbiology (2024)", "Journal of Marine Biotechnology (2023)", "Antimicrobial Agents and Chemotherapy (2024)"]
+                secondarySupervisor: "Prof. Michael Chen"
             },
             {
                 title: "Machine Learning Approaches to Predict Drug-Target Interactions",
@@ -316,8 +245,7 @@
                 aim: "To develop and validate machine learning models that accurately predict drug-target interactions using molecular descriptors and network analysis.",
                 techniques: ["Python programming", "Machine learning", "Network analysis", "Data visualization", "Statistical modeling"],
                 primarySupervisor: "Dr. Alex Kumar",
-                secondarySupervisor: "Dr. Lisa Wang",
-                references: ["Nature Machine Intelligence (2024)", "Bioinformatics (2023)", "Drug Discovery Today (2024)"]
+                secondarySupervisor: "Dr. Lisa Wang"
             },
             {
                 title: "The Role of Gut Microbiome in Immune System Development",
@@ -328,8 +256,7 @@
                 aim: "To systematically review and meta-analyze the relationship between gut microbiome composition and immune system maturation across different populations.",
                 techniques: ["Systematic review methods", "Meta-analysis", "Statistical analysis", "Data extraction", "Critical appraisal"],
                 primarySupervisor: "Prof. Emma Thompson",
-                secondarySupervisor: "Dr. Robert Martinez",
-                references: ["Cell Host & Microbe (2024)", "Nature Reviews Immunology (2023)", "Gut (2024)"]
+                secondarySupervisor: "Dr. Robert Martinez"
             },
             {
                 title: "Enzyme Engineering for Sustainable Biofuel Production",
@@ -340,8 +267,7 @@
                 aim: "To optimize enzyme efficiency for cellulose breakdown and evaluate the potential for scaled biofuel production from agricultural waste.",
                 techniques: ["Protein engineering", "Enzyme assays", "Fermentation", "Chromatography", "Molecular modeling"],
                 primarySupervisor: "Dr. James Wilson",
-                secondarySupervisor: "",
-                references: ["Nature Biotechnology (2024)", "Biotechnology for Biofuels (2023)", "Applied and Environmental Microbiology (2024)"]
+                secondarySupervisor: ""
             },
             {
                 title: "Educational Outreach: Making Biomolecular Science Accessible",
@@ -352,14 +278,23 @@
                 aim: "To create and evaluate effective science communication strategies for biomolecular science topics targeting secondary school students and the general public.",
                 techniques: ["Educational design", "Science communication", "Survey design", "Impact assessment", "Digital media creation"],
                 primarySupervisor: "Dr. Rachel Green",
-                secondarySupervisor: "Prof. David Lee",
-                references: ["Public Understanding of Science (2024)", "Science Communication (2023)", "Journal of Science Education (2024)"]
+                secondarySupervisor: "Prof. David Lee"
+            },
+            {
+                title: "Analysis of Protein Folding Dynamics Using Molecular Simulations",
+                students: 2,
+                type: "Data Science: Computational",
+                subjects: ["Biochemistry", "Biomedical Science"],
+                outline: "Understanding how proteins fold into their functional shapes is crucial for drug design and disease research. This computational project uses molecular dynamics simulations to study protein folding pathways and identify potential therapeutic targets.",
+                aim: "To analyze protein folding mechanisms through computational modeling and identify key intermediates that could be targeted for drug development.",
+                techniques: ["Molecular dynamics", "GROMACS", "Python scripting", "Data analysis", "Visualization software"],
+                primarySupervisor: "Dr. Mark Stevens",
+                secondarySupervisor: ""
             }
         ];
 
         let filteredProjects = [...projects];
 
-        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             populateSupervisorFilter();
             displayProjects(projects);
@@ -418,34 +353,33 @@
         }
 
         function displayProjects(projectsToShow) {
-            const projectsGrid = document.getElementById('projectsGrid');
+            const projectsContainer = document.getElementById('projectsContainer');
             const noResults = document.getElementById('noResults');
             const resultCount = document.getElementById('resultCount');
 
             resultCount.textContent = projectsToShow.length;
 
             if (projectsToShow.length === 0) {
-                projectsGrid.style.display = 'none';
+                projectsContainer.style.display = 'none';
                 noResults.style.display = 'block';
                 return;
             }
 
-            projectsGrid.style.display = 'grid';
+            projectsContainer.style.display = 'block';
             noResults.style.display = 'none';
 
-            projectsGrid.innerHTML = projectsToShow.map(project => `
-                <div class="project-card">
-                    <h3 class="project-title">${project.title}</h3>
+            projectsContainer.innerHTML = projectsToShow.map(project => `
+                <div class="project">
+                    <div class="project-title">${project.title}</div>
                     
-                    <div class="project-meta">
-                        <span class="meta-tag type">${project.type}</span>
-                        <span class="meta-tag students">${project.students} student${project.students > 1 ? 's' : ''}</span>
+                    <div class="project-info">
+                        <span><strong>Type:</strong> ${project.type}</span>
+                        <span><strong>Students:</strong> ${project.students}</span>
                     </div>
 
-                    <div class="subject-tags">
-                        ${project.subjects.map(subject => `
-                            <span class="subject-tag">${subject}</span>
-                        `).join('')}
+                    <div class="subjects">
+                        <strong>Subject areas:</strong>
+                        ${project.subjects.map(subject => `<span class="subject">${subject}</span>`).join('')}
                     </div>
 
                     <div class="project-outline">
@@ -457,17 +391,13 @@
                     </div>
 
                     <div class="techniques">
-                        <h4>Key Techniques:</h4>
-                        <div class="technique-list">
-                            ${project.techniques.map(technique => `
-                                <span class="technique">${technique}</span>
-                            `).join('')}
-                        </div>
+                        <strong>Key techniques:</strong>
+                        <div class="technique-list">${project.techniques.join(', ')}</div>
                     </div>
 
-                    <div class="supervisor-info">
-                        <strong>Primary Supervisor:</strong> ${project.primarySupervisor}
-                        ${project.secondarySupervisor ? `<br><strong>Secondary Supervisor:</strong> ${project.secondarySupervisor}` : ''}
+                    <div class="supervisors">
+                        <strong>Primary supervisor:</strong> ${project.primarySupervisor}
+                        ${project.secondarySupervisor ? `<br><strong>Secondary supervisor:</strong> ${project.secondarySupervisor}` : ''}
                     </div>
                 </div>
             `).join('');

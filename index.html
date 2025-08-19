@@ -783,8 +783,8 @@
             <div class="saved-panel" id="savedPanel">
                 <div class="saved-panel-header">
                     <button class="close-panel-button" onclick="toggleSavedPanel()">×</button>
-                    <div class="saved-panel-title">My Project List</div>
-                    <div class="saved-panel-subtitle">Drag to reorder by preference</div>
+                    <div class="saved-panel-title">My Project Preferences</div>
+                    <div class="saved-panel-subtitle">Drag to reorder by preference • <span id="projectCount">0</span>/30 selected</div>
                 </div>
                 <div class="saved-panel-content">
                     <div id="savedProjectsList">
@@ -1029,6 +1029,12 @@
         function updateSavedDisplay() {
             const badge = document.getElementById('savedBadge');
             const savedList = document.getElementById('savedProjectsList');
+            const projectCount = document.getElementById('projectCount');
+            
+            // Update counter in header
+            if (projectCount) {
+                projectCount.textContent = savedProjects.length;
+            }
             
             // Update badge
             if (savedProjects.length > 0) {
@@ -1065,6 +1071,13 @@
             if (savedProjects.length === 0) {
                 alert('No projects saved to export!');
                 return;
+            }
+            
+            if (savedProjects.length < 30) {
+                const confirmed = confirm(`You have only selected ${savedProjects.length} projects. Students are expected to rank 30 projects for the best chance of assignment.\n\nDo you want to continue anyway?`);
+                if (!confirmed) {
+                    return;
+                }
             }
             
             const projectIds = savedProjects.map(p => p.id).join('\n');

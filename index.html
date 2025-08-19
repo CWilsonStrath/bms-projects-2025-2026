@@ -312,10 +312,10 @@
         .filter-group input,
         .filter-group select {
             width: 100%;
-            padding: 16px;
+            padding: 12px;
             border: 1px solid var(--md-sys-color-outline);
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
             transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
@@ -326,7 +326,7 @@
             outline: none;
             border-color: var(--md-sys-color-primary);
             border-width: 2px;
-            padding: 15px;
+            padding: 11px;
         }
 
         .results-summary {
@@ -708,7 +708,7 @@
     </button>
 
     <div class="container">
-        <div class="main-content">
+        <div class="main-content" style="margin-top: 32px;">
             <div class="content-section">
                 <div class="filters">
                     <div class="filters-header">
@@ -755,7 +755,7 @@
                         <div class="filter-group">
                             <label for="sortFilter">Sort by</label>
                             <select id="sortFilter">
-                                <option value="random">Random (fair)</option>
+                                <option value="random">Default order</option>
                                 <option value="title">Project title A-Z</option>
                                 <option value="supervisor">Supervisor A-Z</option>
                                 <option value="type">Project type</option>
@@ -859,7 +859,18 @@
         // Global variables
         let filteredProjects = [...projects];
         let savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
-        let randomSeed = Math.random(); // Fixed seed for consistent random order during session
+        
+        // Generate or retrieve daily seed for this user
+        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+        const seedKey = 'dailyProjectSeed_' + today;
+        
+        let randomSeed = localStorage.getItem(seedKey);
+        if (!randomSeed) {
+            randomSeed = Math.random();
+            localStorage.setItem(seedKey, randomSeed);
+        } else {
+            randomSeed = parseFloat(randomSeed);
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             populateSupervisorFilter();

@@ -23,28 +23,17 @@
             --md-sys-color-secondary-container: #DEE3EA;
             --md-sys-color-on-secondary-container: #171B20;
             
-            --md-sys-color-tertiary: #7B5800;
-            --md-sys-color-on-tertiary: #FFFFFF;
-            --md-sys-color-tertiary-container: #FFDF9C;
-            --md-sys-color-on-tertiary-container: #261900;
-            
             --md-sys-color-surface: #FEFBFF;
             --md-sys-color-on-surface: #1B1B1F;
             --md-sys-color-surface-variant: #E0E2EC;
             --md-sys-color-on-surface-variant: #44474E;
             
-            --md-sys-color-surface-container: #F0F4F9;
-            --md-sys-color-surface-container-low: #F6FAFE;
-            --md-sys-color-surface-container-high: #E9F0F5;
-            --md-sys-color-surface-container-highest: #E3EAF0;
-            
             --md-sys-color-outline: #74777F;
             --md-sys-color-outline-variant: #C4C6CF;
             
-            --md-sys-color-error: #BA1A1A;
-            --md-sys-color-on-error: #FFFFFF;
-            --md-sys-color-error-container: #FFDAD6;
-            --md-sys-color-on-error-container: #410002;
+            /* Material Design 3 Elevation Shadows */
+            --md-elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --md-elevation-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
         }
 
         body {
@@ -68,23 +57,45 @@
 
         .header h1 {
             font-size: 28px;
-            font-weight: 500;
+            font-weight: 400;
             margin-bottom: 8px;
-            letter-spacing: 0;
         }
 
         .header p {
             font-size: 16px;
             opacity: 0.87;
-            font-weight: 400;
         }
 
         .filters {
-            background-color: var(--md-sys-color-surface-container);
-            padding: 16px;
+            padding: 16px 0;
             margin: 16px 0;
-            border-radius: 12px;
-            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .reset-button {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            border: 1px solid var(--md-sys-color-outline);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
+        }
+
+        .reset-button:hover {
+            background-color: var(--md-sys-color-outline-variant);
+        }
+
+        .reset-button:active {
+            transform: scale(0.98);
         }
 
         .filter-grid {
@@ -104,13 +115,13 @@
         .filter-group input,
         .filter-group select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 16px;
             border: 1px solid var(--md-sys-color-outline);
             border-radius: 4px;
             font-size: 16px;
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
-            transition: border-color 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
         }
 
         .filter-group input:focus,
@@ -118,110 +129,152 @@
             outline: none;
             border-color: var(--md-sys-color-primary);
             border-width: 2px;
+            padding: 15px;
         }
 
         .results-summary {
             text-align: center;
-            margin: 16px 0;
-            padding: 12px;
+            margin: 24px 0 16px 0;
             font-size: 14px;
             color: var(--md-sys-color-on-surface-variant);
-            background-color: var(--md-sys-color-surface-container-low);
-            border-radius: 8px;
         }
 
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 16px;
-            margin: 16px 0;
+            margin-bottom: 24px;
         }
 
+        /* Project Cards */
         .project-card {
-            background-color: var(--md-sys-color-surface-container-high);
+            background-color: #FFFFFF;
             border-radius: 12px;
-            padding: 16px;
-            border: 1px solid var(--md-sys-color-outline-variant);
-            transition: all 0.2s ease;
+            box-shadow: var(--md-elevation-1);
+            transition: all 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .project-card:hover {
-            background-color: var(--md-sys-color-surface-container-highest);
-            border-color: var(--md-sys-color-outline);
+            box-shadow: var(--md-elevation-3);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 20px 20px 16px 20px;
+        }
+
+        .card-content {
+            padding: 0 20px 16px 20px;
+        }
+
+        .card-actions {
+            padding: 16px 20px 20px 20px;
+            border-top: 1px solid var(--md-sys-color-outline-variant);
         }
 
         .project-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             color: var(--md-sys-color-on-surface);
             margin-bottom: 12px;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .project-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
-        .meta-badge {
-            padding: 4px 8px;
-            border-radius: 8px;
+        .meta-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-size: 12px;
             font-weight: 500;
         }
 
-        .meta-badge.type {
+        /* Project Type Colors */
+        .meta-chip.type[data-type*="Data Science"] {
+            background-color: #E8F4FD;
+            color: #1976D2;
+        }
+
+        .meta-chip.type[data-type*="Experimental"] {
+            background-color: #FFF3E0;
+            color: #F57C00;
+        }
+
+        .meta-chip.type[data-type*="Industrial"] {
+            background-color: #F3E5F5;
+            color: #8E24AA;
+        }
+
+        .meta-chip.type[data-type*="Literature"] {
+            background-color: #E8F5E8;
+            color: #43A047;
+        }
+
+        .meta-chip.students {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .subject-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .subject-chip {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
             background-color: var(--md-sys-color-secondary-container);
             color: var(--md-sys-color-on-secondary-container);
         }
 
-        .meta-badge.students {
-            background-color: var(--md-sys-color-tertiary-container);
-            color: var(--md-sys-color-on-tertiary-container);
-        }
-
-        .subject-tags {
-            margin-bottom: 12px;
-        }
-
-        .subject-tag {
-            display: inline-block;
+        /* Project Aim - Highlighted */
+        .project-aim {
             background-color: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-on-primary-container);
-            padding: 4px 12px;
-            margin: 2px 4px 2px 0;
-            border-radius: 16px;
-            font-size: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .project-aim strong {
             font-weight: 500;
         }
 
         .project-description {
-            margin-bottom: 12px;
             color: var(--md-sys-color-on-surface);
             line-height: 1.5;
             font-size: 14px;
-        }
-
-        .project-aim {
-            background-color: var(--md-sys-color-surface-container);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--md-sys-color-primary);
-        }
-
-        .project-aim strong {
-            color: var(--md-sys-color-primary);
-            font-weight: 500;
-        }
-
-        .techniques-section {
             margin-bottom: 16px;
         }
 
-        .techniques-section h4 {
+        /* Expandable Details */
+        .project-details {
+            display: none;
+            padding: 16px 20px 0 20px;
+        }
+
+        .expanded .project-details {
+            display: block;
+        }
+
+        .section-label {
             color: var(--md-sys-color-on-surface-variant);
             margin-bottom: 8px;
             font-size: 12px;
@@ -230,26 +283,52 @@
             letter-spacing: 0.5px;
         }
 
+        .project-outline {
+            margin-bottom: 16px;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .techniques-section {
+            margin-bottom: 16px;
+        }
+
         .techniques-list {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
         }
 
-        .technique {
-            background-color: var(--md-sys-color-surface-variant);
+        .technique-chip {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .references-section {
+            margin-bottom: 16px;
+        }
+
+        .references-list {
+            font-size: 12px;
             color: var(--md-sys-color-on-surface-variant);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .reference {
+            margin-bottom: 8px;
+            padding-left: 12px;
+            border-left: 2px solid var(--md-sys-color-outline-variant);
         }
 
         .supervisor-info {
-            border-top: 1px solid var(--md-sys-color-outline-variant);
-            padding-top: 12px;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 12px;
         }
 
         .supervisor-info strong {
@@ -257,25 +336,42 @@
             font-weight: 500;
         }
 
+        /* Expand Button */
+        .expand-button {
+            background: none;
+            border: none;
+            color: var(--md-sys-color-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+
+        .expand-button:hover {
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .expand-icon {
+            transition: transform 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
         .no-results {
             text-align: center;
             padding: 48px 24px;
-            background-color: var(--md-sys-color-surface-container);
+            background-color: var(--md-sys-color-surface-variant);
             border-radius: 12px;
             color: var(--md-sys-color-on-surface-variant);
         }
 
-        .no-results h3 {
-            margin-bottom: 8px;
-            color: var(--md-sys-color-on-surface);
-            font-weight: 500;
-        }
-
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 24px;
-            }
-            
             .projects-grid {
                 grid-template-columns: 1fr;
             }
@@ -287,13 +383,6 @@
             .container {
                 padding: 0 12px;
             }
-        }
-
-        /* Material Design 3 Focus Indicator */
-        .filter-group input:focus-visible,
-        .filter-group select:focus-visible {
-            outline: 2px solid var(--md-sys-color-primary);
-            outline-offset: 2px;
         }
     </style>
 </head>
@@ -307,6 +396,10 @@
 
     <div class="container">
         <div class="filters">
+            <div class="filters-header">
+                <h2 style="font-size: 18px; font-weight: 500; color: var(--md-sys-color-on-surface); margin: 0;">Filter Projects</h2>
+                <button class="reset-button" onclick="resetAllFilters()">Reset all filters</button>
+            </div>
             <div class="filter-grid">
                 <div class="filter-group">
                     <label for="searchInput">Search projects</label>
@@ -362,73 +455,84 @@
     </div>
 
     <script>
-        // Sample project data - replace this with your actual data
+        // Real BM432 project data
         const projects = [
             {
-                title: "Investigating Novel Antimicrobial Peptides from Marine Organisms",
+                title: "Repurposing combinations of drugs for cancer therapy",
                 students: 2,
-                type: "Experimental Research Projects (Laboratory)",
-                subjects: ["Biochemistry", "Microbiology", "Pharmacology"],
-                outline: "Marine organisms produce unique antimicrobial peptides that could revolutionize antibiotic development. This project explores the discovery, characterization, and potential therapeutic applications of these natural compounds against drug-resistant pathogens.",
-                aim: "To identify, purify, and characterize antimicrobial peptides from marine sources and evaluate their efficacy against clinically relevant bacterial strains.",
-                techniques: ["Protein purification", "Mass spectrometry", "Antimicrobial assays", "Cell culture", "Molecular cloning"],
-                primarySupervisor: "Dr. Sarah Johnson",
-                secondarySupervisor: "Prof. Michael Chen"
+                type: "Data Science: Data Analysis",
+                subjects: ["Biochemistry", "Biomedical Science", "Pharmacology"],
+                outline: "Despite the considerable resources being invested into the discovery of new cancer drugs, novel therapies suffer from high failure rates, high cost, limited efficacy and a lengthy timeline before they become clinically available. One approach to circumvent this problem is to repurpose existing non-cancer or cancer drugs against cancers to provide new or novel therapies or new formulation of existing therapies which could reduce costs, enhance tumour specificity, reduce toxicity or rapidly accelerate the introduction of new therapies into clinical practice. This is particularly relevant for paediatric and hard to treat cancers such as pancreatic cancer, brain tumours, lung cancer, ovarian cancer and triple negative breast cancer and cancers where there is currently an unmet need for effective less toxic cancer drugs.",
+                aim: "The aim of this project is to observe laboratory techniques assessing the efficacy of combination therapies and then to analyse real data derived from a range of experimental techniques to determine the efficacy and mode of action of combination therapies.",
+                techniques: ["Data analysis", "Laboratory observation", "Critical appraisal", "Scientific writing", "Literature search"],
+                primarySupervisor: "Dr. Catherine Roberts",
+                secondarySupervisor: "Prof. Alan Mitchell",
+                references: [
+                    "Jin, H., Wang, L. & Bernards, R. Rational combinations of targeted cancer therapies: background, advances and challenges. Nat Rev Drug Discov 22, 213–234 (2023).",
+                    "Subash C. Gupta et al. Cancer drug discovery by repurposing: teaching new tricks to old dogs. Trends in Pharmacological Sciences September 2013, Vol. 34, No. 9",
+                    "Bayat Mokhtari R et al. Combination therapy in combating cancer. Oncotarget. 2017 Jun 6;8(23):38022-38043."
+                ]
             },
             {
-                title: "Machine Learning Approaches to Predict Drug-Target Interactions",
-                students: 3,
-                type: "Data Science: Computational",
-                subjects: ["Pharmacology", "Biochemistry", "Biomedical Science"],
-                outline: "Using artificial intelligence to accelerate drug discovery by predicting how pharmaceutical compounds interact with their molecular targets. This computational approach could dramatically reduce the time and cost of developing new medicines.",
-                aim: "To develop and validate machine learning models that accurately predict drug-target interactions using molecular descriptors and network analysis.",
-                techniques: ["Python programming", "Machine learning", "Network analysis", "Data visualization", "Statistical modeling"],
-                primarySupervisor: "Dr. Alex Kumar",
-                secondarySupervisor: "Dr. Lisa Wang"
-            },
-            {
-                title: "The Role of Gut Microbiome in Immune System Development",
-                students: 2,
-                type: "Literature: Meta-analysis",
-                subjects: ["Immunology", "Microbiology", "Biomedical Science"],
-                outline: "A comprehensive analysis of how gut bacteria influence the development and function of our immune system. This project synthesizes cutting-edge research to understand the microbiome-immunity connection with implications for personalized medicine.",
-                aim: "To systematically review and meta-analyze the relationship between gut microbiome composition and immune system maturation across different populations.",
-                techniques: ["Systematic review methods", "Meta-analysis", "Statistical analysis", "Data extraction", "Critical appraisal"],
-                primarySupervisor: "Prof. Emma Thompson",
-                secondarySupervisor: "Dr. Robert Martinez"
-            },
-            {
-                title: "Enzyme Engineering for Sustainable Biofuel Production",
+                title: "All the world's a phage: the diversity of bacteriophage that infect Streptomyces",
                 students: 1,
-                type: "Experimental Research Projects (Laboratory)",
-                subjects: ["Biochemistry", "Microbiology"],
-                outline: "Engineering enzymes to efficiently convert plant waste into biofuels, contributing to sustainable energy solutions. This project combines protein engineering with environmental applications to address climate change challenges.",
-                aim: "To optimize enzyme efficiency for cellulose breakdown and evaluate the potential for scaled biofuel production from agricultural waste.",
-                techniques: ["Protein engineering", "Enzyme assays", "Fermentation", "Chromatography", "Molecular modeling"],
-                primarySupervisor: "Dr. James Wilson",
-                secondarySupervisor: ""
+                type: "Data Science: Bioinformatics",
+                subjects: ["Biomedical Science", "Microbiology"],
+                outline: "Bacteriophage are ubiquitous and thought to be the most abundant organisms on the planet, and they play key roles in bacterial horizontal gene transfer, ecology, and evolution. However, there is relatively little known about the bacteriophage that infect Streptomyces, in spite of the fact that bacteria from this genus are of great ecological importance, given their roles as saprophytes and in plant and insect interactions, and of great biotechnological importance due to their ability to produce useful natural products.",
+                aim: "To analyse the diversity of bacteriophages that infect Streptomyces species.",
+                techniques: ["Literature review", "Bioinformatics", "Data analysis"],
+                primarySupervisor: "Dr. Michael Harrison",
+                secondarySupervisor: "",
+                references: [
+                    "Mahmoudabadi, G. & Phillips, R., 2018. A comprehensive and quantitative exploration of thousands of viral genomes. eLife, 7, p.e31955.",
+                    "Edwards, R.A., et al., 2016. Computational approaches to predict bacteriophage-host relationships. FEMS Microbiology Reviews, 40(2), pp.258-272.",
+                    "Jaffal, H., et al., 2024. Prophage induction can facilitate the in vitro dispersal of multicellular Streptomyces structures. PLOS Biology, 22(7), p.e3002725."
+                ]
             },
             {
-                title: "Educational Outreach: Making Biomolecular Science Accessible",
-                students: 4,
-                type: "Industrial/Societal: SciComm & Public Engagement",
-                subjects: ["Biochemistry", "Immunology", "Microbiology", "Pharmacology"],
-                outline: "Developing innovative educational materials and programs to communicate complex biomolecular concepts to diverse audiences. This project focuses on science communication, public engagement, and educational impact assessment.",
-                aim: "To create and evaluate effective science communication strategies for biomolecular science topics targeting secondary school students and the general public.",
-                techniques: ["Educational design", "Science communication", "Survey design", "Impact assessment", "Digital media creation"],
-                primarySupervisor: "Dr. Rachel Green",
-                secondarySupervisor: "Prof. David Lee"
+                title: "Analysis of genetic changes in cancer",
+                students: 3,
+                type: "Data Science: Data Analysis",
+                subjects: ["Biochemistry", "Biomedical Science", "Immunology", "Pharmacology"],
+                outline: "A wealth of information about genomic/genetic changes that occur in different cancers and how this affects patient outcomes is contained in public databases such as The Cancer Genome Atlas (TCGA). The aim of this data analysis project is to extract and analyse data on two genes of interest from public databases to address questions about tumour drivers, mRNA expression profiles, patient outcomes, variant profiles, and protein interactions.",
+                aim: "To explore the association between two genes of interest and cancer. Students are able to choose which genes they would like to study or follow suggestions made by the supervisor.",
+                techniques: ["Use of public databases", "Data analysis", "Data presentation", "Critical review"],
+                primarySupervisor: "Prof. Sarah Chen",
+                secondarySupervisor: "Dr. James Park",
+                references: [
+                    "Ko, P.J., and Dixon, S.J. (2018). Protein palmitoylation and cancer. EMBO reports 19(10):e46666",
+                    "The Cancer Genome Atlas (TCGA) - https://www.cancer.gov/ccg/research/genome-sequencing/tcga"
+                ]
             },
             {
-                title: "Analysis of Protein Folding Dynamics Using Molecular Simulations",
+                title: "Analysis of protein kinase interactions",
                 students: 2,
-                type: "Data Science: Computational",
+                type: "Experimental Research Projects (Laboratory)",
                 subjects: ["Biochemistry", "Biomedical Science"],
-                outline: "Understanding how proteins fold into their functional shapes is crucial for drug design and disease research. This computational project uses molecular dynamics simulations to study protein folding pathways and identify potential therapeutic targets.",
-                aim: "To analyze protein folding mechanisms through computational modeling and identify key intermediates that could be targeted for drug development.",
-                techniques: ["Molecular dynamics", "GROMACS", "Python scripting", "Data analysis", "Visualization software"],
-                primarySupervisor: "Dr. Mark Stevens",
-                secondarySupervisor: ""
+                outline: "Protein kinases are part of signal transduction networks and as such are important regulators in all cells. This is also true for the protein kinases of the human protozoan parasite Leishmania mexicana. Hence, some of these protein kinases might constitute suitable drug targets against leishmaniasis.",
+                aim: "In this project we will look at a selection of kinases and devise methods to test their interaction.",
+                techniques: ["Molecular Biology", "Protein Biochemistry"],
+                primarySupervisor: "Dr. Maria Gonzalez",
+                secondarySupervisor: "Prof. David Thomson",
+                references: [
+                    "Erdmann M, Scholz A, Melzer IM, Schmetz C, and Wiese M. Interacting Protein Kinases Involved in the Regulation of Flagellar Length. Molecular Biology of the Cell 2006;17(4): 2035-2045.",
+                    "John von Freyend S et al. LmxMPK4, an essential mitogen-activated protein kinase of Leishmania mexicana is phosphorylated and activated by the STE7-like protein kinase LmxMKK5. Int J Parasitol. 2010 Jul;40(8):969-78."
+                ]
+            },
+            {
+                title: "Antidepressant drug therapy - where are we, where next?",
+                students: 1,
+                type: "Literature: Critical Analysis",
+                subjects: ["Pharmacology"],
+                outline: "Depressive illness is a major health care issue that severely impacts on suffers, their carers, and society at large. Antidepressant drug therapy is a mainstay treatment option for managing the condition. However, many of the established medicines for depression have limited effectiveness or a high incidence of problematic adverse side effects. Four different antidepressants, currently marketed in either the UK and/or North America have been selected for investigation in this project (levomilnacipran, vortioxetine, vilazodone and desvenlafaxine).",
+                aim: "To research and critically review published literature on a newly developed antidepressant medication and through this gain insight into potential future approaches for the therapeutic management of depressive illness.",
+                techniques: ["Published literature research", "Critical analysis"],
+                primarySupervisor: "Dr. Robert Anderson",
+                secondarySupervisor: "",
+                references: [
+                    "Elmaadawi, A.Z., Singh, N. and Reddy, J. (2015). Prescriber's guide to using 3 new antidepressants: Vilazodone, levomilnacipran, vortioxetine. Current Psychiatry, 14(2): 32-26.",
+                    "Santarsieri, D. and Schwartz, T.L. (2015). Antidepressant efficacy and side-effect burden: a quick guide for clinicians. Drugs Context, 4."
+                ]
             }
         ];
 
@@ -457,6 +561,16 @@
                 option.textContent = supervisor;
                 supervisorFilter.appendChild(option);
             });
+        }
+
+        function resetAllFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('subjectFilter').value = '';
+            document.getElementById('supervisorFilter').value = '';
+            
+            // Trigger filter update
+            filterProjects();
         }
 
         function setupEventListeners() {
@@ -491,6 +605,13 @@
             displayProjects(filteredProjects);
         }
 
+        function toggleCard(cardElement) {
+            cardElement.classList.toggle('expanded');
+            const button = cardElement.querySelector('.expand-button .expand-text');
+            const isExpanded = cardElement.classList.contains('expanded');
+            button.textContent = isExpanded ? 'Show less' : 'Show details';
+        }
+
         function displayProjects(projectsToShow) {
             const projectsGrid = document.getElementById('projectsGrid');
             const noResults = document.getElementById('noResults');
@@ -507,41 +628,64 @@
             projectsGrid.style.display = 'grid';
             noResults.style.display = 'none';
 
-            projectsGrid.innerHTML = projectsToShow.map(project => `
-                <div class="project-card">
-                    <h3 class="project-title">${project.title}</h3>
-                    
-                    <div class="project-meta">
-                        <span class="meta-badge type">${project.type}</span>
-                        <span class="meta-badge students">${project.students} student${project.students > 1 ? 's' : ''}</span>
-                    </div>
+            projectsGrid.innerHTML = projectsToShow.map((project, index) => `
+                <div class="project-card" id="card-${index}">
+                    <div class="card-header">
+                        <h3 class="project-title">${project.title}</h3>
+                        
+                        <div class="project-meta">
+                            <div class="meta-chip type" data-type="${project.type}">${project.type}</div>
+                        </div>
 
-                    <div class="subject-tags">
-                        ${project.subjects.map(subject => `
-                            <span class="subject-tag">${subject}</span>
-                        `).join('')}
-                    </div>
-
-                    <div class="project-description">
-                        ${project.outline}
-                    </div>
-
-                    <div class="project-aim">
-                        <strong>Project aim:</strong> ${project.aim}
-                    </div>
-
-                    <div class="techniques-section">
-                        <h4>Key techniques</h4>
-                        <div class="techniques-list">
-                            ${project.techniques.map(technique => `
-                                <span class="technique">${technique}</span>
+                        <div class="subject-tags">
+                            ${project.subjects.map(subject => `
+                                <div class="subject-chip">${subject}</div>
                             `).join('')}
                         </div>
                     </div>
 
-                    <div class="supervisor-info">
-                        <strong>Primary supervisor:</strong> ${project.primarySupervisor}
-                        ${project.secondarySupervisor ? `<br><strong>Secondary supervisor:</strong> ${project.secondarySupervisor}` : ''}
+                    <div class="card-content">
+                        <div class="project-aim">
+                            <strong>Aim:</strong> ${project.aim}
+                        </div>
+                    </div>
+
+                    <div class="project-details">
+                        <div class="project-outline">
+                            <div class="section-label">Project outline</div>
+                            ${project.outline}
+                        </div>
+
+                        <div class="techniques-section">
+                            <div class="section-label">Key techniques</div>
+                            <div class="techniques-list">
+                                ${project.techniques.map(technique => `
+                                    <div class="technique-chip">${technique}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        ${project.references ? `
+                        <div class="references-section">
+                            <div class="section-label">Key references</div>
+                            <div class="references-list">
+                                ${project.references.map(ref => `<div class="reference">${ref}</div>`).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="card-actions">
+                        <div class="supervisor-info">
+                            <strong>Primary supervisor:</strong> ${project.primarySupervisor}
+                            <br><strong>Secondary supervisor:</strong> ${project.secondarySupervisor || 'N/A'}
+                            <br><strong>Students:</strong> ${project.students}
+                        </div>
+                        
+                        <button class="expand-button" onclick="toggleCard(document.getElementById('card-${index}'))">
+                            <span class="expand-text">Show details</span>
+                            <span class="expand-icon">▼</span>
+                        </button>
                     </div>
                 </div>
             `).join('');

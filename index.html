@@ -220,12 +220,6 @@
             color: #43A047;
         }
 
-        .meta-chip.students {
-            background-color: var(--md-sys-color-surface-variant);
-            color: var(--md-sys-color-on-surface-variant);
-            border: 1px solid var(--md-sys-color-outline-variant);
-        }
-
         .subject-tags {
             display: flex;
             flex-wrap: wrap;
@@ -255,13 +249,6 @@
 
         .project-aim strong {
             font-weight: 500;
-        }
-
-        .project-description {
-            color: var(--md-sys-color-on-surface);
-            line-height: 1.5;
-            font-size: 14px;
-            margin-bottom: 16px;
         }
 
         /* Expandable Details */
@@ -454,15 +441,17 @@
         </div>
     </div>
 
+    <!-- <script src="projects.js"></script> -->
     <script>
-        // Real BM432 project data
+        // Projects data - this will be replaced by data from projects.js file
+        // For now, keeping sample data so the page works
         const projects = [
             {
                 title: "Repurposing combinations of drugs for cancer therapy",
                 students: 2,
                 type: "Data Science: Data Analysis",
                 subjects: ["Biochemistry", "Biomedical Science", "Pharmacology"],
-                outline: "Despite the considerable resources being invested into the discovery of new cancer drugs, novel therapies suffer from high failure rates, high cost, limited efficacy and a lengthy timeline before they become clinically available. One approach to circumvent this problem is to repurpose existing non-cancer or cancer drugs against cancers to provide new or novel therapies or new formulation of existing therapies which could reduce costs, enhance tumour specificity, reduce toxicity or rapidly accelerate the introduction of new therapies into clinical practice. This is particularly relevant for paediatric and hard to treat cancers such as pancreatic cancer, brain tumours, lung cancer, ovarian cancer and triple negative breast cancer and cancers where there is currently an unmet need for effective less toxic cancer drugs.",
+                outline: "Despite the considerable resources being invested into the discovery of new cancer drugs, novel therapies suffer from high failure rates, high cost, limited efficacy and a lengthy timeline before they become clinically available. One approach to circumvent this problem is to repurpose existing non-cancer or cancer drugs against cancers to provide new or novel therapies or new formulation of existing therapies which could reduce costs, enhance tumour specificity, reduce toxicity or rapidly accelerate the introduction of new therapies into clinical practice.",
                 aim: "The aim of this project is to observe laboratory techniques assessing the efficacy of combination therapies and then to analyse real data derived from a range of experimental techniques to determine the efficacy and mode of action of combination therapies.",
                 techniques: ["Data analysis", "Laboratory observation", "Critical appraisal", "Scientific writing", "Literature search"],
                 primarySupervisor: "Dr. Catherine Roberts",
@@ -487,51 +476,6 @@
                     "Mahmoudabadi, G. & Phillips, R., 2018. A comprehensive and quantitative exploration of thousands of viral genomes. eLife, 7, p.e31955.",
                     "Edwards, R.A., et al., 2016. Computational approaches to predict bacteriophage-host relationships. FEMS Microbiology Reviews, 40(2), pp.258-272.",
                     "Jaffal, H., et al., 2024. Prophage induction can facilitate the in vitro dispersal of multicellular Streptomyces structures. PLOS Biology, 22(7), p.e3002725."
-                ]
-            },
-            {
-                title: "Analysis of genetic changes in cancer",
-                students: 3,
-                type: "Data Science: Data Analysis",
-                subjects: ["Biochemistry", "Biomedical Science", "Immunology", "Pharmacology"],
-                outline: "A wealth of information about genomic/genetic changes that occur in different cancers and how this affects patient outcomes is contained in public databases such as The Cancer Genome Atlas (TCGA). The aim of this data analysis project is to extract and analyse data on two genes of interest from public databases to address questions about tumour drivers, mRNA expression profiles, patient outcomes, variant profiles, and protein interactions.",
-                aim: "To explore the association between two genes of interest and cancer. Students are able to choose which genes they would like to study or follow suggestions made by the supervisor.",
-                techniques: ["Use of public databases", "Data analysis", "Data presentation", "Critical review"],
-                primarySupervisor: "Prof. Sarah Chen",
-                secondarySupervisor: "Dr. James Park",
-                references: [
-                    "Ko, P.J., and Dixon, S.J. (2018). Protein palmitoylation and cancer. EMBO reports 19(10):e46666",
-                    "The Cancer Genome Atlas (TCGA) - https://www.cancer.gov/ccg/research/genome-sequencing/tcga"
-                ]
-            },
-            {
-                title: "Analysis of protein kinase interactions",
-                students: 2,
-                type: "Experimental Research Projects (Laboratory)",
-                subjects: ["Biochemistry", "Biomedical Science"],
-                outline: "Protein kinases are part of signal transduction networks and as such are important regulators in all cells. This is also true for the protein kinases of the human protozoan parasite Leishmania mexicana. Hence, some of these protein kinases might constitute suitable drug targets against leishmaniasis.",
-                aim: "In this project we will look at a selection of kinases and devise methods to test their interaction.",
-                techniques: ["Molecular Biology", "Protein Biochemistry"],
-                primarySupervisor: "Dr. Maria Gonzalez",
-                secondarySupervisor: "Prof. David Thomson",
-                references: [
-                    "Erdmann M, Scholz A, Melzer IM, Schmetz C, and Wiese M. Interacting Protein Kinases Involved in the Regulation of Flagellar Length. Molecular Biology of the Cell 2006;17(4): 2035-2045.",
-                    "John von Freyend S et al. LmxMPK4, an essential mitogen-activated protein kinase of Leishmania mexicana is phosphorylated and activated by the STE7-like protein kinase LmxMKK5. Int J Parasitol. 2010 Jul;40(8):969-78."
-                ]
-            },
-            {
-                title: "Antidepressant drug therapy - where are we, where next?",
-                students: 1,
-                type: "Literature: Critical Analysis",
-                subjects: ["Pharmacology"],
-                outline: "Depressive illness is a major health care issue that severely impacts on suffers, their carers, and society at large. Antidepressant drug therapy is a mainstay treatment option for managing the condition. However, many of the established medicines for depression have limited effectiveness or a high incidence of problematic adverse side effects. Four different antidepressants, currently marketed in either the UK and/or North America have been selected for investigation in this project (levomilnacipran, vortioxetine, vilazodone and desvenlafaxine).",
-                aim: "To research and critically review published literature on a newly developed antidepressant medication and through this gain insight into potential future approaches for the therapeutic management of depressive illness.",
-                techniques: ["Published literature research", "Critical analysis"],
-                primarySupervisor: "Dr. Robert Anderson",
-                secondarySupervisor: "",
-                references: [
-                    "Elmaadawi, A.Z., Singh, N. and Reddy, J. (2015). Prescriber's guide to using 3 new antidepressants: Vilazodone, levomilnacipran, vortioxetine. Current Psychiatry, 14(2): 32-26.",
-                    "Santarsieri, D. and Schwartz, T.L. (2015). Antidepressant efficacy and side-effect burden: a quick guide for clinicians. Drugs Context, 4."
                 ]
             }
         ];

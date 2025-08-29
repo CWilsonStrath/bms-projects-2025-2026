@@ -335,11 +335,23 @@
             }
         }
         
-        .milestone-cell {
-            background: #343a40 !important;
-            color: white;
-            font-weight: bold;
-            font-size: 10px;
+        .task-row {
+            cursor: move;
+        }
+        
+        .task-row.dragging {
+            opacity: 0.5;
+        }
+        
+        .task-row.drag-over {
+            border-top: 3px solid #007bff;
+        }
+        
+        .drag-handle {
+            cursor: move;
+            color: #6c757d;
+            margin-right: 8px;
+            user-select: none;
         }
     </style>
 </head>
@@ -523,15 +535,15 @@
             let html = '';
             
             tasks.forEach(task => {
-                html += '<tr data-task-id="' + task.id + '" data-task-type="' + task.type + '">';
+                html += '<tr class="task-row" draggable="true" data-task-id="' + task.id + '" data-task-type="' + task.type + '">';
                 
                 if (task.type === 'group') {
-                    html += `<td class="task-name task-group" contenteditable="true">${task.name}</td>`;
+                    html += `<td class="task-name task-group" contenteditable="true"><span class="drag-handle">≡</span>${task.name}</td>`;
                     for (let i = 0; i < 20; i++) {
                         html += '<td></td>';
                     }
                 } else if (task.type === 'milestone') {
-                    html += `<td class="task-name task-milestone" contenteditable="true">📅 ${task.name}</td>`;
+                    html += `<td class="task-name task-milestone" contenteditable="true"><span class="drag-handle">≡</span>📅 ${task.name}</td>`;
                     for (let i = 0; i < 20; i++) {
                         if (i === task.week) {
                             html += '<td class="milestone-cell">DEADLINE</td>';
@@ -540,7 +552,7 @@
                         }
                     }
                 } else {
-                    html += `<td class="task-name task-subtask" contenteditable="true">□ ${task.name}</td>`;
+                    html += `<td class="task-name task-subtask" contenteditable="true"><span class="drag-handle">≡</span>□ ${task.name}</td>`;
                     for (let i = 0; i < 20; i++) {
                         html += `<td class="task-cell" data-task="${task.id}" data-week="${i}"></td>`;
                     }
@@ -551,8 +563,80 @@
             
             tbody.innerHTML = html;
             
-            // Add click event listeners
+            // Add event listeners
             addEventListeners();
+            addDragAndDropListeners();
+        }
+        
+        function addDragAndDropListeners() {
+            const rows = document.querySelectorAll('.task-row');
+            
+            rows.forEach(row => {
+                row.addEventListener('dragstart', function(e) {
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/html', this.outerHTML);
+                    e.dataTransfer.setData('text/plain', this.getAttribute('data-task-id'));
+                });
+                
+                row.addEventListener('dragend', function(e) {
+                    this.classList.remove('dragging');
+                    
+                    // Remove drag-over class from all rows
+                    rows.forEach(r => r.classList.remove('drag-over'));
+                });
+                
+                row.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    
+                    // Remove drag-over from all rows and add to current
+                    rows.forEach(r => r.classList.remove('drag-over'));
+                    this.classList.add('drag-over');
+                });
+                
+                row.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    const draggedRow = document.querySelector(`[data-task-id="${draggedId}"]`);
+                    
+                    if (draggedRow && draggedRow !== this) {
+                        // Reorder the tasks
+                        reorderTasks(draggedId, this.getAttribute('data-task-id'));
+                    }
+                });
+                
+                row.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over');
+                });
+            });
+        }
+        
+        function reorderTasks(draggedTaskId, targetTaskId) {
+            const currentTasks = getCurrentTasks();
+            
+            // Find the dragged task and target task indices
+            const draggedIndex = currentTasks.findIndex(task => task.id === draggedTaskId);
+            const targetIndex = currentTasks.findIndex(task => task.id === targetTaskId);
+            
+            if (draggedIndex === -1 || targetIndex === -1) return;
+            
+            // Remove the dragged task from its current position
+            const draggedTask = currentTasks.splice(draggedIndex, 1)[0];
+            
+            // Calculate new insertion index (accounting for the removed item)
+            let insertIndex = targetIndex;
+            if (draggedIndex < targetIndex) {
+                insertIndex = targetIndex - 1;
+            }
+            
+            // Insert the dragged task at the new position
+            currentTasks.splice(insertIndex, 0, draggedTask);
+            
+            // Re-render the tasks
+            renderTasks(currentTasks);
         }
         
         function addEventListeners() {

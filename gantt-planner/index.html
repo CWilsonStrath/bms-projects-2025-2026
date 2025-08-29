@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM432 Interactive Gantt Chart Planner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            padding: 20px;
+            border-bottom: 1px solid #e1e8ed;
+            background: #f8f9fa;
+        }
+        
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .gantt-container {
+            overflow: auto;
+            max-height: 70vh;
+        }
+        
+        .gantt-table {
+            width: 100%;
+            min-width: 1200px;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .gantt-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 11px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-right: 1px solid #34495e;
+        }
+        
+        .gantt-table td {
+            border: 1px solid #dee2e6;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .gantt-table td:hover {
+            background-color: #f8f9fa !important;
+        }
+        
+        .task-name {
+            background: #f8f9fa;
+            text-align: left;
+            width: 250px;
+            padding: 10px 15px;
+            font-weight: 600;
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            border-right: 2px solid #dee2e6;
+        }
+        
+        .task-group {
+            background: #e9ecef !important;
+            color: #495057;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .task-subtask {
+            padding-left: 30px;
+            font-size: 12px;
+            background: white !important;
+        }
+        
+        .task-milestone {
+            font-weight: bold;
+            color: #dc3545;
+        }
+        
+        .week-header {
+            font-size: 10px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            white-space: nowrap;
+        }
+        
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .color-option.active {
+            border-color: #2c3e50;
+            transform: scale(1.1);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .selected-color {
+            background: #3498db;
+        }
+        
+        .progress-tracker {
+            background: #f8f9fa;
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .notes {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+        }
+        
+        .notes h3 {
+            margin-bottom: 15px;
+            color: #856404;
+        }
+        
+        .notes ul {
+            list-style-position: inside;
+            color: #856404;
+        }
+        
+        .notes li {
+            margin-bottom: 8px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .gantt-container {
+                font-size: 11px;
+            }
+            
+            .task-name {
+                width: 200px;
+                font-size: 11px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .milestone-cell {
+            background: #343a40 !important;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BM432 Gantt Chart Planner</h1>
+            <p>Interactive project timeline planning tool for final year projects</p>
+        </div>
+        
+        <div class="controls">
+            <div class="project-info">
+                <div class="input-group">
+                    <label for="project-title">Project Title:</label>
+                    <input type="text" id="project-title" placeholder="Enter your project title">
+                </div>
+                <div class="input-group">
+                    <label for="student-name">Student Name:</label>
+                    <input type="text" id="student-name" placeholder="Your name">
+                </div>
+                <div class="input-group">
+                    <label for="supervisor">Supervisor:</label>
+                    <input type="text" id="supervisor" placeholder="Supervisor name">
+                </div>
+                <div class="input-group">
+                    <label for="project-type">Project Type:</label>
+                    <select id="project-type">
+                        <option value="">Select project type</option>
+                        <option value="bioinformatics">Bioinformatics</option>
+                        <option value="computational">Computational</option>
+                        <option value="laboratory">Laboratory Research</option>
+                        <option value="critical-analysis">Critical Analysis</option>
+                        <option value="data-analysis">Data Analysis</option>
+                        <option value="education">Education</option>
+                        <option value="knowledge-exchange">Knowledge Exchange</option>
+                        <option value="science-communication">Science Communication</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="color-palette">
+                <strong>Select Color:</strong>
+                <div class="color-option selected-color active" data-color="#3498db" title="Literature/Research"></div>
+                <div class="color-option" data-color="#e74c3c" style="background: #e74c3c;" title="Data/Experiments"></div>
+                <div class="color-option" data-color="#f39c12" style="background: #f39c12;" title="Writing"></div>
+                <div class="color-option" data-color="#9b59b6" style="background: #9b59b6;" title="Presentation"></div>
+                <div class="color-option" data-color="#1abc9c" style="background: #1abc9c;" title="Training/Setup"></div>
+                <div class="color-option" data-color="#95a5a6" style="background: #95a5a6;" title="Buffer/Review"></div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+                <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
+                <button class="btn btn-success" onclick="exportToPDF()">Export PDF</button>
+                <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+            </div>
+        </div>
+        
+        <div class="progress-tracker">
+            <strong>Project Completion:</strong>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <span id="progress-text">0% Complete (0 of 0 tasks)</span>
+        </div>
+        
+        <div class="gantt-container">
+            <table class="gantt-table" id="gantt-table">
+                <thead>
+                    <tr>
+                        <th class="task-name">Task</th>
+                        <th class="week-header">Sep W3</th>
+                        <th class="week-header">Sep W4</th>
+                        <th class="week-header">Oct W1</th>
+                        <th class="week-header">Oct W2</th>
+                        <th class="week-header">Oct W3</th>
+                        <th class="week-header">Oct W4</th>
+                        <th class="week-header">Nov W1</th>
+                        <th class="week-header">Nov W2</th>
+                        <th class="week-header">Nov W3</th>
+                        <th class="week-header">Nov W4</th>
+                        <th class="week-header">Dec W1</th>
+                        <th class="week-header">Dec W2</th>
+                        <th class="week-header">Jan W2</th>
+                        <th class="week-header">Jan W3</th>
+                        <th class="week-header">Jan W4</th>
+                        <th class="week-header">Feb W1</th>
+                        <th class="week-header">Feb W2</th>
+                        <th class="week-header">Feb W3</th>
+                        <th class="week-header">Feb W4</th>
+                        <th class="week-header">Mar W1</th>
+                    </tr>
+                </thead>
+                <tbody id="gantt-body">
+                    <!-- Content will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3498db;"></div>
+                <span>Literature/Research</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <span>Data/Experiments</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f39c12;"></div>
+                <span>Writing</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #9b59b6;"></div>
+                <span>Presentation</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #1abc9c;"></div>
+                <span>Training/Setup</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #95a5a6;"></div>
+                <span>Buffer/Review</span>
+            </div>
+        </div>
+        
+        <div class="notes">
+            <h3>Planning Tips:</h3>
+            <ul>
+                <li><strong>Click cells</strong> to add color coding for different time periods</li>
+                <li><strong>Build in buffer time</strong> before major deadlines for unexpected issues</li>
+                <li><strong>Consider dependencies</strong> - some tasks can't start until others are complete</li>
+                <li><strong>Weekly meetings</strong> help identify problems early and adjust timeline</li>
+                <li><strong>Start writing early</strong> - methods and introduction can be drafted during project work</li>
+                <li><strong>Save frequently</strong> using the Save Project button</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Modal for save/load -->
+    <div id="saveModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSaveModal()">&times;</span>
+            <h3>Save/Load Project</h3>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedColor = '#3498db';
+        let projectData = {};
+        
+        // Initialize the gantt chart
+        function initializeGantt() {
+            const tbody = document.getElementById('gantt-body');
+            const tasks = [
+                { type: 'group', name: 'PHASE 1: LITERATURE REVIEW' },
+                { type: 'subtask', name: 'Database searches', id: 'lit-search' },
+                { type: 'subtask', name: 'Read & analyze papers', id: 'lit-read' },
+                { type: 'subtask', name: 'Write introduction draft', id: 'lit-write' },
+                { type: 'milestone', name: 'MILESTONE: Introduction Due (Oct 20)', id: 'milestone-intro', week: 4 },
+                
+                { type: 'group', name: 'SETUP & TRAINING' },
+                { type: 'subtask', name: 'Ethics quizzes', id: 'ethics' },
+                { type: 'subtask', name: 'Safety training', id: 'safety' },
+                { type: 'subtask', name: 'Software/equipment setup', id: 'setup' },
+                
+                { type: 'group', name: 'PHASE 2: PROJECT WORK' },
+                { type: 'subtask', name: 'Data collection/experiments', id: 'data-collect' },
+                { type: 'subtask', name: 'Data analysis', id: 'data-analysis' },
+                { type: 'subtask', name: 'Create figures/graphs', id: 'figures' },
+                { type: 'subtask', name: 'Write results section', id: 'results-write' },
+                
+                { type: 'group', name: 'PHASE 3: PRESENTATION' },
+                { type: 'subtask', name: 'Create slides', id: 'slides' },
+                { type: 'subtask', name: 'Practice with supervisor', id: 'practice' },
+                { type: 'milestone', name: 'MILESTONE: Presentation (Dec 2-6)', id: 'milestone-present', week: 11 },
+                
+                { type: 'group', name: 'PHASE 4: THESIS WRITING' },
+                { type: 'subtask', name: 'Methods section', id: 'methods' },
+                { type: 'subtask', name: 'Discussion section', id: 'discussion' },
+                { type: 'subtask', name: 'Abstracts & formatting', id: 'abstracts' },
+                { type: 'milestone', name: 'MILESTONE: Draft Thesis (Feb 3)', id: 'milestone-draft', week: 15 },
+                { type: 'subtask', name: 'Incorporate feedback', id: 'feedback-revise' },
+                { type: 'subtask', name: 'Final proofreading', id: 'proofread' },
+                { type: 'milestone', name: 'MILESTONE: Final Thesis (Mar 3)', id: 'milestone-final', week: 19 },
+                
+                { type: 'group', name: 'ONGOING ACTIVITIES' },
+                { type: 'ongoing', name: 'Weekly supervisor meetings', id: 'meetings' },
+                { type: 'ongoing', name: 'Document progress & issues', id: 'documentation' }
+            ];
+            
+            let html = '';
+            tasks.forEach(task => {
+                html += '<tr>';
+                
+                if (task.type === 'group') {
+                    html += `<td class="task-name task-group">${task.name}</td>`;
+                    for (let i = 0; i < 20; i++) {
+                        html += '<td></td>';
+                    }
+                } else if (task.type === 'milestone') {
+                    html += `<td class="task-name task-milestone">📅 ${task.name}</td>`;
+                    for (let i = 0; i < 20; i++) {
+                        if (i === task.week) {
+                            html += '<td class="milestone-cell">DEADLINE</td>';
+                        } else {
+                            html += '<td></td>';
+                        }
+                    }
+                } else if (task.type === 'ongoing') {
+                    html += `<td class="task-name task-subtask">□ ${task.name}</td>`;
+                    for (let i = 0; i < 19; i++) {
+                        html += `<td class="task-cell" data-task="${task.id}" data-week="${i}" style="background: #1abc9c; color: white; font-size: 12px;">●</td>`;
+                    }
+                    html += '<td></td>';
+                } else {
+                    html += `<td class="task-name task-subtask">□ ${task.name}</td>`;
+                    for (let i = 0; i < 20; i++) {
+                        html += `<td class="task-cell" data-task="${task.id}" data-week="${i}"></td>`;
+                    }
+                }
+                
+                html += '</tr>';
+            });
+            
+            tbody.innerHTML = html;
+            
+            // Add click event listeners to task cells
+            document.querySelectorAll('.task-cell').forEach(cell => {
+                cell.addEventListener('click', function() {
+                    if (this.style.backgroundColor && this.style.backgroundColor !== '') {
+                        // Cell is colored, remove color
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                        this.textContent = '';
+                    } else {
+                        // Cell is empty, add color
+                        this.style.backgroundColor = selectedColor;
+                        this.style.color = 'white';
+                        this.textContent = '●';
+                    }
+                    updateProgress();
+                });
+            });
+        }
+        
+        // Color palette functionality
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelector('.color-option.active').classList.remove('active');
+                this.classList.add('active');
+                selectedColor = this.getAttribute('data-color');
+                document.querySelector('.selected-color').style.backgroundColor = selectedColor;
+            });
+        });
+        
+        // Progress tracking
+        function updateProgress() {
+            const allCells = document.querySelectorAll('.task-cell[data-task]');
+            const coloredCells = document.querySelectorAll('.task-cell[data-task][style*="background"]');
+            
+            const totalTasks = Array.from(allCells).filter(cell => !cell.textContent.includes('●') || cell.style.backgroundColor === selectedColor).length;
+            const completedTasks = coloredCells.length;
+            
+            const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${percentage}% Planned (${completedTasks} of ${totalTasks} task-weeks)`;
+        }
+        
+        // Save project
+        function saveProject() {
+            const projectInfo = {
+                title: document.getElementById('project-title').value,
+                student: document.getElementById('student-name').value,
+                supervisor: document.getElementById('supervisor').value,
+                type: document.getElementById('project-type').value,
+                tasks: {}
+            };
+            
+            document.querySelectorAll('.task-cell[data-task]').forEach(cell => {
+                const taskId = cell.getAttribute('data-task');
+                const week = cell.getAttribute('data-week');
+                const key = `${taskId}-${week}`;
+                
+                if (cell.style.backgroundColor) {
+                    projectInfo.tasks[key] = {
+                        color: cell.style.backgroundColor,
+                        text: cell.textContent
+                    };
+                }
+            });
+            
+            const dataStr = JSON.stringify(projectInfo, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `${projectInfo.title || 'gantt-chart'}-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+        
+        // Load project
+        function loadProject() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const projectInfo = JSON.parse(e.target.result);
+                            
+                            // Load project info
+                            document.getElementById('project-title').value = projectInfo.title || '';
+                            document.getElementById('student-name').value = projectInfo.student || '';
+                            document.getElementById('supervisor').value = projectInfo.supervisor || '';
+                            document.getElementById('project-type').value = projectInfo.type || '';
+                            
+                            // Clear existing colors
+                            clearAll();
+                            
+                            // Load task colors
+                            Object.keys(projectInfo.tasks).forEach(key => {
+                                const taskData = projectInfo.tasks[key];
+                                const cell = document.querySelector(`[data-task="${key.split('-')[0]}"][data-week="${key.split('-')[1]}"]`);
+                                if (cell) {
+                                    cell.style.backgroundColor = taskData.color;
+                                    cell.style.color = 'white';
+                                    cell.textContent = taskData.text;
+                                }
+                            });
+                            
+                            updateProgress();
+                            alert('Project loaded successfully!');
+                        } catch (error) {
+                            alert('Error loading project file. Please check the file format.');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            
+            input.click();
+        }
+        
+        // Clear all
+        function clearAll() {
+            if (confirm('Are you sure you want to clear all task scheduling? This cannot be undone.')) {
+                document.querySelectorAll('.task-cell[data-task]').forEach(cell => {
+                    if (!cell.classList.contains('milestone-cell') && cell.textContent !== '●') {
+                        cell.style.backgroundColor = '';
+                        cell.style.color = '';
+                        cell.textContent = '';
+                    }
+                });
+                updateProgress();
+            }
+        }
+        
+        // Export to PDF (simplified - opens print dialog)
+        function exportToPDF() {
+            window.print();
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeGantt();
+            updateProgress();
+        });
+        
+        // Close modal functionality
+        function closeSaveModal() {
+            document.getElementById('saveModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('saveModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

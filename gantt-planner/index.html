@@ -391,9 +391,12 @@
             </div>
             
             <div class="action-buttons">
+                <button class="btn btn-primary" onclick="addTask()">Add Task</button>
+                <button class="btn btn-secondary" onclick="addSubtask()">Add Subtask</button>
+                <button class="btn btn-secondary" onclick="deleteTask()">Delete Task</button>
                 <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
                 <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
-                <button class="btn btn-success" onclick="exportToPDF()">Export PDF</button>
+                <button class="btn btn-success" onclick="exportToPDF()">Export PNG</button>
                 <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
             </div>
         </div>
@@ -491,58 +494,44 @@
     <script>
         let selectedColor = '#3498db';
         let projectData = {};
+        let taskIdCounter = 1;
+        let selectedTaskRow = null;
         
-        // Initialize the gantt chart
+        // Initialize the gantt chart with basic structure
         function initializeGantt() {
             const tbody = document.getElementById('gantt-body');
-            const tasks = [
-                { type: 'group', name: 'PHASE 1: LITERATURE REVIEW' },
-                { type: 'subtask', name: 'Database searches', id: 'lit-search' },
-                { type: 'subtask', name: 'Read & analyze papers', id: 'lit-read' },
-                { type: 'subtask', name: 'Write introduction draft', id: 'lit-write' },
+            const defaultTasks = [
+                { type: 'group', name: 'LITERATURE REVIEW', id: 'group-lit' },
+                { type: 'subtask', name: 'Database searches', id: 'task-' + taskIdCounter++, parent: 'group-lit' },
+                { type: 'subtask', name: 'Read & analyze papers', id: 'task-' + taskIdCounter++, parent: 'group-lit' },
                 { type: 'milestone', name: 'MILESTONE: Introduction Due (Oct 20)', id: 'milestone-intro', week: 4 },
                 
-                { type: 'group', name: 'SETUP & TRAINING' },
-                { type: 'subtask', name: 'Ethics quizzes', id: 'ethics' },
-                { type: 'subtask', name: 'Safety training', id: 'safety' },
-                { type: 'subtask', name: 'Software/equipment setup', id: 'setup' },
+                { type: 'group', name: 'PROJECT WORK', id: 'group-work' },
+                { type: 'subtask', name: 'Data collection/experiments', id: 'task-' + taskIdCounter++, parent: 'group-work' },
+                { type: 'subtask', name: 'Data analysis', id: 'task-' + taskIdCounter++, parent: 'group-work' },
                 
-                { type: 'group', name: 'PHASE 2: PROJECT WORK' },
-                { type: 'subtask', name: 'Data collection/experiments', id: 'data-collect' },
-                { type: 'subtask', name: 'Data analysis', id: 'data-analysis' },
-                { type: 'subtask', name: 'Create figures/graphs', id: 'figures' },
-                { type: 'subtask', name: 'Write results section', id: 'results-write' },
-                
-                { type: 'group', name: 'PHASE 3: PRESENTATION' },
-                { type: 'subtask', name: 'Create slides', id: 'slides' },
-                { type: 'subtask', name: 'Practice with supervisor', id: 'practice' },
-                { type: 'milestone', name: 'MILESTONE: Presentation (Dec 2-6)', id: 'milestone-present', week: 11 },
-                
-                { type: 'group', name: 'PHASE 4: THESIS WRITING' },
-                { type: 'subtask', name: 'Methods section', id: 'methods' },
-                { type: 'subtask', name: 'Discussion section', id: 'discussion' },
-                { type: 'subtask', name: 'Abstracts & formatting', id: 'abstracts' },
-                { type: 'milestone', name: 'MILESTONE: Draft Thesis (Feb 3)', id: 'milestone-draft', week: 15 },
-                { type: 'subtask', name: 'Incorporate feedback', id: 'feedback-revise' },
-                { type: 'subtask', name: 'Final proofreading', id: 'proofread' },
-                { type: 'milestone', name: 'MILESTONE: Final Thesis (Mar 3)', id: 'milestone-final', week: 19 },
-                
-                { type: 'group', name: 'ONGOING ACTIVITIES' },
-                { type: 'ongoing', name: 'Weekly supervisor meetings', id: 'meetings' },
-                { type: 'ongoing', name: 'Document progress & issues', id: 'documentation' }
+                { type: 'group', name: 'THESIS WRITING', id: 'group-thesis' },
+                { type: 'subtask', name: 'Write results section', id: 'task-' + taskIdCounter++, parent: 'group-thesis' },
+                { type: 'milestone', name: 'MILESTONE: Final Thesis (Mar 3)', id: 'milestone-final', week: 19 }
             ];
             
+            renderTasks(defaultTasks);
+        }
+        
+        function renderTasks(tasks) {
+            const tbody = document.getElementById('gantt-body');
             let html = '';
+            
             tasks.forEach(task => {
-                html += '<tr>';
+                html += '<tr data-task-id="' + task.id + '" data-task-type="' + task.type + '">';
                 
                 if (task.type === 'group') {
-                    html += `<td class="task-name task-group">${task.name}</td>`;
+                    html += `<td class="task-name task-group" contenteditable="true">${task.name}</td>`;
                     for (let i = 0; i < 20; i++) {
                         html += '<td></td>';
                     }
                 } else if (task.type === 'milestone') {
-                    html += `<td class="task-name task-milestone">📅 ${task.name}</td>`;
+                    html += `<td class="task-name task-milestone" contenteditable="true">📅 ${task.name}</td>`;
                     for (let i = 0; i < 20; i++) {
                         if (i === task.week) {
                             html += '<td class="milestone-cell">DEADLINE</td>';
@@ -550,14 +539,8 @@
                             html += '<td></td>';
                         }
                     }
-                } else if (task.type === 'ongoing') {
-                    html += `<td class="task-name task-subtask">□ ${task.name}</td>`;
-                    for (let i = 0; i < 19; i++) {
-                        html += `<td class="task-cell" data-task="${task.id}" data-week="${i}" style="background: #1abc9c; color: white; font-size: 12px;">●</td>`;
-                    }
-                    html += '<td></td>';
                 } else {
-                    html += `<td class="task-name task-subtask">□ ${task.name}</td>`;
+                    html += `<td class="task-name task-subtask" contenteditable="true">□ ${task.name}</td>`;
                     for (let i = 0; i < 20; i++) {
                         html += `<td class="task-cell" data-task="${task.id}" data-week="${i}"></td>`;
                     }
@@ -568,16 +551,19 @@
             
             tbody.innerHTML = html;
             
-            // Add click event listeners to task cells
+            // Add click event listeners
+            addEventListeners();
+        }
+        
+        function addEventListeners() {
+            // Task cell clicks for coloring
             document.querySelectorAll('.task-cell').forEach(cell => {
                 cell.addEventListener('click', function() {
                     if (this.style.backgroundColor && this.style.backgroundColor !== '') {
-                        // Cell is colored, remove color
                         this.style.backgroundColor = '';
                         this.style.color = '';
                         this.textContent = '';
                     } else {
-                        // Cell is empty, add color
                         this.style.backgroundColor = selectedColor;
                         this.style.color = 'white';
                         this.textContent = '●';
@@ -585,6 +571,143 @@
                     updateProgress();
                 });
             });
+            
+            // Row selection for editing/deleting
+            document.querySelectorAll('tr[data-task-id]').forEach(row => {
+                row.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('task-cell')) return; // Don't select when clicking cells
+                    
+                    // Remove previous selection
+                    if (selectedTaskRow) {
+                        selectedTaskRow.style.outline = '';
+                    }
+                    
+                    // Select new row
+                    selectedTaskRow = this;
+                    this.style.outline = '2px solid #007bff';
+                });
+            });
+        }
+        
+        function addTask() {
+            const taskName = prompt('Enter task name:');
+            if (!taskName) return;
+            
+            const taskType = confirm('Is this a major task group? Click OK for major task, Cancel for regular task.') ? 'group' : 'subtask';
+            const taskId = taskType === 'group' ? 'group-' + taskIdCounter++ : 'task-' + taskIdCounter++;
+            
+            const newTask = {
+                type: taskType,
+                name: taskName,
+                id: taskId
+            };
+            
+            // Add to current tasks
+            const currentTasks = getCurrentTasks();
+            
+            // Insert before milestones if possible
+            const insertIndex = currentTasks.findIndex(task => task.type === 'milestone' && task.id.includes('final'));
+            if (insertIndex !== -1) {
+                currentTasks.splice(insertIndex, 0, newTask);
+            } else {
+                currentTasks.push(newTask);
+            }
+            
+            renderTasks(currentTasks);
+        }
+        
+        function addSubtask() {
+            if (!selectedTaskRow || selectedTaskRow.getAttribute('data-task-type') !== 'group') {
+                alert('Please select a major task group first by clicking on it.');
+                return;
+            }
+            
+            const subtaskName = prompt('Enter subtask name:');
+            if (!subtaskName) return;
+            
+            const parentId = selectedTaskRow.getAttribute('data-task-id');
+            const newSubtask = {
+                type: 'subtask',
+                name: subtaskName,
+                id: 'task-' + taskIdCounter++,
+                parent: parentId
+            };
+            
+            const currentTasks = getCurrentTasks();
+            
+            // Find insertion point (after parent group)
+            const parentIndex = currentTasks.findIndex(task => task.id === parentId);
+            if (parentIndex !== -1) {
+                // Find last subtask of this group
+                let insertIndex = parentIndex + 1;
+                while (insertIndex < currentTasks.length && 
+                       currentTasks[insertIndex].type === 'subtask' && 
+                       currentTasks[insertIndex].parent === parentId) {
+                    insertIndex++;
+                }
+                currentTasks.splice(insertIndex, 0, newSubtask);
+            } else {
+                currentTasks.push(newSubtask);
+            }
+            
+            renderTasks(currentTasks);
+        }
+        
+        function deleteTask() {
+            if (!selectedTaskRow) {
+                alert('Please select a task to delete by clicking on it.');
+                return;
+            }
+            
+            const taskId = selectedTaskRow.getAttribute('data-task-id');
+            const taskType = selectedTaskRow.getAttribute('data-task-type');
+            
+            if (taskType === 'milestone') {
+                alert('Cannot delete milestone tasks.');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete this task?')) {
+                const currentTasks = getCurrentTasks();
+                const filteredTasks = currentTasks.filter(task => {
+                    // Remove the task and its subtasks if it's a group
+                    if (taskType === 'group') {
+                        return task.id !== taskId && task.parent !== taskId;
+                    } else {
+                        return task.id !== taskId;
+                    }
+                });
+                
+                selectedTaskRow = null;
+                renderTasks(filteredTasks);
+            }
+        }
+        
+        function getCurrentTasks() {
+            const tasks = [];
+            document.querySelectorAll('tr[data-task-id]').forEach(row => {
+                const taskName = row.querySelector('.task-name').textContent.replace(/^(□|📅)\s*/, '');
+                const taskType = row.getAttribute('data-task-type');
+                const taskId = row.getAttribute('data-task-id');
+                
+                let task = {
+                    type: taskType,
+                    name: taskName,
+                    id: taskId
+                };
+                
+                if (taskType === 'milestone') {
+                    // Try to extract week from milestone (simplified)
+                    const milestoneCell = row.querySelector('.milestone-cell');
+                    if (milestoneCell) {
+                        const weekIndex = Array.from(row.querySelectorAll('td')).indexOf(milestoneCell) - 1;
+                        task.week = weekIndex;
+                    }
+                }
+                
+                tasks.push(task);
+            });
+            return tasks;
         }
         
         // Color palette functionality
@@ -706,9 +829,62 @@
             }
         }
         
-        // Export to PDF (simplified - opens print dialog)
+        // Export to PNG
         function exportToPDF() {
-            window.print();
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Get the gantt table
+            const table = document.getElementById('gantt-table');
+            const rect = table.getBoundingClientRect();
+            
+            // Set canvas size (landscape orientation)
+            canvas.width = Math.max(1400, rect.width);
+            canvas.height = Math.max(800, rect.height + 200); // Extra space for header
+            
+            // Fill white background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add project header
+            const projectTitle = document.getElementById('project-title').value || 'BM432 Project Timeline';
+            const studentName = document.getElementById('student-name').value;
+            const supervisor = document.getElementById('supervisor').value;
+            
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText(projectTitle, 20, 40);
+            
+            ctx.font = '16px Arial';
+            if (studentName) ctx.fillText(`Student: ${studentName}`, 20, 70);
+            if (supervisor) ctx.fillText(`Supervisor: ${supervisor}`, 20, 95);
+            
+            // Use html2canvas library if available, otherwise show instruction
+            if (typeof html2canvas !== 'undefined') {
+                html2canvas(table, {
+                    backgroundColor: 'white',
+                    width: table.scrollWidth,
+                    height: table.scrollHeight
+                }).then(function(tableCanvas) {
+                    // Draw the table on our main canvas
+                    ctx.drawImage(tableCanvas, 0, 120);
+                    
+                    // Download the image
+                    const link = document.createElement('a');
+                    link.download = `${projectTitle.replace(/\s+/g, '-')}-gantt-chart.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            } else {
+                // Fallback: Show instructions for manual screenshot
+                alert('For best results, take a screenshot of the Gantt chart:\n\n' +
+                      '1. Press F11 to enter fullscreen\n' +
+                      '2. Use Ctrl+Shift+S (or Cmd+Shift+4 on Mac)\n' +
+                      '3. Select the chart area\n' +
+                      '4. Save as PNG file\n\n' +
+                      'Or use browser\'s print function and save as PDF.');
+            }
         }
         
         // Initialize the application

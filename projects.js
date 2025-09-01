@@ -2112,6 +2112,13 @@ const projects = [
             "1. https://pubmed.ncbi.nlm.nih.gov/32762559/ 2. https://pubmed.ncbi.nlm.nih.gov/28542339/",
         ],
     },
+    {
+        id: "BM432-103",
+        title: "What Ion Channels & GPCRs Control Blood Vessel Function?",
+        type: "Experimental Research Projects (Laboratory)",
+        subjects: [
+            "General",
+        ],
         primarySupervisor: "Wilson, C",
         secondarySupervisor: "McCarron, J and Lee, M",
         students: "1",

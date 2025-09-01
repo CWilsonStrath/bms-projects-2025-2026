@@ -48,7 +48,7 @@ const projects = [
     {
         id: "BM432-005",
         title: "Analysis of protein-protein interactions in signalling pathways using AlphaFold",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -252,7 +252,7 @@ const projects = [
     {
         id: "BM432-015",
         title: "Optogenetic manipulation of memory during sleep",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -562,7 +562,7 @@ const projects = [
     {
         id: "BM432-029",
         title: "Do rheumatoid and other forms of arthritis have a global transcriptional pathology?",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -604,7 +604,7 @@ const projects = [
     {
         id: "BM432-031",
         title: "How is the interaction between EFR3, TMEM150a and PI4K controlled?",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -1029,7 +1029,7 @@ const projects = [
     {
         id: "BM432-051",
         title: "Investigating glioblastoma-specific alterations in selected candidate therapeutic genes (PAR1-4, IL1RL1/IL33, or DHCR7/DHCR24)",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -1102,7 +1102,7 @@ const projects = [
     {
         id: "BM432-054",
         title: "Pathogen protein evolution and structure-function relationships",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -1220,7 +1220,7 @@ const projects = [
     {
         id: "BM432-059",
         title: "Discovery and structural predictions of targeted protein antibiotics",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -1285,7 +1285,7 @@ const projects = [
     {
         id: "BM432-062",
         title: "All the world’s a phage: the diversity of bacteriophage that infect Streptomyces",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -1441,7 +1441,7 @@ const projects = [
     {
         id: "BM432-069",
         title: "Horizontal Gene Transfer, Resistance, and Virulence: Plasmid Dynamics in Enterococci",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -1521,7 +1521,7 @@ const projects = [
     {
         id: "BM432-073",
         title: "Can AlphaFold3 provide novel molecular level insights into receptor-protein interactions?",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -2127,7 +2127,7 @@ const projects = [
     {
         id: "BM432-101",
         title: "Decoding Cardiovascular Disease at the Single-Cell Level",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Bioinformatics",
         subjects: [
             "General",
         ],
@@ -2264,7 +2264,7 @@ const projects = [
     {
         id: "BM432-107",
         title: "Quantitative assessment of malaria parasites in mesoscale images of infected blood films",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -2285,7 +2285,7 @@ const projects = [
     {
         id: "BM432-108",
         title: "Cell orientation relative to recently-discovered channels in mature E. coli colony biofilms",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -2306,7 +2306,7 @@ const projects = [
     {
         id: "BM432-109",
         title: "Discovering the fractal dimension of Pseudomonas sp biofilms",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -2327,7 +2327,7 @@ const projects = [
     {
         id: "BM432-110",
         title: "Dark field microscopy as a means of assessing cobalt uptake in cardiac cells",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -2347,7 +2347,7 @@ const projects = [
     {
         id: "BM432-111",
         title: "The role of entropy in pattern formation in mature colony biofilms",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],
@@ -2368,7 +2368,7 @@ const projects = [
     {
         id: "BM432-112",
         title: "The role of lacunarity in pattern formation in mature colony biofilms",
-        type: "Data Science: Data Analysis",
+        type: "Data Science: Computational",
         subjects: [
             "General",
         ],

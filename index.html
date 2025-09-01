@@ -817,7 +817,6 @@
                     subjects: ["Biochemistry"],
                     primarySupervisor: "Dr. Sample",
                     secondarySupervisor: null,
-                    students: "1",
                     aim: "This is sample data. Replace with your actual projects.js file.",
                     outline: "Create a projects.js file with your actual project data.",
                     techniques: ["Replace", "With", "Real", "Data"]
@@ -1175,13 +1174,6 @@ ${projectIds}`;
                             <div class="project-aim">
                                 <strong>Aim:</strong> ${project.aim}
                             </div>
-                        </div>
-
-                        <div class="project-details">
-                            <div class="project-outline">
-                                <div class="section-label">Project outline</div>
-                                ${project.outline}
-                            </div>
 
                             <div class="techniques-section">
                                 <div class="section-label">Key techniques</div>
@@ -1190,6 +1182,13 @@ ${projectIds}`;
                                         <div class="technique-chip">${technique}</div>
                                     `).join('')}
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="project-details">
+                            <div class="project-outline">
+                                <div class="section-label">Project outline</div>
+                                ${project.outline}
                             </div>
 
                             ${project.references ? `
@@ -1206,8 +1205,7 @@ ${projectIds}`;
                             <div class="supervisor-info">
                                 <strong>Project ID:</strong> ${project.id}<br>
                                 <strong>Primary supervisor:</strong> ${project.primarySupervisor}<br>
-                                <strong>Secondary supervisor:</strong> ${project.secondarySupervisor || 'N/A'}<br>
-                                <strong>Students:</strong> ${project.students}
+                                <strong>Secondary supervisor:</strong> ${project.secondarySupervisor || 'N/A'}
                             </div>
                             
                             <button class="expand-button" onclick="toggleCard(document.getElementById('card-${index}'))">

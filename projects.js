@@ -109,26 +109,6 @@ const projects = [
         ],
     },
     {
-        id: "BM432-008",
-        title: "Analysis of human lactoferrin critical quality attributes: Developing an analytical method pipeline",
-        type: "Experimental Research Projects (Laboratory)",
-        subjects: [
-            "General",
-        ],
-        primarySupervisor: "Rattray, Z",
-        secondarySupervisor: "Georgina Armstrong",
-        students: "1",
-        aim: "The aim of this project is to compare the digestibility and purity profile of a yeast generated human lactoferrin against reference standard and bovine lactoferrin.",
-        outline: "Project Summary: Lactoferrin is a multifunctional glycoprotein found in milk and other secretions, known for its antimicrobial, anti-inflammatory, and immunomodulatory properties. Its bioactivity is highly dependent on its structural integrity and resistance to gastrointestinal digestion. This project aims to develop and validate robust in vitro assays to assess the digestibility of lactoferrin under simulated gastrointestinal conditions, providing insights into its stability, bioavailability, and potential therapeutic applications. Objectives: Characterize lactoferrin structure and purity using biochemical and biophysical methods. Simulate gastrointestinal digestion using established in vitro models (e.g., INFOGEST protocol). Develop and optimize analytical assays to monitor lactoferrin degradation and peptide release. Evaluate bioactivity post-digestion, focusing on antimicrobial and iron-binding properties. Compare digestibility across different lactoferrin sources (e.g., bovine vs. recombinant human). Methodology: The candidate will be performing the following activities: Protein Characterization: SDS-PAGE, Western blotting, LC-MS/MS, and circular dichroism. In Vitro Digestion Models: Simulated gastric and intestinal phases using pepsin, pancreatin, and bile salts. ELISA for intact lactoferrin quantification. HPLC and LC-MS for peptide profiling. Iron-binding assays to assess functional integrity. Bioactivity Testing: Antimicrobial assays against selected pathogens pre- and post-digestion. Expected Outcomes: A validated set of assays for assessing lactoferrin digestibility. Data on structural and functional changes during digestion. Comparative digestibility profiles across lactoferrin sources. Broader Impact and Applications: This project will inform formulation strategies for lactoferrin-based nutraceuticals and therapeutics applications, and advance understanding of protein digestion and bioactivity in functional foods.",
-        techniques: [
-            "SDS-PAGE",
-            "Western Blot",
-        ],
-        references: [
-            "Conesa C, Bellés A, Grasa L, Sánchez L. The Role of Lactoferrin in Intestinal Health. Pharmaceutics. 2023 May 23;15(6):1569. doi: 10.3390/pharmaceutics15061569. PMID: 37376017; PMCID: PMC10304194. Bo W, et al. Lactoferrin: Structure, Function, Denaturation and Digestion. Critical Reviews in Food Science and Nutrition. 2017 59, 10.1080/10408398.2017.1381583. Ng ZJ, et al. Lactoferrin in health and disease: A review of its bioavailability and evidence-based benefits across study models. 2025, 105024, https://doi.org/10.1016/j.tifs.2025.105024.",
-        ],
-    },
-    {
         id: "BM432-009",
         title: "Silent but deadly? – Discovering novel natural product antimicrobials by activating silent biosynthetic gene clusters",
         type: "Experimental Research Projects (Laboratory)",

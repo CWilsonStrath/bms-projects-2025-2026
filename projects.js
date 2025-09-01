@@ -186,11 +186,15 @@ const projects = [
         aim: "To evaluate a dual therapeutic strategy for glioblastoma by combining cholesterol synthesis inhibition with blockade of cholesterol uptake in preclinical in vitro models. These studies will be conducted under cholesterol-enriched conditions to mimic the brain’s cholesterol-rich microenvironment, with the ultimate goal of enhancing the cytotoxic efficacy of cholesterol-targeting therapies and overcoming tumour resistance mechanisms.",
         outline: "Glioblastoma (GBM) displays a marked dependence on cholesterol to sustain its rapid proliferation. However, the brain microenvironment is inherently rich in cholesterol, allowing tumour cells to buffer intracellular fluctuations and maintain growth. Our preliminary data show that inhibiting terminal enzymes in the cholesterol biosynthesis pathway induces significant cytotoxicity in GBM cells. Notably, this effect is fully reversed and rescued by cholesterol supplementation, indicating that tumour cells can readily compensate for the inhibition of cholesterol synthesis through enhanced cholesterol uptake mechanisms. These findings suggest that targeting cholesterol synthesis alone is insufficient in a cholesterol-rich setting like the brain, where GBM cells can evade cytotoxic effects by activating alternative uptake pathways. To overcome this metabolic plasticity, this project proposes a dual strategy that combines inhibition of cholesterol biosynthesis with blockade of cholesterol uptake. In this project, you will investigate pharmacological combinations of cholesterol biosynthesis inhibitors with uptake blockade in preclinical glioblastoma in vitro models. This approach is designed to disrupt GBM’s adaptive reliance on cholesterol, preserving the cytotoxic effects of cholesterol synthesis inhibitors within the lipoprotein-rich brain microenvironment, and counteracting resistance mechanisms driven by increased cholesterol uptake.",
         techniques: [
-            "Cell culture of patient-derived glioblastoma cells",
-            "cell viability assays",
-            "spheroid assays",
-            "and bright field and fluorescent microscopy. Image analysis using ImageJ Fiji",
-            "and Gelcount software. Statistical analysis using GraphPad PRISM and RStudio.",
+            "Cell culture",
+            "Cell viability assays",
+            "Spheroid assays",
+            "Bright field microscopy",
+            "Fluorescence microscopy",
+            "ImageJ analysis",
+            "Gelcount analysis",
+            "GraphPad PRISM analysis",
+            "RStudio analysis",
         ],
         references: [
             "Chen, B., et al., Recent incidence trend of elderly patients with glioblastoma in the United States, 2000-2017. BMC Cancer, 2021. 21(1): p. 54. Davis, F.G., et al., Glioblastoma incidence rate trends in Canada and the United States compared with England, 1995-2015. Neuro Oncol, 2020. 22(2): p. 301-302. Villa, G.R., et al., An LXR-Cholesterol Axis Creates a Metabolic Co-Dependency for Brain Cancers. Cancer Cell, 2016. 30(5): p. 683-693. Han, M., et al., Therapeutic implications of altered cholesterol homeostasis mediated by loss of CYP46A1 in human glioblastoma. EMBO Mol Med, 2020. 12(1): p. e10924. Kambach, D.M., et al., Disabled cell density sensing leads to dysregulated cholesterol synthesis in glioblastoma. Oncotarget, 2017. 8(9): p. 14860-14875. N, R.S., et al., Elevated expression of cholesterol transporter LRP-1 is crucially implicated in the pathobiology of glioblastoma. Front Neurol, 2022. 13: p. 1003730.",
@@ -209,15 +213,15 @@ const projects = [
         aim: "To test the hypothesis that neural population activity is state-dependent and region-specific.",
         outline: "Sleep is conserved in the animal kingdom. Sleep abnormalities are associated with a wide range of brain disorders, but also with cancer and diabetes. But how is sleep regulated or dysregulated? Although various brain regions are involved in sleep, we know little about how distributed neural and non-neural circuits control sleep in concert. To address this fundamental issue, it requires a novel technology to monitor brain-wide dynamics of neuronal and non-neuronal ensembles across sleep-wake cycles. We are developing such a technology, called multi-fibre array-based photometry. This technology aims to monitor cell-type-specific calcium dynamics across multiple regions and sleep-wake cycles by expressing genetically encoded sensors and implanting a multi-fibre array in the mouse brain. In this project, a student will participate in the development of this cutting-edge technology. The student will learn how to fabricate a multi-fibre array and characterize it optically. Although the student will not be able to conduct actual animal procedures due to legal requirements, the student will have an opportunity to observe the procedures. By processing videos that capture cell-type-specific calcium signals in vivo, the student will write his/her dissertation.",
         techniques: [
-            "Computer-aided design of 3D objects",
-            "multi-fibre array fabrication",
-            "fibre photometry",
-            "mouse genetic engineering",
-            "video analysis",
-            "coding",
-            "statistical analysis",
-            "immunohistochemistry",
-            "fluorescence microscopy",
+            "Computer-aided design",
+            "Multi-fibre array fabrication",
+            "Fibre photometry",
+            "Mouse genetic engineering",
+            "Video analysis",
+            "Coding",
+            "Statistical analysis",
+            "Immunohistochemistry",
+            "Fluorescence microscopy",
         ],
         references: [
             "Byron N, and Sakata S. (2024). Fiber photometry-based investigation of brain function and dysfunction. Neurophotonics, 11, S11502. Simpson EH, et al. (2024). Lights, fiber, action! A primer on in vivo fiber photometry. Neuron, 112, 718-739. Vu MT, et al. (2024). Targeted micro-fiber arrays for measuring and manipulating localized multi-scale neural dynamics over large, deep brain volumes during behavior. Neuron, 112, 909-923.",
@@ -236,7 +240,10 @@ const projects = [
         aim: "To test the hypothesis that AD pathology emerges in a region-specific manner",
         outline: "Alzheimer's disease (AD) is the most common form of dementia, affecting over 50 million people worldwide. Although novel immunotherapies can delay disease progression by 6 months, their efficacy is limited to only mild forms of the disease. Thus, different therapeutic interventions are urgently needed. Amyloid pathology has long been recognized as a hallmark of AD. Various mouse models have been developed to mimic amyloid pathology. However, traditional models, such as APP/PS1 and 5xFAD mice, rely on artificial overexpression of mutated genes related to amyloid genesis. To overcome this fundamental limitation in traditional models, knock-in models have been developed. The APPNL-G-F mouse line has recently gained popularity. However, this mouse model remains incompletely characterised when and where amyloid pathology and inflammation occur in the brain. In this project, we will comprehensively characterize amyloid pathology and associated microglial responses across the brain. By performing fluorescent immunostaining, we will determine when and where pathology appears in APPNL-G-F mice. The outcome of this project informs future studies to develop a novel intervention strategy.",
         techniques: [
-            "Mouse genetics Fluorescence immunohistochemistry Fluorescence imaging Image analysis",
+            "Mouse genetics",
+            "Fluorescence immunohistochemistry",
+            "Fluorescence imaging",
+            "Image analysis",
         ],
         references: [
             "1. Oblak AL, Lin PB, Kotredes KP, Pandey RS, Garceau D, Williams HM, et al. Comprehensive Evaluation of the 5XFAD Mouse Model for Preclinical Testing Applications: A MODEL-AD Study. Front Aging Neurosci. 2021;13:713726. 2. Saito T, Matsuba Y, Mihira N, Takano J, Nilsson P, Itohara S, et al. Single App knock-in mouse models of Alzheimer's disease. Nat Neurosci. 2014;17(5):661-3. 3. Yokoyama M, Kobayashi H, Tatsumi L, Tomita T. Mouse Models of Alzheimer's Disease. Front Mol Neurosci. 2022;15:912995.",
@@ -255,13 +262,13 @@ const projects = [
         aim: "To test the hypothesis that P-waves causally and differentially influence memory consolidation depending on sleep stages",
         outline: "Sleep requires for survival. Sleep is also essential for memory consolidation. Although sleep is classified into non-rapid eye movement (NREM) and REM sleep, we know little about how these two distinct sleep-stages contribute to memory consolidation. We recently discovered that two distal brain regions, the hippocampus and pons, functionally interact with each other during sleep and their interactions change by sleep stages. More specifically, by monitoring sleep-related neuronal activity in these two regions, we found that fast brain waves in the hippocampus precede pontine waves, called P-waves, during NREM sleep, whereas hippocampal neural activity follows P-waves during REM sleep. Thus, the directionality of their interactions reverses depending on sleep stages. Since the hippocampus plays a critical role in memory consolidation during sleep, these results imply distinct functional roles of the pons-hippocampus interaction in memory consolidation. In this project, by combining optogenetic, electrophysiological and behavioural approaches in transgenic mice, we will examine if the manipulation of P-waves can facilitate or disrupt memory consolidation depending on how manipulations are introduced. Although a student will not be able to conduct actual animal procedures due to legal requirements, the student will have an opportunity to observe the procedures and analyze real in vivo data to write a dissertation.",
         techniques: [
-            "mouse genetics",
-            "optogenetics",
-            "in vivo electrophysiology",
-            "immunohistochemistry",
-            "coding",
-            "sleep scoring",
-            "statistical analysis",
+            "Mouse genetics",
+            "Optogenetics",
+            "In vivo electrophysiology",
+            "Immunohistochemistry",
+            "Coding",
+            "Sleep scoring",
+            "Statistical analysis",
         ],
         references: [
             "Datta S (1997) Cellular basis of pontine ponto-geniculo-occipital wave generation and modulation. Cellular and molecular neurobiology 17:341-365. Tsunematsu T, Patel AA, Onken A, Sakata S (2020) State-dependent brainstem ensemble dynamics and their interactions with hippocampus across sleep states. Elife 9. Tsunematsu T, Matsumoto S, Merkler M, Sakata S (2023) Pontine Waves Accompanied by Short Hippocampal Sharp Wave-Ripples During Non-rapid Eye Movement Sleep. Sleep 46.",
@@ -322,9 +329,16 @@ const projects = [
         aim: "To evaluate the in vitro effects of vascular endothelial growth factors (VEGFi) in human aortic endothelial cells and test SGLT2 inhibitors as new potential therapeutics to prevent these effects.",
         outline: "Over the past two decades, the treatment of cancer has been revolutionized by the highly successful introduction of novel molecular targeted therapies and immunotherapies. Despite their anti-cancer benefits, their use has been hampered by potent cardiovascular toxicities especially hypertension, heart failure and thromboembolism. We are particularly interested in the vascular effects of vascular endothelial growth factors inhibitors (VEGFi) since nearly 80% of cancer patients treated with this class of drugs exhibit increase in blood pressure or hypertension. Pathophysiological mechanisms remain elusive, although oxidative stress and endothelial dysfunction has been described previously. Therefore, there is an urgent need to identify new therapeutic targets to treat these complications. In this project we will test new potential targets to improve vascular dysfunction associated with VEGFi.",
         techniques: [
-            "Literature review Signalling pathways appraisal (biochemistry) Primary cells handling and exposure to anti-cancer drugs Molecular assays (e.g. DCFDA",
-            "Greiss",
-            "TEER and western blotting) Data analysis Data interpretation",
+            "Literature review",
+            "Signalling pathway analysis",
+            "Primary cell culture",
+            "Drug exposure",
+            "DCFDA assay",
+            "Griess assay",
+            "TEER assay",
+            "Western blotting",
+            "Data analysis",
+            "Data interpretation",
         ],
         references: [
             "1. van Dorst DCH, et al. Hypertension and Prohypertensive Antineoplastic Therapies in Cancer Patients. Circ Res. 2021 Apr 2;128(7):1040-1061. doi: 10.1161/CIRCRESAHA.121.318051. 2. Neves KB, Montezano AC, Lang NN, Touyz RM. Vascular toxicity associated with anti-angiogenic drugs. Clin Sci. 2020 Sep 30;134(18):2503-2520. doi: 10.1042/CS20200308. 3. Amir Askarinejad et al. Hypertension in Cardio-Oncology Clinic: an update on etiology, assessment, and management. Cardiooncology. 2023 Dec 12;9(1):46. doi: 10.1186/s40959-023-00197-8.",
@@ -344,7 +358,8 @@ const projects = [
         outline: "Mesothelioma is a highly heterogeneous and aggressive malignancy characterized by a complex tumour microenvironment (TME) that significantly influences tumour progression, immune evasion, and therapeutic resistance. To accurately model these interactions, advanced three-dimensional (3D) in vitro systems are essential for recapitulating the spatial architecture, cellular heterogeneity, and extracellular matrix composition of patient-derived tumours, thereby enabling more physiologically relevant assessment of drug efficacy and therapeutic response (1). Histological processing and analysis are powerful techniques to assess 3D spheroid responses to drug treatment, but in reality, these methods can be laborious, expensive and complex to set up as a routine technique. A recently published paper outlines a simplified low-cost methodology to establish, histologically process and analyse 3D tumour spheroid arrays (2). This project will follow this protocol to evaluate the response of 3D spheroids generated from mesothelioma tumour cell lines to standard chemotherapeutic treatments.",
         techniques: [
             "Tissue processing",
-            "immunostaining and image analysis",
+            "Immunostaining",
+            "Image analysis",
         ],
         references: [
             "1. Shi H, Rath EM, Lin RCY, Sarun KH, Clarke CJ, McCaughan BC, et al. 3-Dimensional mesothelioma spheroids provide closer to natural pathophysiological tumor microenvironment for drug response studies. Front Oncol. 2022;12:973576. 2. Moraes GS, Wink MR, Klamt F, Silva AO, da Cruz Fernandes M. Simplified low-cost methodology to establish, histologically process and analyze three-dimensional cancer cell spheroid arrays. Eur J Cell Biol. 2020;99(5):151095.",
@@ -364,7 +379,8 @@ const projects = [
         outline: "There is widespread recognition of the negative health impact of both agricultural and non-agricultural pesticides use and their link with a range of human illnesses, including cancers, chronic neurological conditions such as ME/CFS, endocrine disruption and DNA alteration, as well as autism and learning difficulties in children; mothers with impaired detoxification systems have been shown to be more likely to have autistic children (1). The University of Strathclyde Sustainability Team are actively pursuing initiatives to improve the campus environment through redevelopment schemes to maximise biodiversity, improve air quality, public health and access and engagement with green spaces. Inspired by the Pesticide-Free Cambridge campaign (HOME | Pesticide-Free Cambridge), one initiative is focussed on the reduction of pesticide use across campus. This project will work with the Sustainability team to assess the use of pesticides on campus and understand the potential health implications for those exposed through primary use (e.g. gardening teams) or passive exposure (student population) by conducting lab-based toxicology testing.",
         techniques: [
             "Survey data collection",
-            "lab-based cell culture and cytotoxicity assays",
+            "Cell culture",
+            "Cytotoxicity assays",
         ],
         references: [
             "1. Mostafalou S, Abdollahi M. Pesticides and human chronic diseases: Evidences, mechanisms, and perspectives. Toxicology and Applied Pharmacology. 2013;268(2):157-77. 2. www.pesticidefreecambridge.org",
@@ -384,7 +400,8 @@ const projects = [
         outline: "There is now broad expert consensus that air pollution is a major global public health concern and currently ranks fourth among major risk factors for global disease and mortality, only behind hypertension, smoking and dietary factors (1). Air pollution is a complex mixture of gaseous, volatile, semi-volatile and particulate matter, and its exact composition varies widely. Epidemiological evidence suggests that the strongest associations between air pollution exposure and morbidity and mortality are found for particulate matter, especially the fine and ultrafine particulate fractions that can easily be inhaled deep into the lungs (2). The University of Strathclyde Sustainability Team are undertaking a number of redevelopment schemes to improve the campus environment which aim to improve air quality and ensure good health of our University population. Evaluating the beneficial impact of these initiatives first requires a good understanding of the baseline exposures experienced by the University population. This project will work with the Sustainability Operations team and researchers from Civil and Environmental Engineering to conduct mobile monitoring of air quality across the University campus. This will be supported by lab-based toxicology assessment of common particle pollutants for vehicle exhaust emissions to gain an understanding of the potential hazard posed by exposure to high levels of air pollution.",
         techniques: [
             "Air quality data collection",
-            "lab-based cell culture and cytotoxicity assays",
+            "Cell culture",
+            "Cytotoxicity assays",
         ],
         references: [
             "1. Hoffmann B, Boogaard H, de Nazelle A, Andersen ZJ, Abramson M, Brauer M, et al. WHO Air Quality Guidelines 2021-Aiming for Healthier Air for all: A Joint Statement by Medical, Public Health, Scientific Societies and Patient Representative Organisations. Int J Public Health. 2021;66:1604465. 2. Langrish JP, Bosson J, Unosson J, Muala A, Newby DE, Mills NL, et al. Cardiovascular effects of particulate air pollution exposure: time course and underlying mechanisms. Journal of Internal Medicine. 2012;272(3):224-39.",
@@ -404,8 +421,9 @@ const projects = [
         outline: "There is now broad expert consensus that air pollution is a major global public health concern and currently ranks fourth among major risk factors for global disease and mortality, only behind hypertension, smoking and dietary factors (2). Air pollution is a complex mixture of gaseous, volatile, semi-volatile and particulate matter, and its exact composition varies widely. Epidemiological evidence suggests that the strongest associations between air pollution exposure and morbidity and mortality are found for particulate matter, especially the fine and ultrafine particulate fractions that can easily be inhaled deep into the lungs (3). The University of Strathclyde Sustainability Team are undertaking a number of redevelopment schemes to improve the campus environment which aim to improve air quality and ensure good health of our University population. Evaluating the beneficial impact of these initiatives first requires a good understanding of the baseline exposures experienced by the University population. This project will work with the Sustainability Operations team and researchers from Civil and Environmental Engineering to compare air quality at static sites on the University campus with areas of high and low pollution within the wider Glasgow city area. Air quality assessment will be supported by lab-based toxicology assessment of common particle pollutants for vehicle exhaust emissions to gain an understanding of the potential hazard posed by exposure to high levels of air pollution.",
         techniques: [
             "Air quality data collection",
-            "filter analysis",
-            "lab-based cell culture and cytotoxicity assays",
+            "Filter analysis",
+            "Cell culture",
+            "Cytotoxicity assays",
         ],
         references: [
             "1. Hoffmann B, Boogaard H, de Nazelle A, Andersen ZJ, Abramson M, Brauer M, et al. WHO Air Quality Guidelines 2021-Aiming for Healthier Air for all: A Joint Statement by Medical, Public Health, Scientific Societies and Patient Representative Organisations. Int J Public Health. 2021;66:1604465. 2. Langrish JP, Bosson J, Unosson J, Muala A, Newby DE, Mills NL, et al. Cardiovascular effects of particulate air pollution exposure: time course and underlying mechanisms. Journal of Internal Medicine. 2012;272(3):224-39",
@@ -446,10 +464,10 @@ const projects = [
         outline: "Arthritis of the hip continues to be a leading cause of chronic pain for patients across the UK and current therapy for advanced cases comprises hip replacement. Although technology has improved over the years in terms of the design of hip prostheses, there continue to be major issues associated with the health and overall outlook for patients receiving artificial hips. There is now very strong evidence supporting a link between metal-on-metal (MoM) hip replacements (where metals such as cobalt and chromium are used in the artificial joint bearings) and development of heart disease. Over time, cobalt levels rise in the bloodstream of patients with MoM hip replacements and the metal accumulates in various organs of the body. Levels accumulating in the heart can be particularly high. Previous work by our group using rats has shown that cobalt can cause impaired contractile activity of rat hearts. The cellular mechanisms underlying this cobalt-mediated contractile dysfunction may manifest at the level of both contractile and non-contractile cells of the heart. Our work to date has focused on a rat model and we have limited understanding of the effects of cobalt in human cardiac cells. Cardiac fibroblasts are non-contractile cells responsible for providing structural support to the heart via the extracellular matrix and they interact closely with the contractile cardiac myocytes.",
         techniques: [
             "Cell culture",
-            "Pharmacological treatment of cells",
+            "Pharmacological treatment",
             "Protein assays",
-            "immunoblotting",
-            "cell imaging",
+            "Immunoblotting",
+            "Cell imaging",
         ],
         references: [
             "Jenkinson M., Meek R.D., Tate R., MacMillan S., Grant M.H. & Currie S. (2021) Cobalt-induced cardiomyopathy – do circulating cobalt levels matter? Bone Joint Res 10(6):340-347 doi: 10.1302/2046-3758.106.BJR-2020-0414.R2. Jenkinson M.J., Meek R.M.D., Tate R.J., Brady A., MacMillan S., Grant M.H. & Currie S. (2024) Cardiac function may be compromised in patients with elevated blood cobalt levels secondary to metal-on-metal hip implants. Bone Joint J. 106B, 51-58 Harrington A. & Moore-Morris T. (2024) Cardiac fibroblasts in heart failure and regeneration. Front Cell Dev Biol doi.org/10.3389/fcell.2024.1388378",
@@ -468,10 +486,10 @@ const projects = [
         aim: "This project will investigate the effects of selected anti-cancer agents on the phenotype and function of human cardiac fibroblasts. The aim will be to establish whether these agents may exert at least part of their cardiotoxic effects at the level of these cells.",
         outline: "Improvements in anti-cancer therapy over recent years have been overshadowed by increasing evidence of toxic side effects of anti-cancer drugs on cardiovascular function. The cellular mechanism(s) of action underlying these toxic effects remain largely unknown and this is a major area of concern for the field of safety pharmacology. This is even more pertinent for patients who may already exhibit signs of compromised cardiovascular function prior to receiving anti-cancer therapy. Agents such as anthracyclines and tyrosine kinase inhibitors are known to cause compromised cardiac function over time and in some cases, can lead to heart failure. These drugs may exert toxic effects on both contractile and non-contractile cells of the heart and therefore research examining the underlying mechanisms of action across different cell types of the cardiovascular system is crucial.",
         techniques: [
-            "cell culture",
-            "drug treatments",
-            "imaging",
-            "immunoblotting",
+            "Cell culture",
+            "Drug treatments",
+            "Imaging",
+            "Immunoblotting",
         ],
         references: [
             "Morelli M.B. et al (2022) Cardiotoxicity of anticancer drugs: molecular mechanisms and strategies for cardioprotection. Front. Cardiovasc. Med. doi.org/10.3389/fcvm.2022.847012 Rawat PS et al (2021) Doxorubicin-induced cardiotoxicity: an update on the molecular mechanism and novel therapeutic strategies for effective management. Biomed. Pharmacother. 139:111708 doi: 10.1016/j.biopha.2021.111708 Harrington A. & Moore-Morris T. (2024) Cardiac fibroblasts in heart failure and regeneration. Front Cell Dev Biol doi.org/10.3389/fcell.2024.1388378",
@@ -512,7 +530,8 @@ const projects = [
         outline: "Pulmonary arterial hypertension (PAH) is a fatal and rapidly progressive disease that ultimately leads to right ventricular (RV) failure and death. The reduction in cardiac output and increase in venous pressure could damage other organs such as kidney, spleen and liver. The malfunction in kidney, spleen and liver may in turn worsen the condition of PAH and therefore understanding the changes in these organs may be useful to PAH disease management. This study aims to examine the histological changes in these organs and associated sex differences using an animal model of PAH, the Sugen-hypoxia rats. It is hypothesized that there is histological remodelling in kidney, spleen and liver in PAH.",
         techniques: [
             "Histological staining",
-            "imaging and data analysis",
+            "Imaging",
+            "Data analysis",
         ],
         references: [
             "1. Gérald Simonneau, David Montani, David S Celermajer, Christopher P Denton, Michael A Gatzoulis, Michael Krowka, Paul G Williams, Rogerio Souza. Haemodynamic definitions and updated clinical classification of pulmonary hypertension. Eur Respir J. 2019 Jan 24;53(1):1801913. doi: 10.1183/13993003.01913-2018 2. NP Nickel, JM O’Leary, EL Brittain, JP Fessel, RT Zamanian, JD West, ED Austin. Kidney dysfunction in patients with pulmonary arterial hypertension. Pulm Circ. 2017 Mar 13;7(1):38–54. doi: 10.1086/690018. 3. Laurent Bitker , Florence Sens, Cécile Payet , Ségolène Turquier, Antoine Duclos , Vincent Cottin, Laurent Juillard. Presence of Kidney Disease as an Outcome Predictor in Patients with Pulmonary Arterial Hypertension. Am J Nephrol . 2018;47(2):134-143. doi: 10.1159/000487198. 4. Adriano Tonelli, Ruchi Yadav, Amit Gupta, Andrea V Arrosi, Gustavo A Heresi, Raed Dweik. Spleen Size in Idiopathic and Heritable Pulmonary Arterial Hypertension. Respiration. 2012 Aug 3;85(5):391–399. doi: 10.1159/000339423. 5. Nils P Nickel, Gian M Galura, Marc J Zuckerman, M Nawar Hakim, Haider Alkhateeb, Debabrata Mukherjee, Eric D Austin, Gustavo A Heresi. Liver abnormalities in pulmonary arterial hypertension. Pulm Circ. 2021 Oct 21;11(4):20458940211054304. doi: 10.1177/20458940211054304. 6. Gewehr, D.M.; Giovanini, A.F.; Mattar, B.A.; Agulham, A.P.; Bertoldi, A.d.S.; Nagashima, S.; Kubrusly, F.B.; Kubrusly, L.F. Congestive Hepatopathy Secondary to Right Ventricular Hypertrophy Related to Monocrotaline-Induced Pulmonary Arterial Hypertension. Int. J. Mol. Sci. 2021, 22(21), 11891; https://doi.org/10.3390/ijms222111891. 7. Florian Hamberger, Ekaterina Legchenko, Philippe Chouvarine, Young Seon Mederacke, Richard Taubert, Martin Meier, Danny Jonigk, Georg Hansmann, Ingmar Mederacke. Pulmonary Arterial Hypertension and Consecutive Right Heart Failure Lead to Liver Fibrosis. Front Cardiovasc Med. 2022 Mar 17:9:862330. doi: 10.3389/fcvm.2022.862330. eCollection 2022.",
@@ -532,8 +551,9 @@ const projects = [
         outline: "Nuclear factor-erythroid-derived 2-like-2 (NFE2L2, or named NRF2 in some literature) is a key transcription factor that is important to mitochondrial function and plays a crucial protective role during hypoxia. In heart disease such as pulmonary hypertension (PH), the right ventricle (RV) is under hypoxia. Studies have shown that the NFE2L2 level in RV is decreased in PH. The role of NFE2L2 is not well studied in RV fibroblasts in PH. This study aims to examine the role of NFE2L2 on the cell proliferation in cardiac fibroblasts. It is hypothesized that a decrease level in NFE2L2 leads to an increase in cell proliferation in cardiac fibroblasts.",
         techniques: [
             "Cell culture",
-            "immunocytochemistry",
-            "imaging and data analysis",
+            "Immunocytochemistry",
+            "Imaging",
+            "Data analysis",
         ],
         references: [
             "1. Qin, Y., et al.. Oxid Med Cell Longev, 2022. 2022: p. 7845503. 2. Baldelli, S., K. Aquilano, and M.R. Ciriolo. Biochim Biophys Acta, 2013. 1830(8): p. 4137-46. 3. Kang, Y., et al.. Am J Physiol Heart Circ Physiol, 2020. 318(4): p. H853-H866. 4. Bogaard, H.J., et al.. Circulation, 2009. 120(20): p. 1951-60.",
@@ -552,7 +572,9 @@ const projects = [
         aim: "-Identify suitable datasets for analysis -carry out mRNA composition vs mRNA expression level analysis (in Excel, training provided) -Try to pin any effects down to particular immune or synovial cell type. -determine the immunological functions of those genes particularly affected by global gene expression changes in RA -do any of the datasets show drug treatment effects on RA/global gene expression?",
         outline: "I recently published a paper that describes a novel mechanism of gene expression control that doesn't act through individual gene promoters but acts instead on the capacity of the cell to synthesise mRNAs from constituent nucleotides. You can imagine that, if a particular nucleotide is in short supply, then mRNA transcripts more enriched in that nucleotide will be harder to synthesise and therefore expressed at a lower level. So, this form of gene expression regulation acts by combining 'supply' (of nucleotides) and 'demand' (of each mRNA and its composition) to produce a global change in expression profile. I have observed that common diseases, drugs, viral infections, the menstrual cycle, circadian rhythms, and environmental pollutants all seem to perturb global expression through this mechanism. This suggests that these phenomena alter nucleotide levels in cells. Why? It seems that some genes have evolved extreme sequence compositions which make them more likely to be regulated by this process - this might be a way to hard-wire large-scale cellular transcriptional responses to physiological changes that involve changes in nucleotide availability. In terms of disease, Rheumatoid arthritis (RA) seems to have an effect on global gene expression when publicly available gene expression array data is re-analysed. Interestingly, methotrexate is a DMARD (Disease-Modifying Anti-Rheumatic Drug treatment for RA) which is also very clearly involved in nucleotide availability control. I would like a student to look over Next Generation Sequencing data from patients now, to test if this effect is also observed using this form of gene expression quantification.",
         techniques: [
-            "Data analysis using Excel and online resources. Gene ontology analysis using online resources",
+            "Data analysis",
+            "Excel analysis",
+            "Gene ontology analysis",
         ],
         references: [
             "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0317071 and references within",
@@ -593,7 +615,7 @@ const projects = [
         outline: "Insulin stimulates glucose transport in muscle and adipocytes. This is achieved by regulated delivery of intracellular glucose transporter (GLUT4)-containing vesicles to the plasma membrane where they dock and fuse, resulting in increased cell surface GLUT4 levels. Recent work identified a potential further regulatory step, in which insulin increases the dispersal of GLUT4 in the plasma membrane away from the sites of vesicle fusion. EFR3 is a scaffold protein that facilitates localisation of phosphatidylinositol 4-kinase type IIIalpha to the cell surface [2-4]. We have found that knockdown of EFR3 or phosphatidylinositol 4-kinase type IIIalpha impairs insulin-stimulated glucose transport in adipocytes [1]. Using direct stochastic reconstruction microscopy, we also show that EFR3 knockdown impairs insulin stimulated GLUT4 dispersal in the plasma membrane. We proposed that EFR3 plays a previously unidentified role in controlling insulin-stimulated glucose transport by facilitating dispersal of GLUT4 within the plasma membrane [1].",
         techniques: [
             "Computational biology",
-            "including alfafold.",
+            "AlphaFold",
         ],
         references: [
             "1. Koester et al https://doi.org/10.1042/bsr20221181 2. Dornan et al. https://doi.org/10.1016/j.jmb.2018.07.020 3. Chung et al. https://doi.org/10.15252/embr.201439151 4. Lees et al. https://doi.org/10.1073/pnas.1718471115",
@@ -632,8 +654,9 @@ const projects = [
         outline: "Zinc alpha-2 glycoprotein (ZAG) is secreted from fat cells and may act to regulate lipolysis. this project will consider whether ZAG is effective in inducing lipolysis (fat breakdown) in cultured adipocytes, to what extent and by which mechanism. ZAG is also thought to be a key player in muscle wasting in cancer, thus understanding its mechanism is important. To this end, we will compare actions of ZAG in adipocytes of different ages and extent of differentiation using a combination of cell staining and image analysis.",
         techniques: [
             "Cell staining",
-            "image analysis",
-            "data analysis of existing datasets and collection of new datasets for computational analysis.",
+            "Image analysis",
+            "Data analysis",
+            "Dataset collection",
         ],
         references: [
             "https://doi.org/10.3390/nu13062023 https://doi.org/10.1007/s11154-020-09553-w",
@@ -652,7 +675,8 @@ const projects = [
         aim: "The aim of this project is test the hypothesis by examining the following research questions: 1. Does the PAR2 inhibitor, AZ8838, inhibit AC26461-induced internalisation of PAR2? 2. Does AZ8838 inhibit PAR2-mediated activation of signalling pathways? Answers to these questions will improve our understanding of the selectivity of the PAR2 inhibitor and potentially highlight its use as a novel therapeutic for the treatment of CNS disorders.",
         outline: "Four proteinase-activated receptors (PARs1-4) have been cloned to date and they have been implicated in various inflammation-related diseases in both the periphery and central nervous system (CNS)1. We have previously investigated the role of one PAR subtype, PAR2, in CNS function revealing that its activation modulates neuronal excitability2, is neuroprotective3 and plays a role in sickness behaviour4. In addition, we have shown that a PAR2 activator, AC264613, that crosses the blood brain barrier, induces depression-like behaviour in mice5. However, novel PAR2 inhibitors have recently been developed6,7 yet these have not been characterised against AC264613 or in CNS preparations. Given PAR2 activation induces depression-like behaviour, our lab hypothesises that PAR2 inhibitors will ameliorate depression-like behaviour. However, whether the proposed PAR2 inhibitor, AZ8838, selectively inhibits PAR2 in CNS-relevant preparations is unknown.",
         techniques: [
-            "Data analysis of epi-fluorescent images.",
+            "Data analysis",
+            "Fluorescence image analysis",
         ],
         references: [
             "1. Bushell, T.J. et al., (2016). Proteinase-activated receptor 2: Are common functions in glial and immune cells linked to inflammation-related CNS disorders? Curr Drug Targets 17, 1861-1870. 2. Gan, J. et al., (2011). Indirect modulation of neuronal excitability and synaptic transmission in the hippocampus by activation of proteinase-activated receptor-2. British Journal of Pharmacology. 163, 984-94. 3. Moudio, S. et al., (2025). Neuroprotection induced by protease-activated receptor 2 activation is independent of Gq signalling. Brain Neurosci Adv. 9:23982128251345673. 4. Abulkassim, R. et al., (2016). Proteinase-activated receptor 2 is involved in the behavioural changes associated with sickness behaviour. J Neuroimmunol, 295-296, 139-147. 5. Moudio et al., (2022). Protease-activated receptor 2 activation induces behavioural changes associated with depression-like behaviour through microglial-independent modulation of inflammatory cytokines. Psychopharmacology (Berl) 239: 229-242. 6. Cheng RKY et al., (2017). Structural insight into allosteric modulation of protease-activated receptor 2. Nature. 545: 112-115. 7. McIntosh KA et al., (2020). The development of proteinase-activated receptor-2 modulators and the challenges involved. Biochem Soc Trans: 48: 2525–2537.",
@@ -671,7 +695,9 @@ const projects = [
         aim: "the aim of this project is to test the hypothesis by examining the following research questions: 1. Is pro-inflammatory marker expression increased in astrocytes of 5xFAD mice? 2. Is altered astrocytic pro-inflammatory marker expression region-specific? Answers to these questions will improve our understanding of how astrocytic inflammatory phenotype contributes to disease progression in a commonly used mouse model of AD.",
         outline: "Recent studies have identified that pro-inflammatory astrocyte populations contributes to disease progression in several CNS disorders1,2. Indeed, studies using cultured human astrocytes have revealed similar pro-inflammatory expression profiles to those seen in animal models of CNS disorders and post-mortem tissue3. We are currently examining novel therapeutic options for Alzheimer’s disease (AD) using the 5xFAD mouse model4, which is a model for ?-amyloid pathology. However, whether changes in the astrocytic expression of inflammatory markers in this mouse model are present is unknown. Hence, we hypothesise that astrocytic expression of inflammatory markers will be increased in those astrocytes close to ?-amyloid plaques.",
         techniques: [
-            "Data analysis of immunohistochemical images using FIJI software.",
+            "Data analysis",
+            "Immunohistochemistry analysis",
+            "FIJI analysis",
         ],
         references: [
             "1. Endo, F. et al., (2022). Molecular basis of astrocyte diversity and morphology across the CNS in health and disease. Science.378:eadc9020. 2. Clayton BLL & Liddelow SA. (2025). Heterogeneity of Astrocyte Reactivity. Annu Rev Neurosci. 48:231-249. 3. Labib, D. et al., (2022). Proteomic Alterations and Novel Markers of Neurotoxic Reactive Astrocytes in Human Induced Pluripotent Stem Cell Models. Front Mol Neurosci. 15:870085. 4. Oakley, H. et al., (2006). Intraneuronal beta-amyloid aggregates, neurodegeneration, and neuron loss in transgenic mice with five familial Alzheimer's disease mutations: potential factors in amyloid plaque formation. J Neurosci. 26:10129-40.",
@@ -690,7 +716,8 @@ const projects = [
         aim: "The aim of this project is test the hypothesis by examining the following research question: 1. Does PAR activation stimulate mouse endothelial cell lines? Answers to these questions will improve our understanding of how PAR2 activation contributes to depression-like behaviour.",
         outline: "Four proteinase-activated receptors (PARs1-4) have been cloned to date and they have been implicated in various inflammation-related diseases in both the periphery and central nervous system (CNS). We have previously investigated the role of one PAR subtype, PAR2, in CNS function revealing that its activation is neuroprotective [1], plays a role in sickness behaviour [2] and induces depression-like behaviour in mice [3] . Strikingly, depression-like behaviour is often associated with a change in BBB permeability and we have preliminary data indicating BBB permeability is increased under conditions identical to those for PAR2-induced behavioural changes.. However, whether PAR2 action stimulates brain endothelial cells leading to increased BBB permeability is unknown. Here, we hypothesise that PAR2 activators will stimulate brain endothelial cells that will contribute to the increase in BBB permeability observed in vivo.",
         techniques: [
-            "Cell culture of immortalised cell lines and calcium imaging.",
+            "Cell culture",
+            "Calcium imaging",
         ],
         references: [
             "1. Moudio S. et al., (2025). Neuroprotection induced by protease-activated receptor 2 activation is independent of Gq signalling. Brain Neurosci Adv. 2025 9:23982128251345673. 2. Abulkassim, R. et al., (2016). Proteinase-activated receptor 2 is involved in the behavioural changes associated with sickness behaviour. J Neuroimmunol, 295-296, 139-147. 3. Moudio et al., (2022). Protease-activated receptor 2 activation induces behavioural changes associated with depression-like behaviour through microglial-independent modulation of inflammatory cytokines. Psychopharmacology (Berl) 239: 229-242.",
@@ -709,7 +736,9 @@ const projects = [
         aim: "The aim of this project is to test the hypothesis by examining the following research questions: 1. Is reactive astrocyte marker expression minimal in cultured cHAs? 2. Does exposure to TNF?, IL-1? & C1q induce astrocytic reactivity in cHAs? Answers to these questions will improve our understanding of assays and models of reactive astrocytes, which will aid in determining whether targeting reactive astrocytes is a viable therapeutic strategy in CNS disorders.",
         outline: "Recent studies have identified that pro-inflammatory astrocyte populations contributes to disease progression in several CNS disorders [1-3]. Indeed, we have shown in animal models of CNS disorders that reactive astrocytes are present and studies using cultured human astrocytes have revealed similar pro-inflammatory expression profiles to those seen in post-mortem tissue [1,2]. However, whether commercially available human astrocytes (cHAs)display markers of reactivity depending on theior culture conditions remains unknown. To overcome these issues, we will examine astrocytic reactivity using appropriate markers (GFAP, C3 etc) using cHAs which are suggested to be a good model to examine astrocytic function. We hypothesise that astrocytic reactivity will be minimal in cHAs under basal conditions but will be induced by exposure to inflammatory stimuli.",
         techniques: [
-            "Data analysis of epi-fluorescent images using FIJI imaging software.",
+            "Data analysis",
+            "Fluorescence image analysis",
+            "FIJI analysis",
         ],
         references: [
             "1. Labib, D. et al., (2022). Proteomic Alterations and Novel Markers of Neurotoxic Reactive Astrocytes in Human Induced Pluripotent Stem Cell Models. Front Mol Neurosci. 15:870085. 2. Endo, F. et al., (2022). Molecular basis of astrocyte diversity and morphology across the CNS in health and disease. Science.378:eadc9020. 3. Patani R, Hardingham GE, Liddelow SA. (2023). Functional roles of reactive astrocytes in neuroinflammation and neurodegeneration. Nat Rev Neurol. 19:395-409.",
@@ -729,7 +758,8 @@ const projects = [
         outline: "Gliobastoma (GBM) is one the most aggressive brain tumours for which there are limited treatments and is fatal in almost all patients. Recently, proteinase-activated receptors (PARs1-4), which have been implicated in various inflammation-related diseases , have been shown to be present in GBM using transcriptomics [1]. We have previously investigated the role of PARs in CNS function revealing that PAR2 activation is neuroprotective [2], plays a role in sickness behaviour and induces depression-like behaviour in mice [3] . However, whether functional PARs are present in GBM cells is unknown. Here, we hypothesise that PAR activators will induce Ca2+ signalling in cultured GBM cells, thus confirming the presence of functional PARs.",
         techniques: [
             "Cell culture of GBM cells",
-            "Ca2+ imaging and immunocytochemistry.",
+            "Ca2+ imaging",
+            "immunocytochemistry.",
         ],
         references: [
             "1. Bien-Möller S et al., (2025). The protease-activated receptors are expressed in glioblastoma and differentially modulate adherent versus stem-like growth of LN-18 GBM cells. Front Oncol. 15:1582996. 2. Moudio S. et al., (2025). Neuroprotection induced by protease-activated receptor 2 activation is independent of Gq signalling. Brain Neurosci Adv. 2025 9:23982128251345673. 3. Moudio et al., (2022). Protease-activated receptor 2 activation induces behavioural changes associated with depression-like behaviour through microglial-independent modulation of inflammatory cytokines. Psychopharmacology (Berl) 239: 229-242.",
@@ -769,7 +799,8 @@ const projects = [
         aim: "Identify alteration of surface marker expression that can promote adhesion of B cells Test adhesion of treated B cells onto different matrix-rich surfaces",
         outline: "Naïve B and T cells migrate from primary lymphoid organs to the lymph nodes (LNs) via specialized blood vessels called High Endothelial Venules (HEVs). These vessels are crucial for guiding immune cells to the correct location, where they await activation in response to infection, disease, or other immune challenges. However, during tumour progression, lymph nodes undergo reprogramming facilitating immune evasion. One observed effect is the disruption in B cell trafficking to the follicles. A leading hypothesis suggests that these lymph nodes become enriched with extracellular matrix components, which may hinder immune cell movement. This project aims to investigate whether B cells upregulate specific surface adhesion molecules that cause them to become trapped within the matrix-rich environment of tumour-draining lymph nodes.",
         techniques: [
-            "Fluorescence imaging Western blot",
+            "Fluorescence imaging",
+            "Western blot",
         ],
         references: [
             "Harjunpää H, Llort Asens M, Guenther C, Fagerholm SC. Cell Adhesion Molecules and Their Roles and Regulation in the Immune and Tumor Microenvironment. Front Immunol. 2019 May 22;10:1078. doi: 10.3389/fimmu.2019.01078 Li YL, Hung WC. Reprogramming of sentinel lymph node microenvironment during tumor metastasis. J Biomed Sci. 2022 Oct 20;29(1):84. doi: 10.1186/s12929-022-00868-1.",
@@ -788,7 +819,8 @@ const projects = [
         aim: "This project aims to characterize the effects of IL-19 on B cell function, focusing on its influence on B cell activation, cytokine production, and antibody secretion.",
         outline: "Cytokine signalling is a fundamental component of the immune response, orchestrating the recruitment and activation of immune cells and shaping the nature of the response to pathogens or disease. Among these cytokines, Interleukin-19 (IL-19) has emerged as a molecule of interest due to its complex and context-dependent roles in immunity. IL-19 is a member of the IL-10 cytokine family and is primarily produced by monocytes, macrophages, and to a lesser extent, B cells. IL-19 has been described as immunosuppressive and tumour-promoting, particularly in glioblastoma and other cancers, where it contributes to immune evasion by promoting M2-like macrophage polarization and dampening T cell activation. Despite its recognized role in modulating macrophage and T cell responses, the direct effects of IL-19 on B cells remain poorly understood. Some evidence suggests that IL-19 promotes anti-inflammatory cytokine expression, such as IL-10, in peripheral blood mononuclear cells. This project aims to characterize the effects of IL-19 on B cell function, focusing on its influence on B cell activation, cytokine production, and antibody secretion. Understanding how IL-19 modulates B cell responses could provide new insights into its role in tumour-associated immune regulation.",
         techniques: [
-            "Flow cytometry ELISA",
+            "Flow cytometry",
+            "ELISA",
         ],
         references: [
             "Shazia sofi, Nusrat Jan, Hina Qayoom, Mustfa Alkhanani, Abdullah Almilaibary, Manzoor Ahmad Mir, Elucidation of interleukin-19 as a therapeutic target for breast cancer by computational analysis and experimental validation, Saudi Journal of Biological Sciences, Volume 30, Issue 9, 2023, 103774,https://doi.org/10.1016/j.sjbs.2023.103774. Grant Gallagher, Interleukin-19: Multiple roles in immune regulation and disease, Cytokine & Growth Factor Reviews, Volume 21, Issue 5, 2010, Pages 345-352, https://doi.org/10.1016/j.cytogfr.2010.08.005.",
@@ -807,11 +839,14 @@ const projects = [
         aim: "This project aims to investigate whether stimulation of mitochondrial biogenesis through activation PGC-1? in astrocytes, brain endothelial cells and/or neurons, alters cell viability, relative mitochondrial membrane potential and resistance to oxidative stress.",
         outline: "Long-term resilience of neurons, as well as glia and brain vascular cells, is essential for them to endure stressors such as ischaemia, proteinopathies that can lead to neurodegeneration and the normal aging process. Neurons are post-mitotic, energetically highly demanding, and are dependent upon support provided by astrocytes and local metabolic supply from the brain’s vascular network. Mitochondria within each of these cell types are essential for efficient metabolic supply and flexibility, as well as playing roles in calcium homeostasis and oxidative balance. Mitochondrial overload during stressful situations can, however, actually contribute to decline as damaged mitochondria produce excessive reactive oxygen species, consume ATP and release their calcium stores to feed-forward decline to neighbouring mitochondria, contributing to cell death processes. Peroxisome Proliferator-Activated Receptor-Gamma Coactivator 1-Alpha (PGC-1?) is a transcriptional co-activator and master regulator of energy metabolism and mitochondrial biogenesis. PGC-1? can be stimulated by modulating energy-sensing pathways, various pharmacological agents and potentially by metabolite alterations. There is growing evidence that stimulation of mitochondrial biogenesis via increased PGC-1? can protect in a number of cellular models. This protection may come from neurons themselves, or from supporting neural cells – for example increasing mitochondrial biogenesis specifically in astrocytes alone protects and reverses motor-neuron decline in a model of familial amyotrophic lateral sclerosis. Enhancing PGC-1? activity is thus of great therapeutic potential in diverse neurological (and other) disorders.",
         techniques: [
-            "Brain endothelial",
-            "astrocyte and primary neuronal cell culture",
-            "fluorescence microscopy imaging – immunocytochemistry and live-cell imaging",
-            "image quantification",
-            "potentially western blotting.",
+            "Brain endothelial cell culture",
+            "Astrocyte culture",
+            "Primary neuronal cell culture",
+            "Fluorescence microscopy",
+            "Immunocytochemistry",
+            "Live-cell imaging",
+            "Image quantification",
+            "Western blotting",
         ],
         references: [
             "1. Stavrou, M. et al. Astrocytes control motor neuronal mitochondrial axonal transport deficits in C9ORF72 ALS. bioRxiv 2025.06.10.658820; doi: https://doi.org/10.1101/2025.06.10.658820 2. Jhuo, CF et al (2024). Teaghrelin protected dopaminergic neurons in MPTP-induced Parkinson's disease animal model by promoting PINK1/Parkin-mediated mitophagy and AMPK/SIRT1/PGC1-?-mediated mitochondrial biogenesis. Environmental toxicology, 39(7), 4022–4034. https://doi.org/10.1002/tox.24275 3. Lin, J et al. Metabolic control through the PGC-1 family of transcription coactivator (2005) Cell Metabolism, Volume 1, Issue 6, 361-370, ISSN 1550-4131, https://doi.org/10.1016/j.cmet.2005.05.004.",
@@ -830,8 +865,12 @@ const projects = [
         aim: "This project aims to investigate whether supplementation of astrocytes, brain endothelial cells and/or neurons with antioxidants prior to ischaemia (oxygen glucose deprivation) or just during the post-ischaemic reperfusion phase, alters cell viability, apoptosis and mitochondrial function.",
         outline: "Blockage of blood vessels within the brain results in local deprivation of the oxygen and metabolites that are essential for cell function and survival. Prolonged ischaemia causes necrosis in the most affected regions, with a surrounding penumbra that can reperfuse but is susceptible to apoptosis – particularly of neurons that are largely post-mitotic and thus irreplaceable. At the same time, there can be a shift in astrocytes towards a reactive phenotype and impairment or cell death in the endothelial cells of brain capillaries. The extent of neurological deficit caused is dependent upon the size of the damaged region (as well as CNS location), thus interventions that minimise delayed neurodegeneration post-ischaemia have much clinical potential. Oxidative stress during post-ischaemia reperfusion is thought to be one driver of delayed neural cell death. This project will quantify the ability of antioxidants to protect astrocytes, brain endothelial cells and/or neurons, and their mitochondria during or after acute periods of ischaemia. We will compare the efficiency of antioxidants targeted specifically to mitochondria, as well as general antioxidants.",
         techniques: [
-            "Brain endothelial",
-            "astrocyte and primary neuronal cell culture fluorescence microscopy imaging immunocytochemistry western blotting",
+            "Brain endothelial cell culture",
+            "Astrocyte culture",
+            "Primary neuronal cell culture",
+            "Fluorescence microscopy",
+            "Immunocytochemistry",
+            "Western blotting",
         ],
         references: [
             "1. Ibrahim, AA et al (2023). MitoQ alleviates hippocampal damage after cerebral ischemia: The potential role of SIRT6 in regulating mitochondrial dysfunction and neuroinflammation. Life sciences, 328, 121895. https://doi.org/10.1016/j.lfs.2023.121895 2. Li, Y et al. (2021) Rational Application of ?-Hydroxybutyrate Attenuates Ischemic Stroke by Suppressing Oxidative Stress and Mitochondrial-Dependent Apoptosis via Activation of the Erk/CREB/eNOS Pathway. ACS Chem Neurosci. 12(7):1219-1227. doi: 10.1021/acschemneuro.1c00046 3. Fernández-González & Galea (2023) Astrocyte strategies in the energy-efficient brain. Essays in Biochem. 67(1) https://doi.org/10.1042/EBC20220077",
@@ -850,7 +889,10 @@ const projects = [
         aim: "This project aims to directly visualise tunnelling nanotubes and mitochondria in live cell co-cultures of primary astrocytes and neurons via transfection with mitochondrially-targeted red fluorescent protein (mito-RFP) and an actin-green fluorescent protein chimera (actin-GFP). Timelapse imaging will quantify the formation of actin-GFP+ thin process connections between cells and the transfer of mitochondria between astrocytes and neurons. Should time allow, this process will also be monitored during ischaemic-like oxygen-glucose deprivation.",
         outline: "Given their high energy demands and post-mitotic nature, neurons are particularly susceptible to mitochondrial dysfunction. Emerging evidence suggests that spontaneous intercellular mitochondrial transfer between neurons and glial cells, particularly astrocytes and microglia, might serve as a compensatory response to restore mitochondrial homeostasis in acute conditions such as stroke, but also in chronic neurodegenerative diseases. Tunnelling nanotubes are F-actin-based membranous channels that connect cell cytoplasm directly, enabling the intercellular transfer of diverse cellular components, including mitochondria. Despite increasing evidence for the role of tunnelling nanotubes in mitochondrial transfer, direct visualisation remains limited, and their physiological regulation or functional outcomes remain unclear.",
         techniques: [
-            "Astrocyte and primary neuronal cell culture mito-RFP and actin-GFP transfection fluorescence microscopy imaging",
+            "Astrocyte culture",
+            "Primary neuronal cell culture",
+            "Transfection",
+            "Fluorescence microscopy",
         ],
         references: [
             "1. Hayakawa, K et al (2016). Transfer of mitochondria from astrocytes to neurons after stroke. Nature 535, 551-5. 2. Cheng, XY et al (2020). Human iPSCs derived astrocytes rescue rotenone-induced mitochondrial dysfunction and dopaminergic neurodegeneration in vitro by donating functional mitochondria. Transl Neurodegener 9, 13. 3. Rostami, J et al (2017). Human Astrocytes Transfer Aggregated Alpha-Synuclein via Tunneling Nanotubes. J Neurosci 37, 11835-11853.",
@@ -869,7 +911,9 @@ const projects = [
         aim: "This project aims to follow the development of dendritic spines and the potential co-localisation of mitochondria during the development of primary hippocampal neurons using mitochondrially-targeted red fluorescent protein (mito-RFP) and an actin-green fluorescent protein chimera (actin-GFP), and investigating whether pharmacological stimulation of PGC-1? influences the development of large, mitochondrially-localised spines.",
         outline: "Dendritic spine formation and strengthening is fundamental to neuronal development of excitatory synapses. Spine formation relies on the precise distribution of mitochondria, which are transported to new dendritic protrusions to supply ATP and regulate calcium. Neurons maintained in culture form functional synapses within 1-2 weeks, during which time mitochondrial are thought to localise – and potentially become tethered – in close proximity to strengthening post-synaptic dendritic spines. This process may be stimulated by Peroxisome Proliferator-Activated Receptor-Gamma Coactivator 1-Alpha (PGC-1?) - a transcriptional co-activator and master regulator of energy metabolism and mitochondrial biogenesis.",
         techniques: [
-            "Primary neuronal cell culture transfection of mito-RFP and actin-GFP live-cell fluorescence microscopy imaging",
+            "Primary neuronal cell culture",
+            "Transfection",
+            "Live-cell fluorescence microscopy",
         ],
         references: [
             "1. Fukumitsu K, et al. Synergistic action of dendritic mitochondria and creatine kinase maintains ATP homeostasis and actin dynamics in growing neuronal dendrites. J Neurosci. 2015;35(14):5707-5723. https://doi.org/10.1523/JNEUROSCI.4115-14.2015 2. Feofilaktova T, Kushnireva L, Segal M, Korkotian E. Calcium signaling in postsynaptic mitochondria: mechanisms, dynamics, and role in ATP production. Front Mol Neurosci. 2025;18:1621070. https://doi.org/10.3389/fnmol.2025.1621070 3. Cheng, A. et al. Involvement of PGC-1? in the formation and maintenance of neuronal dendritic spines. Nat Commun 3, 1250 (2012). https://doi.org/10.1038/ncomms2238",
@@ -888,7 +932,9 @@ const projects = [
         aim: "The aim of this data analysis project is to quantify changes in mitochondrial morphology induced by a 2 hour period of oxygen-glucose deprivation (data already acquired by host lab).",
         outline: "Mitochondria are classically thought of as bean-shaped organelles that produce ATP, however it is now clear that there are a wide range of morphologies that mitochondria can display – even within the one cell, from small spheres to very extensive branched structures that can span the cytoplasm. These different morphologies have been suggested to have different functional outcomes driven by adaptations such as increased fusion of mitochondria into large network-like shapes that protects ATP production capacity, or increased mitochondrial fission that may feed into autophagic processes. One of the potential effects of the nutrient and oxygen deprivation that occurs during cerebral ischaemia is an adaptational change in the morphology of mitochondria. This data analysis project will utilise open-source software to analyse microscopy images of primary neurons or astrocytes before, during and after oxygen-glucose deprivation to quantify the time course of such changes in morphology and their potential impact on cell health.",
         techniques: [
-            "Image analysis sub-cellular morphological quantification mitochondrial membrane potential quantification",
+            "Image analysis",
+            "Sub-cellular morphology analysis",
+            "Mitochondrial membrane potential analysis",
         ],
         references: [
             "1. Deheshi, S et al (2015) Changes in mitochondrial morphology induced by calcium or rotenone in primary astrocytes occur predominantly through ROS-mediated remodeling. J Neurochem; 133(5):684-99. doi: 10.1111/jnc.13090 2. Montiel, T et al (2023) Modulation of the autophagy-lysosomal pathway and endoplasmic reticulum stress by ketone bodies in experimental models of stroke. J Neurochem. 166(1):87-106; doi: 10.1111/jnc.15852 3. Fernández-González & Galea (2023) Astrocyte strategies in the energy-efficient brain. Essays in Biochem. 67(1) doi.org/10.1042/EBC20220077",
@@ -907,15 +953,13 @@ const projects = [
         aim: "Evaluate how effectively national HPV materials communicate gender inclusive messages, especially male cancer risk, and prepare a robust audience study (survey or focus groups) to test recall and understanding, including an ethics submission.",
         outline: "Why this matters: Recent work shows a clear gap in public awareness of non cervical and male HPV related cancers, and limited awareness that boys are routinely offered the HPV vaccine in Scotland. This project will evaluate how effectively national HPV materials communicate gender inclusive messages and identify specific improvements. What you will do: You will quantify how well official materials communicate these points by coding a corpus of NHS leaflets, school consent packs, and website pages against a structured checklist. You will measure how often and how explicitly male cancers and boys eligibility are mentioned, how easy these facts are to find on the page and whether language meets plain English standards using Flesch Kincaid and accessibility checks. You will generate summary tables and figures, rank strengths and gaps and then design the next step by preparing a short survey or focus group protocol to test recall and understanding of the priority messages, including consent or assent forms and an ethics application pack. Due to the project timeline, primary data collection is not expected this year. Impact: You will produce concrete, evidence based recommendations to redesign HPV information so it is clearer, more gender inclusive and equitable across SIMD groups, and you will deliver a ready to launch study for the next phase. The project will be undertaken in collaboration with Public Health Scotland.",
         techniques: [
-            "Systematic content analysis of leaflets",
-            "school consent forms",
-            "NHS webpages",
-            "posters (coding scheme provided). Framing and inclusivity coding",
-            "inter-rater reliability (Cohen’s ?). Readability assessment (Flesch/Flesch-Kincaid)",
-            "accessibility checks (easy-read/translation/BSL availability). Basic data analysis and visualisation. Research design for survey/focus groups (questionnaire/guide drafting",
-            "sampling plan",
-            "SIMD linkage). Ethics application preparation (participant information sheets/consent/assent",
-            "data management & anonymity).",
+            "Content analysis",
+            "Inclusivity assessment",
+            "Readability testing",
+            "Accessibility evaluation",
+            "Data analysis",
+            "Research design",
+            "Ethics preparation",
         ],
         references: [
             "Davis EN, Doyle PC. An Assessment of Young Adults' Awareness and Knowledge Related to the Human Papillomavirus (HPV), Oropharyngeal Cancer, and the HPV Vaccine. Cancers (Basel). 2025 Jan 21;17(3):344. doi: 10.3390/cancers17030344. HPV education pack. Public health Scotland. https://publichealthscotland.scot/publications/hpv-education-pack/ Ortiz RR, Smith A, Coyne-Beasley T. A systematic literature review to examine the potential for social media to impact HPV vaccine uptake and awareness, knowledge, and attitudes about HPV and HPV vaccination. Hum Vaccin Immunother. 2019;15(7-8):1465-1475. doi: 10.1080/21645515.2019.1581543.",
@@ -995,13 +1039,15 @@ const projects = [
         aim: "This data analysis project aims to extract and analyse data of glioblastoma samples from public databases to address the following questions: (i) Are the genes of interest known tumour drivers or suppressors? (ii) How does the mRNA expression profile differ between healthy human tissue and glioblastoma tumours? (iii) What is the patient's prognosis based on the gene expression levels of your selected genes? (iv) Do the expression levels of your genes of interest differ in glioblastoma subtypes? (v) What is the protein expression level of your selected genes in glioblastoma tumour samples?",
         outline: "Glioblastoma (GBM) is a rare, aggressive, and highly lethal brain cancer that remains one of the most difficult cancers to treat. Despite intensive therapy, only about 5% of patients survive beyond five years after diagnosis, underscoring the urgent need for new therapeutic strategies. Current standard treatments, including surgery, radiation and temozolomide, primarily work by inducing DNA damage to block cell division and trigger cell death. However, GBM cells often activate additional survival pathways that support tumour growth and drive resistance to this therapy. Identifying novel glioblastoma-specific vulnerabilities could open new avenues for intervention and significantly improve patient outcomes. This project aims to uncover molecular alterations that are unique to glioblastoma. By leveraging public resources such as The Cancer Genome Atlas (TCGA) and Gliovis, we will systematically analyse gene expression changes, mutations, protein expression levels, and other molecular signatures in GBM compared with normal brain tissue. Insights from this work may highlight novel therapeutic targets and lay the groundwork for future preclinical and clinical studies focused on more effective and durable treatments for glioblastoma.",
         techniques: [
-            "In Silico: data-mining",
-            "data collection",
-            "and analysis by extraction of data from public databases and web tools (COSMIC Cancer Gene Consensus",
-            "GEPIA",
-            "Gliovis",
-            "The Human Protein Atlas",
-            "cBioPortal). RStudio statistical analysis software.",
+            "Data mining",
+            "Data collection",
+            "COSMIC database analysis",
+            "GEPIA analysis",
+            "GlioVis analysis",
+            "Human Protein Atlas analysis",
+            "cBioPortal analysis",
+            "RStudio analysis",
+            "Statistical analysis",
         ],
         references: [
             "1 Grech, N. et al. Rising Incidence of Glioblastoma Multiforme in a Well-Defined Population. Cureus 12, e8195, doi:10.7759/cureus.8195 (2020). 2 Philips, A., Henshaw, D. L., Lamburn, G. & O'Carroll, M. J. Brain Tumours: Rise in Glioblastoma Multiforme Incidence in England 1995-2015 Suggests an Adverse Environmental or Lifestyle Factor. J Environ Public Health 2018, 7910754, doi:10.1155/2018/7910754 (2018). 3 Comprehensive genomic characterization defines human glioblastoma genes and core pathways. Nature. 2008;455(7216):1061-1068. doi:10.1038/nature07385.",
@@ -1020,7 +1066,9 @@ const projects = [
         aim: "The aim of this project is to observe laboratory techniques assessing the efficacy of combination chemo and radiotherapies and then to analyse real data derived from a range of experimental techniques to determine the efficacy and mode of action of combination therapies.",
         outline: "Despite the considerable resources being invested into the discovery of new cancer drugs, novel therapies suffer from high failure rates, high cost, limited efficacy and a lengthy timeline before they become clinically available. None of this is good for the cancer patient. One approach to circumvent this problem is to repurpose existing non-cancer or cancer drugs against cancers to provide new or novel therapies or new formulation of existing therapies which could reduce costs, enhance tumour specificity, reduce toxicity or rapidly accelerate the introduction of new therapies into clinical practice. This is particularly relevant for paediatric and hard to treat cancers such as pancreatic cancer, brain tumours, lung cancer, ovarian cancer and triple negative breast cancer and cancers where there is currently an unmet need for effective less toxic cancer drugs. Furthermore often the primary cancer is not the therapeutic issue, but the metastatic and therapy resistant cancer that returns. New therapies are therefore needed for the treatment of hard to treat and therapy resistant cancer. We therefore urgently require new approaches to develop more effective and less toxic treatments for cancer patients where there is poor survival and limited treatment options. Our laboratory has been assessing new combination therapies using repurposed drugs and radiotherapy and have identified combination therapies that have promise in the treatment of these hard to treat cancers.",
         techniques: [
-            "The aim of this project is to observe laboratory techniques assessing the efficacy of combination chemo and radiotherapies and then to analyse real data derived from a range of experimental techniques to determine the efficacy and mode of action of combination therapies.",
+            "Data analysis",
+            "Efficacy assessment",
+            "Combination therapy analysis",
         ],
         references: [
             "Jin, H., Wang, L. & Bernards, R. Rational combinations of targeted cancer therapies: background, advances and challenges. Nat Rev Drug Discov 22, 213–234 (2023). https://doi.org/10.1038/s41573-022-00615-z Subash C. Gupta1, Bokyung Sung1, Sahdeo Prasad1, Lauren J. Webb2, and Bharat B. Aggarwal1 Cancer drug discovery by repurposing: teaching new tricks to old dogs. Trends in Pharmacological Sciences September 2013, Vol. 34, No. 9 Bayat Mokhtari R, Homayouni TS, Baluch N, Morgatskaya E, Kumar S, Das B, Yeger H. Combination therapy in combating cancer. Oncotarget. 2017 Jun 6;8(23):38022-38043. doi: 10.18632/oncotarget.16723. PMID: 28410237; PMCID: PMC5514969.",
@@ -1039,7 +1087,13 @@ const projects = [
         aim: "The aim of this project is to investigate in the laboratory the tumour specific cell kill of radiotherapy used in novel ways in combination with other drugs and agents using a range of radiobiology techniques",
         outline: "Despite the considerable resources being invested into the discovery of new cancer drugs, novel therapies suffer from high failure rates, high cost, limited efficacy and a lengthy timeline before they become clinically available. None of this is good for the cancer patient. Often cancer cells display resistance to chemotherapy drugs and personalised medicine due to inherent resistance mechanism- this leads to cancers initially appearing to respond to treatments only to recur months later as therapy resistant. Radiotherapy is used in the treatment of around 50% of cancer patients, is highly effective at killing cancer cells and there are fewer resistance mechanism cancer cells can deploy to escape the toxic effects of radiation. Despite these features, there has been little investment and research in improving the use of radiotherapy in cancer patients by optimising is tumour killing potential and equally as important reducing its toxic effects. If these challenges can be overcome, radiotherapy could be utilised safely and effectively in more cancer patients, including very young children and could begin to elicit cures and reduce therapy resistance. Our group has been researching how to better use radiotherapy alone and in combination with other drugs and this work has already led to translation of some therapies into the clinic. We hypothesise that understanding the effects of radiotherapy on normal and tumour cells could lead to further breakthroughs for patients with cancer.",
         techniques: [
-            "cell culture cell death assays DNA damage and repair assays- comet assay data generation data presentation experimental design statistical analysis",
+            "Cell culture",
+            "Cell death assays",
+            "Comet assay",
+            "Data generation",
+            "Data presentation",
+            "Experimental design",
+            "Statistical analysis",
         ],
         references: [
             "Tang H, Cai L, He X, Niu Z, Huang H, Hu W, Bian H, Huang H. Radiation-induced bystander effect and its clinical implications. Front Oncol. 2023 Apr 5;13:1124412. doi: 10.3389/fonc.2023.1124412. PMID: 37091174; PMCID: PMC10113613. Wang, Y.; Yu, J.; Ghosh, T.; Mayassi, N. Beyond the Target: A Review of Radiation-Induced Bystander Effects in Radiobiology and Radiation Therapy. Preprints 2025, 2025031099. https://doi.org/10.20944/preprints202503.1099.v1 Rallis KS, Lai Yau TH, Sideris M. Chemoradiotherapy in Cancer Treatment: Rationale and Clinical Applications. Anticancer Res. 2021 Jan;41(1):1-7. doi: 10.21873/anticanres.14746. PMID: 33419794.",
@@ -1082,13 +1136,12 @@ const projects = [
         aim: "Evaluate a selected molecular target within a defined cancer type by: (1) quantifying alteration frequency and co-occurrence/exclusivity with key pathway genes; (2) assessing prognostic and predictive value using survival analyses; and (3) synthesising clinical evidence on targeted inhibition to judge whether the target represents a plausible therapeutic opportunity suitable for trial development.",
         outline: "Tumorigenesis is driven by recurrent driver alterations, single-nucleotide variants, copy-number changes, and gene fusions, that rewire signalling pathways (e.g., MAPK/ERK, PI3K/AKT, DNA repair). Targeted agents exploit oncogene addiction or pathway dependency and are often authorised first within one tumour type before tumour-agnostic expansion to others sharing the same alteration (e.g., KRAS G12C, IDH1/2, BRAF V600E, NTRK fusions). Feasibility for such expansion depends on robust estimates of alteration prevalence, co-mutation landscapes (which modulate response and resistance) and the prognostic/predictive association of the biomarker with outcomes. Public cancer genomics resources (patient cohorts and clinical annotations) enable this evidence-building prior to trials. In this project you will select a target–tumour pair (for example, KRAS G12C in pancreatic adenocarcinoma, IDH1 in glioma, FGFR2 in cholangiocarcinoma) and integrate genomic and clinical data to generate a decision-grade assessment of therapeutic viability.",
         techniques: [
-            "This involves exploring and summarising public cancer data with point and click web tools such as COSMIC (Cancer Gene Census)",
-            "GEPIA",
-            "GlioVis",
-            "The Human Protein Atlas",
-            "and cBioPortal. You will extract information on gene mutations",
-            "expression levels and any survival signals. You will evaluate therapeutic relevance using OncoKB or the ESMO ESCAT framework",
-            "and you will explore resistance by noting common co alterations and reported resistance variants or pathways for your chosen target.",
+            "Cancer database analysis",
+            "Gene mutation analysis",
+            "Expression analysis",
+            "Survival analysis",
+            "Therapeutic relevance assessment",
+            "Resistance analysis",
         ],
         references: [
             "Zhong, L., Li, Y., Xiong, L. et al. Small molecules in targeted cancer therapy: advances, challenges, and future perspectives. Sig Transduct Target Ther 6, 201 (2021). https://doi.org/10.1038/s41392-021-00572-w Min, HY., Lee, HY. Molecular targeted therapy for anticancer treatment. Exp Mol Med 54, 1670–1694 (2022). https://doi.org/10.1038/s12276-022-00864-3 Pantziarka Pan, Bouche Gauthier, André Nicolas. Hard” Drug Repurposing for Precision Oncology: The Missing Link? (2018). Frontiers in Pharmacology 9 https://www.frontiersin.org/articles/10.3389/fphar.2018.00637/full",
@@ -1306,7 +1359,12 @@ const projects = [
         aim: "This project aims to investigate the impact of media composition and divalent cation species on the efficiency of plaque formation in Enterococcus faecalis across a range of phages.",
         outline: "Bacteriophages (phages) are viruses that infect and kill bacteria. Unlike broad-spectrum antibiotics, phages are highly specific, targeting only their bacterial hosts and leaving beneficial microbes unharmed. This precision makes them attractive for phage therapy [1], especially as resistance to conventional antibiotics escalates. Enterococcus spp. are Gram positive bacteria commonly found as part of the healthy gut flora in humans and animals. In recent decades, however, Enterococcus faecalis and Enterococcus faecium have emerged as important opportunistic pathogens [2]. These organisms cause a range of diseases, including urinary tract, wound and bloodstream infections, and endocarditis. Furthermore, both organisms display increasing rates of intrinsic and acquired antibiotic resistance (including to drugs of last resort) rendering treatment of invasive infections challenging. These features make enterococcal infections prime targets for phage therapy. Phage therapy development depends on identifying phages that efficiently infect target bacteria. Plaque assays are integral to this process as they allow visualisation of areas of lysis on a lawn of target bacteria. For Enterococcus phages, success requires carefully balancing bacterial growth (to form an even lawn) with optimal infection conditions. Divalent cations, such as calcium (Ca²?) and magnesium (Mg²?), are known to enhance phage adsorption and infection efficiency in various systems [3]. However, the most effective cations for promoting phage infection in Enterococcus spp. remain unclear, with no consensus met across existing studies.",
         techniques: [
-            "• Bacterial culture and maintenance • Phage induction • Phage titration and Efficiency of Plating (EOP) assays • Media formulation",
+            "Bacterial culture",
+            "Bacterial maintenance",
+            "Phage induction",
+            "Phage titration",
+            "Efficiency of Plating assay",
+            "Media formulation",
         ],
         references: [
             "1. Skurnik, M., Alkalay-Oren, S., Boon, M. et al. Phage therapy. Nat Rev Methods Primers 5, 9 (2025). https://doi.org/10.1038/s43586-024-00377-5 2. Fiore E, Van Tyne D, Gilmore MS. Pathogenicity of Enterococci. Microbiol Spectr. 2019 Jul;7(4):10.1128/microbiolspec.gpp3-0053-2018. doi: 10.1128/microbiolspec.GPP3-0053-2018. 3. Ramesh N, Archana L, Madurantakam Royam M, Manohar P, Eniyan K. Effect of various bacteriological media on the plaque morphology of Staphylococcus and Vibrio phages. Access Microbiol. 2019 Jun 17;1(4):e000036. doi: 10.1099/acmi.0.000036. PMID: 32974524; PMCID: PMC7470289.",
@@ -1325,11 +1383,14 @@ const projects = [
         aim: "This project aims to develop a multiplex PCR assay targeting phage integrase genes to enable rapid assessment of prophage frequency and genomic location in clinical isolates of Enterococcus spp.",
         outline: "Enterococcus spp. are Gram positive bacteria commonly found as part of the healthy gut flora in humans and animals. In recent decades, however, Enterococcus faecalis and Enterococcus faecium have emerged as important opportunistic pathogens [1]. These organisms cause a range of diseases, including urinary tract, wound and bloodstream infections, and endocarditis. Furthermore, they display increasing rates of intrinsic and acquired antibiotic resistance - including to drugs of last resort - rendering treatment of invasive infections challenging. Phage therapy, which involves using bacteriophages (viruses that infect bacteria) to selectively kill pathogenic bacteria, is a promising strategy for treating antibiotic-resistant infections [2]. However, its effectiveness can be influenced by prophages, which are dormant phages integrated into the genomes of the target bacteria. While the number of prophages carried by enterococcal strains varies, they are often integrated at conserved genomic sites. These integration sites are determined by the sequence of the phage-encoded integrase enzyme, which tends to be conserved among prophages that localise to the same genomic regions. In other organisms, such as Staphylococcus aureus, this sequence conservation has been exploited to develop PCR-based methods for identifying both the number and location of prophages in clinical isolates without a requirement for whole genome sequencing [3]. Since enterococcal prophages have similar modular structures to S. aureus and are found at conserved regions within the bacterial chromosome, this project will investigate development of a similar assay for prophage screening in E. faecalis.",
         techniques: [
-            "• Bacterial culture • Molecular biology",
-            "including genomic DNA extraction",
+            "acterial culture",
+            "Genomic DNA extraction",
             "PCR",
-            "agarose gel electrophoresis • Primer design and assay optimisation • Bioinformatics analyses: Prophage identification",
-            "multiple sequence alignment",
+            "Agarose gel electrophoresis",
+            "Primer design",
+            "Assay optimisation",
+            "Prophage identification",
+            "Multiple sequence alignment",
         ],
         references: [
             "1. Fiore E, Van Tyne D, Gilmore MS. Pathogenicity of Enterococci. Microbiol Spectr. 2019 Jul;7(4):10.1128/microbiolspec.gpp3-0053-2018. doi: 10.1128/microbiolspec.GPP3-0053-2018. 2. Skurnik, M., Alkalay-Oren, S., Boon, M. et al. Phage therapy. Nat Rev Methods Primers 5, 9 (2025). https://doi.org/10.1038/s43586-024-00377-5 3. Goerke CPantucek R, Holtfreter S, Schulte B, Zink M, Grumann D, Bröker BM, Doskar J, Wolz C. 2009. Diversity of Prophages in Dominant Staphylococcus aureus Clonal Lineages. J Bacteriol 191. https://doi.org/10.1128/jb.01804-08",
@@ -1470,10 +1531,14 @@ const projects = [
         aim: "The aim of this project is to utilise and appraise the use of AlphaFold-based computational methods in the determination of protein-protein interactions. The project will look to provide molecular level insights into the structures, interactions, and activation mechanisms of selected pharmacological receptors.",
         outline: "High-resolution structural data for monomeric receptors are abundant, with thousands of entries in the Protein Data Bank (PDB) from X-ray crystallography and cryo-EM. In contrast, structural information on receptor assemblies is limited, as these are often short-lived, dynamic, or membrane-associated and therefore harder to capture experimentally. Yet, many receptor families (including receptor tyrosine kinases, G protein–coupled receptors, and cytokine receptors) are well known to function as dimers or higher-order complexes, where their physical interaction is critical for signalling and regulation. These interfaces likely present valuable therapeutic targets, offering opportunities to disrupt or stabilise specific states with high selectivity. Advances in deep learning approaches may provide new ways to model these complexes and inform future structure-based drug design. Since the publication of the first iteration of AlphaFold in 2020, it has been heralded as a landmark in de novo protein structure prediction. Developed by Google’s DeepMind, AlphaFold comprised an entirely new kind of software, in that it was first and foremost an AI-driven neural network. It was trained using vast quantities of data to make accurate predictions of distances between pairs of residues, and was more powerful than existing methodologies. In mid-2024, DeepMind published the third generation of this software (AF3), which, in addition to further refinement that has made it more accurate, is also believed to accurately predict interactions of proteins, the effects of point mutations, post-translational modifications and, in some cases, make predictions about the nature of ligand binding sites.",
         techniques: [
-            "This is a challenging computational biology/ bioinformatics project. Use of AI software to predict protein structures",
-            "protein docking/refinement software",
-            "interface and oligomerisation analysis (perhaps molecular dynamics simulations)",
-            "and structure/ data visualisation.",
+            "Protein structure prediction",
+            "Protein docking",
+            "Protein refinement",
+            "Interface analysis",
+            "Oligomerisation analysis",
+            "Molecular dynamics simulations",
+            "Structure visualisation",
+            "Data visualisation",
         ],
         references: [
             "Abramson, J., Adler, J., Dunger, J., Evans, R., Green, T., Pritzel, A., Ronneberger, O., Willmore, L., Ballard, A.J., Bambrick, J., Bodenstein, S.W., Evans, D.A., Hung, C.-C., O’Neill, M., Reiman, D., Tunyasuvunakool, K., Wu, Z., Žemgulyt?, A., Arvaniti, E. and Beattie, C. (2024). Accurate structure prediction of biomolecular interactions with AlphaFold 3. Nature, [online] 630(630), pp.493–500. doi:https://doi.org/10.1038/s41586-024-07487-w. Krokidis, M.G., Koumadorakis, D.E., Lazaros, K., Ivantsik, O., Exarchos, T.P., Vrahatis, A.G., Kotsiantis, S. and Vlamos, P. (2025). AlphaFold3: An Overview of Applications and Performance Insights. International Journal of Molecular Sciences, 26(8), p.3671. doi:https://doi.org/10.3390/ijms26083671.",
@@ -1492,7 +1557,13 @@ const projects = [
         aim: "This project aims to define key phenotypic differences between clinical and environmental Klebsiella isolates, linking growth, antimicrobial resistance, and virulence traits to better understand the processes that drive host adaptation and the emergence of pathogenic lineages.",
         outline: "Klebsiella species are major opportunistic pathogens responsible for a wide range of healthcare-associated infections and are increasingly recognized for their role in multidrug-resistant outbreaks. At the same time, closely related strains are frequently found in soil, water, and plant environments, raising questions about how environmental isolates acquire the traits that enable human infection. Understanding the differences between clinical and environmental isolates is critical for identifying the pathways through which harmless environmental bacteria adapt to cause disease. This project will investigate how isolates from clinical and environmental origins differ in their growth dynamics, antimicrobial resistance, and expression of virulence-associated traits such as biofilm formation, iron acquisition, and cytolytic activity. It will also explore how these phenotypes relate to in vivo pathogenic potential. Together, these comparisons will provide insight into the evolutionary and ecological factors that underpin Klebsiella’s transition from environmental survival to clinical threat, and identify phenotypic signatures that could aid in monitoring emerging high-risk strains.",
         techniques: [
-            "- Growth curves by hand - Growth curves using old plate reader - AMR disk diffusion - Biofilms via crystal violet - Galleria mellonella infection - Haemolysis assay - Siderophore screening",
+            "Growth curves",
+            "Plate reader analysis",
+            "AMR disk diffusion",
+            "Crystal violet biofilm assay",
+            "Galleria mellonella infection model",
+            "Haemolysis assay",
+            "Siderophore screening",
         ],
         references: [
             "https://doi.org/10.1093/femsre/fuy043",
@@ -1597,9 +1668,12 @@ const projects = [
         aim: "The main focus will be cell survival. This project will study the effects of various prostaglandins and their metabolites especially the more recently discovered ethanolamide metabolites on their ability to modulate cell survival/ cell death of human leukaemic cells in response to compounds that activate cell death mechanisms. TNF-?-induced death will be the primary function measured and the modulation of this response by the lipids outlined above will be evaluated using various inhibitors of cell survival pathways to elucidate the mechanisms which may be involved.",
         outline: "Prostaglandins are well established secondary mediators of inflammation which are derived from arachidonic acid and their synthesis can be inhibited by aspirin-like drugs. However, more recently it has been recognised that prostaglandins, particularly PGE2 can suppress the production of the main inflammatory mediators, specifically tumour necrosis factor-alpha (TNF-?) in a negative-feedback regulation and PGE2 has been shown to be one of the most potent immunoregulatory mediators so far studied [1, 2], with the ability to completely abolish many immune cell activities. In addition to inhibiting cytokine release prostanoids can also suppress the cell pathology induced by TNF-? i.e. preventing cell death [1]. They appear to have cytoprotective properties. There are many different series of prostaglandins in addition to PGE2 such as PGD2 and the more recently discovered PGE2-ethanolamide (from anandamide the ethanolamide derivative of arachidonic acid [3]). The fatty acid-ethanolamides can also be antiproliferative, which is important in the control of cancer cells and have already been shown to control the growth of solid cancers [4]. This raises the question of whether other fatty acid acid-derived lipids that can be synthesised during immune responses, can also regulate cell survival responses and if so the nature/ mechanisms by which they do so.",
         techniques: [
-            "Cell culture/ propagation of human leukaemia cells",
-            "cell viability estimation (also cytotoxicity and apoptosis) and if time permits",
-            "assay of cytokines.",
+            "Cell culture",
+            "Cell propagation",
+            "Cell viability estimation",
+            "Cytotoxicity assay",
+            "Apoptosis assay",
+            "Cytokine assay",
         ],
         references: [
             "1. DAVIDSON, J. ROTONDO, D. RIZZO, M.T. LEAVER, H.A. (2012) Therapeutic implications of disorders of cell death signalling: membranes, micro-environment, and eicosanoid and docosanoid metabolism. Br. J. Pharmacol. 166, 1193-1210. 2. BROWN, K.L. DAVIDSON, J. and ROTONDO, D. (2013) Characterisation of the prostaglandin E2-ethanolamide suppression of tumour necrosis factor-alpha production in human monocytic cells. Biochim. Biophys. Acta, 1831, 1098-1107. 4. BROWN, I. CASCIO, M.G. ROTONDO, D. PERTWEE, R.G. HEYS, S.D. WAHLE KW. (2013) Cannabinoids and omega-3/6 endocannabinoids as cell death and anticancer modulators. Prog. Lipid Res. 52, 80-109. 4. BROWN I, LEE J, SNEDDON AA, CASCIO MG, PERTWEE RG, WAHLE KWJ, ROTONDO D. (2020). Anticancer effects of n-3 EPA and DHA and their endocannabinoid derivatives on breast cancer cell growth and invasion. Prostaglandins Leukot Essent Fatty Acids 156: 102024, 102021-102010.",
@@ -1831,8 +1905,11 @@ const projects = [
         aim: "- To characterise the effect of iron availability on NTM growth. - To isolate and characterise siderophores produced by NTM.",
         outline: "Skin and lung infections caused by environmental non-tuberculous mycobacteria (NTM) are an emerging threat to global health. They are related to the deadly tuberculosis bacteria that kill over one million people annually. In developed countries, NTM infections now surpass tuberculosis. The UK infection rate is projected to increase by 6.2% over the next decade, with Scotland particularly affected. Immunocompromised individuals, such as those with cystic fibrosis, HIV, rheumatoid arthritis, or post-surgery, are especially vulnerable. Currently, there are no standard treatment for NTM infections; patients are treated with multiple antibiotics, which increases the risk of resistance, and the cure rate remains below 50%. Therefore, understanding NTM pathogenesis and identifying new therapeutic targets are urgently needed. This project will investigate the effect of iron on NTM growth and the NTM iron acquisition strategy involving siderophores, which is required for growth and pathogenesis, to pave the way for future studies on drug development.",
         techniques: [
-            "- Microbiology: Cultivation of bacteria under defined growth conditions. - Biochemistry: Screening for siderophore production",
-            "followed by isolation and characterisation using chromatographic methods.",
+            "Bacterial cultivation",
+            "Defined growth conditions",
+            "Siderophore screening",
+            "Chromatographic isolation",
+            "Chromatographic characterisation",
         ],
         references: [
             "Johansen, M., Non-tuberculous mycobacteria and the rise of Mycobacterium abscessus, Nat Rev Microbiol., 2022, 18, 392–407. DOI: 10.1038/s41579-020-0331-1 Gomes, A., et al., A Practical Toolkit for the Detection, Isolation, Quantification, and Characterization of Siderophores and Metallophores in Microorganisms, ACS Omega 2024, 9, 26863?26877. DOI: 10.1021/acsomega.4c03042",
@@ -2038,11 +2115,10 @@ const projects = [
         aim: "To investigate changes in expression and subcellular localisation of the inflammatory mediator high mobility group box 1 (HMGB1) in skeletal muscle using a rodent model of pulmonary hypertension.",
         outline: "Pulmonary hypertension (PH) is a progressive cardiovascular disorder characterised by elevated pulmonary arterial pressure, right ventricular strain, and reduced exercise capacity. Beyond the pulmonary circulation, PH has systemic consequences, including skeletal muscle dysfunction, which contributes significantly to exercise intolerance and reduced survival. The molecular mechanisms driving muscle impairment in PH remain poorly understood. High mobility group box 1 (HMGB1), a non-histone nuclear protein with both nuclear and extracellular signalling roles, has emerged as a key mediator of inflammation, oxidative stress, and tissue remodelling in cardiovascular disease. Elevated circulating HMGB1 has been reported in patients with PH, but its role in peripheral skeletal muscle adaptation remains unclear. This project will investigate HMGB1 expression and localisation in skeletal muscle using a rodent model of PH.",
         techniques: [
-            "Students will apply protein and imaging techniques to assess whether PH alters muscle HMGB1 distribution. Western blotting will quantify total HMGB1 protein content",
-            "while immunofluorescence (IF) combined with confocal microscopy will enable spatial localisation within muscle fibres",
-            "providing insight into nuclear versus cytoplasmic translocation. Together",
-            "these approaches will generate preliminary data on HMGB1 dynamics in PH",
-            "enhancing understanding of muscle pathology and potentially identifying novel therapeutic targets.",
+            "Protein imaging techniques",
+            "Western blotting",
+            "immunofluorescence",
+            "confocal microscopy",
         ],
         references: [
             "1. Zheng, Q., & Dai, Z. (2025). Engineering HMGB1-derived Peptides to Unravel Sex-Specific Mechanisms in Pulmonary Arterial Hypertension. American journal of respiratory cell and molecular biology, 73(3), 337–339. https://doi.org/10.1165/rcmb.2025-0070ED 2. Lawal, O. S., Niihori, M., James, J., Hinkle, A. J., Sano, T., McClain, N., Rafikov, R., & Rafikova, O. (2025). The Critical Role of HMGB1Cys106 in Regulating Sex-Specific p53 Signaling in Pulmonary Arterial Hypertension. American journal of respiratory cell and molecular biology, 73(3), 396–414. https://doi.org/10.1165/rcmb.2024-0296OC 3. Tang, D., Kang, R., Zeh, H. J., & Lotze, M. T. (2023). The multifunctional protein HMGB1: 50 years of discovery. Nature reviews. Immunology, 23(12), 824–841. https://doi.org/10.1038/s41577-023-00894-6",

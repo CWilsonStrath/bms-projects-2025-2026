@@ -890,13 +890,11 @@
             const supervisorFilter = document.getElementById('supervisorFilter');
             const supervisors = new Set();
             
+            // Only add primary supervisors to the dropdown
             projects.forEach(project => {
                 supervisors.add(project.primarySupervisor);
-                if (project.secondarySupervisor) {
-                    supervisors.add(project.secondarySupervisor);
-                }
             });
-
+        
             Array.from(supervisors).sort().forEach(supervisor => {
                 const option = document.createElement('option');
                 option.value = supervisor;

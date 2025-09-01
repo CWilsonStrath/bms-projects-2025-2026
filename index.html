@@ -990,7 +990,7 @@
                 const matchesSubject = !subjectFilter || project.subjects.includes(subjectFilter);
                 const matchesSupervisor = !supervisorFilter || 
                     project.primarySupervisor === supervisorFilter ||
-                    project.secondarySupervisor === supervisorFilter;
+                    (project.secondarySupervisor && project.secondarySupervisor.includes(supervisorFilter));
 
                 return matchesSearch && matchesType && matchesSubject && matchesSupervisor;
             });

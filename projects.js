@@ -2048,7 +2048,7 @@ const projects = [
         primarySupervisor: "Wang, H",
         secondarySupervisor: "",
         students: "2",
-        aim: "#NAME?",
+        aim: "To characterise the effect of iron availability on NTM growth. To isolate and characterise siderophores produced by NTM.",
         outline: "Skin and lung infections caused by environmental non-tuberculous mycobacteria (NTM) are an emerging threat to global health. They are related to the deadly tuberculosis bacteria that kill over one million people annually. In developed countries, NTM infections now surpass tuberculosis. The UK infection rate is projected to increase by 6.2% over the next decade, with Scotland particularly affected. Immunocompromised individuals, such as those with cystic fibrosis, HIV, rheumatoid arthritis, or post-surgery, are especially vulnerable. Currently, there are no standard treatment for NTM infections; patients are treated with multiple antibiotics, which increases the risk of resistance, and the cure rate remains below 50%. Therefore, understanding NTM pathogenesis and identifying new therapeutic targets are urgently needed. This project will investigate the effect of iron on NTM growth and the NTM iron acquisition strategy involving siderophores, which is required for growth and pathogenesis, to pave the way for future studies on drug development.",
         techniques: [
             "Bacterial cultivation",

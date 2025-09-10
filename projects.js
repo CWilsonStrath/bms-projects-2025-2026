@@ -2589,7 +2589,80 @@ const projects = [
         references: [
             "Tang, D., Kang, R., Zeh, H. J., & Lotze, M. T. (2023). The multifunctional protein HMGB1: 50 years of discovery. Nature reviews. Immunology, 23(12), 824–841. https://doi.org/10.1038/s41577-023-00894-6",
         ],
+    },
+    {
+        id: "BM432-114",
+        title: "Assessment of novel inhibitory-kappaB kinase-alpha (IKKalpha)-selective kinase inhibitors as potential anti-inflammatory agents.",
+        type: "Experimental Research Projects (Laboratory)",
+        subjects: [
+            "Biochemistry",
+            "Pharmacology",
+            "Biomedical Science",
+            "Immunology",
+        ],
+        primarySupervisor: "Paul, A",
+        secondarySupervisor: "",
+        students: "3",
+        aim: "In this project novel IKKalpha-selective and commercially available IKKbeta-selective small molecule kinase inhibitors will be examined for potential anti-inflammatory action against LPS-activated signalling events principally by assessment of changes in agonist-stimulated iNOS expression and activity in a murine macrophage cell model.",
+        outline: "Exposure of mammalian cell systems to bacteria results initially in the gross activation of macrophages leading to progressive haemodynamic instability and shock that are characteristic of the onset of sepsis, ultimately leading to death. Following exposure to lipopolysaccharide (LPS), the active component of bacterial endotoxin, a number of genes are induced, mediated in part through the activation of Toll-like receptor-4 (TLR-4). TLR4 engagement leads to the activation of a number of signalling pathways including the critical Nuclear Factor-kappaB (NF-kappaB) signalling pathways, namely the canonical and non-canonical pathways regulated by the IKKs, IKKbeta and IKKalpha respectively. Multiple genes are induced to generate a coordinated transcriptional response. One gene of critical importance in the onset of septicemia and septic shock is that of inducible nitric oxide synthase (iNOS) and can serve as a marker of the inflammatory response. The induction of iNOS is regulated by NF-kappaB signalling however it remains to be detailed clearly the contribution(s) of the canonical versus the non-canonical pathways in this process. In this project novel IKKalpha- and commercially available IKK-beta selective small molecule kinase inhibitors will be examined for potential anti-inflammatory action against LPS-activated signalling events principally by assessment of changes in agonist-stimulated iNOS expression and activity in a murine macrophage cell model.",
+        techniques: [
+            "Cell culture",
+            "pharmacological interventions with kinase inhibitors",
+            "iNOS activity assays",
+            "Western blotting.",
+        ],
+        references: [
+            "1. Involvement of mitogen-activated protein kinase homologues in the regulation of lipopolysaccharide-mediated induction of cyclo-oxygenase-2 but not nitric oxide synthase in RAW 264.7 macrophages. (1999) Paul, A., Cuenda, A., Bryant, C. E., Murray, J., Chilvers, E. R., Cohen, P., Gould, G. W., Plevin, R. (1999). Cell Signal. 11, 491-497. 2. IkappaB kinase inhibitors for treating autoimmune and inflammatory disorders: potential and challenges. (2007) Strnad J, Burke J.R. Trends Pharmacol Sci. 28, 142-148. 3. Integrating cell-signalling pathways with NF-kappaB and IKK function. (2007) Perkins ND. Nat Rev Mol Cell Biol. 8(1):49-62. 4. Inhibitory kappa B kinases as targets for pharmacological regulation. (2012) Carly Gamble, Kathryn McIntosh, Rebecca Scott, Ka Ho Ho, Robin Plevin and Andrew Paul Brit. J. Pharmacol. 165(4):802-19. 5. Inhibitory-?B Kinase (IKK) ? and Nuclear Factor-?B (NF?B)-Inducing Kinase (NIK) as Anti-Cancer Drug Targets. (2018) Paul A, Edwards J, Pepper C, Mackay S. Cells. 7(10). pii: E176. 6. Design and synthesis of novel aminoindazole-pyrrolo[2,3-b]pyridine inhibitors of IKK? that selectively perturb cellular non-canonical NF-?B signalling. Riley, C., Ammar, U., Alsfouk, A., Anthony, N. G., Baiget, J., Berretta, G., Breen, D., Huggan, J., Lawson, C., McIntosh, K., Plevin, R., Suckling, C. J., Young, L. C., Paul, A. & Mackay, S. P., 26 Jul 2024, In: Molecules. 29, 15, 29 p., 3515.",
+        ],
+    },
+    {
+        id: "BM432-115",
+        title: "Does targeting one classical IKK isoform over another offer better therapeutic potential in cancer?",
+        type: "Literature: Critical Analysis",
+        subjects: [
+            "Biochemistry",
+            "Pharmacology",
+        ],
+        primarySupervisor: "Paul, A",
+        secondarySupervisor: "",
+        students: "1",
+        aim: "This project will involve the critical appraisal of whether targeting IKKalpha and/or IKKbeta, using either molecular or pharmacological strategies, identifies a viable drug intervention strategy in cancer.",
+        outline: "The signalling of the NFkappaB cascade and its regulation of cellular gene transcription is well recognised to influence the development of a number of pathological conditions including bacterial and viral infection, cardiovascular diseases and cancer. Central to the regulation of NFkappaB-mediated gene transcription is the activation of the classical inhibitory kappaB kinases (IKKs); IKKalpha and IKKbeta. Pharmacological inhibitors targeting these kinase isoforms have to a degree offered hope of small molecule intervention against these inflammatory-based responses however it also emerging that targeting of each of these isoforms may have associated intrinsic toxicities.",
+        techniques: [
+            "research",
+            "literature searching and appraising",
+            "evidence based writing",
+            "critical appraisal",
+        ],
+        references: [
+            "1. IkappaB kinase inhibitors for treating autoimmune and inflammatory disorders: potential and challenges. (2007)Strnad J, Burke J.R. Trends Pharmacol Sci. 28, 142-148. 2. Inhibitory kappa B kinases as targets for pharmacological regulation. (2012) Carly Gamble, Kathryn McIntosh, Rebecca Scott, Ka Ho Ho, Robin Plevin and Andrew Paul Brit. J. Pharmacol. 165(4):802-19. 3. Inhibitory-?B Kinase (IKK) ? and Nuclear Factor-?B (NF?B)-Inducing Kinase (NIK) as Anti-Cancer Drug Targets. (2018) Paul A, Edwards J, Pepper C, Mackay S. Cells. 7(10). pii: E176.",
+        ],
+    },
+    {
+        id: "BM432-116",
+        title: "Does targeting one classical IKK isoform over another offer better therapeutic potential in inflammatory-based disease?",
+        type: "Literature: Critical Analysis",
+        subjects: [
+            "Biochemistry",
+            "Pharmacology",
+            "Immunology",
+        ],
+        primarySupervisor: "Paul, A",
+        secondarySupervisor: "",
+        students: "1",
+        aim: "This project will involve the critical appraisal of whether targeting IKKalpha and/or IKKbeta, using either molecular or pharmacological strategies, identifies a viable drug intervention strategy against inflammatory-based disease.",
+        outline: "The signalling of the NFkappaB cascade and its regulation of cellular gene transcription is well recognised to influence the development of a number of pathological conditions including bacterial and viral infection, cardiovascular diseases and cancer. Central to the regulation of NFkappaB-mediated gene transcription is the activation of the classical inhibitory kappaB kinases (IKKs); IKKalpha and IKKbeta. Pharmacological inhibitors targeting these kinase isoforms have to a degree offered hope of small molecule intervention against these inflammatory-based responses however it also emerging that targeting of each of these isoforms may have associated intrinsic toxicities.",
+        techniques: [
+            "research",
+            "literature searching and appraising",
+            "evidence based writing",
+            "critical appraisal",
+        ],
+        references: [
+            "1. IkappaB kinase inhibitors for treating autoimmune and inflammatory disorders: potential and challenges. (2007)Strnad J, Burke J.R. Trends Pharmacol Sci. 28, 142-148. 2. Inhibitory kappa B kinases as targets for pharmacological regulation. (2012) Carly Gamble, Kathryn McIntosh, Rebecca Scott, Ka Ho Ho, Robin Plevin and Andrew Paul Brit. J. Pharmacol. 165(4):802-19. 3. Inhibitory-?B Kinase (IKK) ? and Nuclear Factor-?B (NF?B)-Inducing Kinase (NIK) as Anti-Cancer Drug Targets. (2018) Paul A, Edwards J, Pepper C, Mackay S. Cells. 7(10). pii: E176.",
+        ],
     }
+    
 ];
 
 // Export for use in browser

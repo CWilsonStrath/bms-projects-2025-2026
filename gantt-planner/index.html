@@ -1400,18 +1400,19 @@
         
         // Update the project header display
         function updateProjectHeader() {
-            document.getElementById('display-project-title').textContent = 
-                document.getElementById('project-title').value || 'Not specified';
-            document.getElementById('display-student-name').textContent = 
-                document.getElementById('student-name').value || 'Not specified';
-            document.getElementById('display-supervisor').textContent = 
-                document.getElementById('supervisor').value || 'Not specified';
-            document.getElementById('display-project-type').textContent = 
-                document.getElementById('project-type').value || 'Not specified';
-            document.getElementById('display-timeline').textContent = 
-                `${CONFIG.totalWeeks} weeks`;
-            document.getElementById('display-date').textContent = 
-                new Date().toLocaleDateString();
+            const displayTitle = document.getElementById('display-project-title');
+            const displayStudent = document.getElementById('display-student-name');
+            const displaySupervisor = document.getElementById('display-supervisor');
+            const displayType = document.getElementById('display-project-type');
+            const displayTimeline = document.getElementById('display-timeline');
+            const displayDate = document.getElementById('display-date');
+            
+            if (displayTitle) displayTitle.textContent = document.getElementById('project-title').value || 'Not specified';
+            if (displayStudent) displayStudent.textContent = document.getElementById('student-name').value || 'Not specified';
+            if (displaySupervisor) displaySupervisor.textContent = document.getElementById('supervisor').value || 'Not specified';
+            if (displayType) displayType.textContent = document.getElementById('project-type').value || 'Not specified';
+            if (displayTimeline) displayTimeline.textContent = `${CONFIG.totalWeeks} weeks`;
+            if (displayDate) displayDate.textContent = new Date().toLocaleDateString();
         }
     </script>
 </body>

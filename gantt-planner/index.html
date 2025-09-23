@@ -12,30 +12,23 @@
         }
 
         :root {
-            /* Material Design 3 Color System */
             --md-sys-color-primary: #1565C0;
             --md-sys-color-on-primary: #FFFFFF;
             --md-sys-color-primary-container: #D3E3FD;
             --md-sys-color-on-primary-container: #001C3B;
-            
             --md-sys-color-secondary: #5A6069;
             --md-sys-color-on-secondary: #FFFFFF;
             --md-sys-color-secondary-container: #DEE3EA;
             --md-sys-color-on-secondary-container: #171B20;
-            
             --md-sys-color-surface: #FEFBFF;
             --md-sys-color-on-surface: #1B1B1F;
             --md-sys-color-surface-variant: #E0E2EC;
             --md-sys-color-on-surface-variant: #44474E;
-            
             --md-sys-color-outline: #74777F;
             --md-sys-color-outline-variant: #C4C6CF;
-            
             --md-sys-color-success: #4CAF50;
             --md-sys-color-warning: #FF9800;
             --md-sys-color-error: #F44336;
-            
-            /* Material Design 3 Elevation Shadows */
             --md-elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
             --md-elevation-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
         }
@@ -142,7 +135,6 @@
             border: 1px solid var(--md-sys-color-outline);
             border-radius: 4px;
             cursor: pointer;
-            transition: all 0.2s;
         }
         
         .btn {
@@ -158,25 +150,10 @@
             gap: 8px;
         }
         
-        .btn-primary {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-        }
-        
-        .btn-secondary {
-            background-color: var(--md-sys-color-secondary);
-            color: var(--md-sys-color-on-secondary);
-        }
-        
-        .btn-success {
-            background-color: var(--md-sys-color-success);
-            color: white;
-        }
-        
-        .btn-error {
-            background-color: var(--md-sys-color-error);
-            color: white;
-        }
+        .btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+        .btn-secondary { background-color: var(--md-sys-color-secondary); color: var(--md-sys-color-on-secondary); }
+        .btn-success { background-color: var(--md-sys-color-success); color: white; }
+        .btn-error { background-color: var(--md-sys-color-error); color: white; }
         
         .btn:hover {
             transform: translateY(-1px);
@@ -202,7 +179,6 @@
             color: var(--md-sys-color-on-primary-container);
             padding: 20px;
             border-radius: 12px 12px 0 0;
-            border-bottom: 2px solid var(--md-sys-color-primary);
         }
         
         .project-header-grid {
@@ -239,6 +215,7 @@
             min-width: 1400px;
             border-collapse: separate;
             border-spacing: 0;
+            table-layout: fixed;
         }
         
         .gantt-header {
@@ -252,7 +229,7 @@
         .gantt-header th {
             padding: 16px 8px;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -269,13 +246,13 @@
             text-align: center;
             font-size: 11px;
             font-weight: 500;
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
             line-height: 1.2;
         }
         
         .gantt-row {
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
             transition: background-color 0.2s;
+            position: relative;
         }
         
         .gantt-row:hover {
@@ -288,16 +265,20 @@
         
         .task-name-cell {
             width: 300px;
-            padding: 16px 20px;
+            padding: 10px 20px;
             border-right: 2px solid var(--md-sys-color-outline-variant);
             background: var(--md-sys-color-surface);
             cursor: pointer;
+            min-height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .task-title {
             font-weight: 500;
             font-size: 14px;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             color: var(--md-sys-color-on-surface);
         }
         
@@ -352,7 +333,7 @@
         
         .timeline-cell {
             width: 60px;
-            height: 60px;
+            height: 40px;
             border-right: 1px solid var(--md-sys-color-outline-variant);
             position: relative;
             background: white;
@@ -361,8 +342,8 @@
         
         .task-bar {
             position: absolute;
-            top: 12px;
-            height: 36px;
+            top: 8px;
+            height: 24px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -381,7 +362,7 @@
         }
         
         .task-bar:hover {
-            transform: translateY(-50%) scale(1.02);
+            transform: translateY(-1px);
             box-shadow: var(--md-elevation-3);
         }
         
@@ -490,28 +471,10 @@
             border-top: 1px solid var(--md-sys-color-outline-variant);
         }
         
-        .tips {
-            background: var(--md-sys-color-secondary-container);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 24px;
-        }
-        
-        .tips h3 {
-            color: var(--md-sys-color-on-secondary-container);
-            margin-bottom: 12px;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        
-        .tips ul {
-            color: var(--md-sys-color-on-secondary-container);
-            list-style-position: inside;
-        }
-        
-        .tips li {
-            margin-bottom: 8px;
-            line-height: 1.4;
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--md-sys-color-on-surface-variant);
         }
         
         @media (max-width: 768px) {
@@ -523,19 +486,9 @@
                 min-width: 800px;
             }
             
-            .week-header {
+            .week-header, .timeline-cell {
                 width: 40px;
             }
-            
-            .timeline-cell {
-                width: 40px;
-            }
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--md-sys-color-on-surface-variant);
         }
     </style>
 </head>
@@ -543,7 +496,7 @@
     <div class="header">
         <div class="container">
             <h1>BM432 Project Timeline Planner</h1>
-            <p>Strategic planning tool for final year projects • 2025-2026</p>
+            <p>Strategic planning tool for undergraduate thesis projects • 2025-2026</p>
         </div>
     </div>
 
@@ -575,7 +528,7 @@
                 </div>
                 <div class="input-group">
                     <label for="total-weeks">Timeline (weeks)</label>
-                    <input type="number" id="total-weeks" min="10" max="52" value="20" onchange="updateTimelineWeeks()">
+                    <input type="number" id="total-weeks" min="10" max="52" value="20">
                 </div>
             </div>
             
@@ -596,28 +549,7 @@
                     </div>
                     <div class="input-group">
                         <label for="start-week">Start Week</label>
-                        <select id="start-week">
-                            <option value="0">Sep W3</option>
-                            <option value="1">Sep W4</option>
-                            <option value="2">Oct W1</option>
-                            <option value="3">Oct W2</option>
-                            <option value="4">Oct W3</option>
-                            <option value="5">Oct W4</option>
-                            <option value="6">Nov W1</option>
-                            <option value="7">Nov W2</option>
-                            <option value="8">Nov W3</option>
-                            <option value="9">Nov W4</option>
-                            <option value="10">Dec W1</option>
-                            <option value="11">Dec W2</option>
-                            <option value="12">Jan W2</option>
-                            <option value="13">Jan W3</option>
-                            <option value="14">Jan W4</option>
-                            <option value="15">Feb W1</option>
-                            <option value="16">Feb W2</option>
-                            <option value="17">Feb W3</option>
-                            <option value="18">Feb W4</option>
-                            <option value="19">Mar W1</option>
-                        </select>
+                        <select id="start-week"></select>
                     </div>
                     <div class="input-group">
                         <label>Color</label>
@@ -643,36 +575,43 @@
         </div>
         
         <div class="gantt-container">
+            <div class="project-header">
+                <div class="project-header-grid">
+                    <div class="project-header-item">
+                        <div class="project-header-label">Project</div>
+                        <div class="project-header-value" id="display-project-title">Not specified</div>
+                    </div>
+                    <div class="project-header-item">
+                        <div class="project-header-label">Student</div>
+                        <div class="project-header-value" id="display-student-name">Not specified</div>
+                    </div>
+                    <div class="project-header-item">
+                        <div class="project-header-label">Supervisor</div>
+                        <div class="project-header-value" id="display-supervisor">Not specified</div>
+                    </div>
+                    <div class="project-header-item">
+                        <div class="project-header-label">Type</div>
+                        <div class="project-header-value" id="display-project-type">Not specified</div>
+                    </div>
+                    <div class="project-header-item">
+                        <div class="project-header-label">Timeline</div>
+                        <div class="project-header-value" id="display-timeline">20 weeks</div>
+                    </div>
+                    <div class="project-header-item">
+                        <div class="project-header-label">Generated</div>
+                        <div class="project-header-value" id="display-date"></div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="gantt-chart">
                 <table class="gantt-table" id="gantt-table">
                     <thead class="gantt-header">
                         <tr>
                             <th class="task-header">Task</th>
-                            <th class="week-header">Sep<br>W3</th>
-                            <th class="week-header">Sep<br>W4</th>
-                            <th class="week-header">Oct<br>W1</th>
-                            <th class="week-header">Oct<br>W2</th>
-                            <th class="week-header">Oct<br>W3</th>
-                            <th class="week-header">Oct<br>W4</th>
-                            <th class="week-header">Nov<br>W1</th>
-                            <th class="week-header">Nov<br>W2</th>
-                            <th class="week-header">Nov<br>W3</th>
-                            <th class="week-header">Nov<br>W4</th>
-                            <th class="week-header">Dec<br>W1</th>
-                            <th class="week-header">Dec<br>W2</th>
-                            <th class="week-header">Jan<br>W2</th>
-                            <th class="week-header">Jan<br>W3</th>
-                            <th class="week-header">Jan<br>W4</th>
-                            <th class="week-header">Feb<br>W1</th>
-                            <th class="week-header">Feb<br>W2</th>
-                            <th class="week-header">Feb<br>W3</th>
-                            <th class="week-header">Feb<br>W4</th>
-                            <th class="week-header">Mar<br>W1</th>
                         </tr>
                     </thead>
-                    <tbody id="gantt-body">
-                        <!-- Tasks will be rendered here -->
-                    </tbody>
+                    <tbody id="gantt-body"></tbody>
                 </table>
             </div>
         </div>
@@ -686,7 +625,7 @@
         </div>
     </div>
 
-    <!-- Week Labels Customization Modal -->
+    <!-- Week Labels Modal -->
     <div id="weekLabelsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -694,11 +633,9 @@
                 <button class="close-btn" onclick="closeWeekLabelsModal()">&times;</button>
             </div>
             <div style="margin-bottom: 16px; color: var(--md-sys-color-on-surface-variant); font-size: 14px;">
-                Edit the labels for each week in your timeline. Leave blank to use default "Week #" format.
+                Edit the labels for each week in your timeline.
             </div>
-            <div id="week-labels-form" style="display: grid; gap: 12px; max-height: 400px; overflow-y: auto;">
-                <!-- Week label inputs will be generated here -->
-            </div>
+            <div id="week-labels-form" style="display: grid; gap: 12px; max-height: 400px; overflow-y: auto;"></div>
             <div class="modal-actions">
                 <button type="button" class="btn btn-secondary" onclick="resetWeekLabels()">Reset to Defaults</button>
                 <button type="button" class="btn btn-secondary" onclick="closeWeekLabelsModal()">Cancel</button>
@@ -736,28 +673,7 @@
                     </div>
                     <div class="input-group">
                         <label for="edit-start-week">Start Week</label>
-                        <select id="edit-start-week" required>
-                            <option value="0">Sep W3</option>
-                            <option value="1">Sep W4</option>
-                            <option value="2">Oct W1</option>
-                            <option value="3">Oct W2</option>
-                            <option value="4">Oct W3</option>
-                            <option value="5">Oct W4</option>
-                            <option value="6">Nov W1</option>
-                            <option value="7">Nov W2</option>
-                            <option value="8">Nov W3</option>
-                            <option value="9">Nov W4</option>
-                            <option value="10">Dec W1</option>
-                            <option value="11">Dec W2</option>
-                            <option value="12">Jan W2</option>
-                            <option value="13">Jan W3</option>
-                            <option value="14">Jan W4</option>
-                            <option value="15">Feb W1</option>
-                            <option value="16">Feb W2</option>
-                            <option value="17">Feb W3</option>
-                            <option value="18">Feb W4</option>
-                            <option value="19">Mar W1</option>
-                        </select>
+                        <select id="edit-start-week" required></select>
                     </div>
                 </div>
                 <div class="input-group">
@@ -783,7 +699,7 @@
         let selectedTask = null;
         let taskIdCounter = 1;
         
-        // Configuration - easily adjustable
+        // Configuration
         const CONFIG = {
             totalWeeks: 20,
             weekLabels: [
@@ -793,139 +709,7 @@
             ]
         };
         
-        // Generate week headers dynamically
-        function generateWeekHeaders() {
-            const headerRow = document.querySelector('.gantt-header tr');
-            const taskHeader = headerRow.querySelector('.task-header');
-            
-            // Clear existing week headers
-            const existingHeaders = headerRow.querySelectorAll('.week-header');
-            existingHeaders.forEach(header => header.remove());
-            
-            // Add new week headers
-            for (let i = 0; i < CONFIG.totalWeeks; i++) {
-                const th = document.createElement('th');
-                th.className = 'week-header';
-                th.textContent = CONFIG.weekLabels[i] || `Week ${i + 1}`;
-                headerRow.appendChild(th);
-            }
-        }
-        
-        // Update timeline when user changes number of weeks
-        function updateTimelineWeeks() {
-            const totalWeeksInput = document.getElementById('total-weeks');
-            const newTotal = parseInt(totalWeeksInput.value);
-            
-            if (newTotal < 10 || newTotal > 52 || isNaN(newTotal)) {
-                alert('Please enter a number between 10 and 52 weeks');
-                totalWeeksInput.value = CONFIG.totalWeeks;
-                return;
-            }
-            
-            // Update configuration
-            CONFIG.totalWeeks = newTotal;
-            
-            // Generate default week labels if we don't have enough
-            while (CONFIG.weekLabels.length < newTotal) {
-                CONFIG.weekLabels.push(`Week ${CONFIG.weekLabels.length + 1}`);
-            }
-            
-            // Update start week options in forms
-            updateStartWeekOptions();
-            
-            // Regenerate chart
-            generateWeekHeaders();
-            renderChart();
-        }
-        
-        // Update the start week dropdown options
-        function updateStartWeekOptions() {
-            const startWeekSelects = document.querySelectorAll('#start-week, #edit-start-week');
-            
-            startWeekSelects.forEach(select => {
-                const currentValue = select.value;
-                select.innerHTML = '';
-                
-                for (let i = 0; i < CONFIG.totalWeeks; i++) {
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = CONFIG.weekLabels[i] || `Week ${i + 1}`;
-                    select.appendChild(option);
-                }
-                
-                // Restore previous selection if still valid
-                if (currentValue < CONFIG.totalWeeks) {
-                    select.value = currentValue;
-                }
-            });
-        }
-        
-        // Open week labels customization modal
-        function customizeWeekLabels() {
-            const modal = document.getElementById('weekLabelsModal');
-            const form = document.getElementById('week-labels-form');
-            
-            // Generate input fields for each week
-            form.innerHTML = '';
-            for (let i = 0; i < CONFIG.totalWeeks; i++) {
-                const div = document.createElement('div');
-                div.style.display = 'grid';
-                div.style.gridTemplateColumns = '100px 1fr';
-                div.style.gap = '12px';
-                div.style.alignItems = 'center';
-                
-                const label = document.createElement('label');
-                label.textContent = `Week ${i + 1}:`;
-                label.style.fontWeight = '500';
-                
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.id = `week-label-${i}`;
-                input.value = CONFIG.weekLabels[i] || '';
-                input.placeholder = `Week ${i + 1}`;
-                input.style.padding = '8px';
-                input.style.border = '1px solid var(--md-sys-color-outline)';
-                input.style.borderRadius = '4px';
-                
-                div.appendChild(label);
-                div.appendChild(input);
-                form.appendChild(div);
-            }
-            
-            modal.style.display = 'block';
-        }
-        
-        // Close week labels modal
-        function closeWeekLabelsModal() {
-            document.getElementById('weekLabelsModal').style.display = 'none';
-        }
-        
-        // Save week labels
-        function saveWeekLabels() {
-            for (let i = 0; i < CONFIG.totalWeeks; i++) {
-                const input = document.getElementById(`week-label-${i}`);
-                CONFIG.weekLabels[i] = input.value.trim() || `Week ${i + 1}`;
-            }
-            
-            // Update the chart and form options
-            generateWeekHeaders();
-            updateStartWeekOptions();
-            closeWeekLabelsModal();
-        }
-        
-        // Reset week labels to default
-        function resetWeekLabels() {
-            if (confirm('Reset all week labels to default format (Week 1, Week 2, etc.)?')) {
-                CONFIG.weekLabels = [];
-                for (let i = 0; i < CONFIG.totalWeeks; i++) {
-                    CONFIG.weekLabels[i] = `Week ${i + 1}`;
-                    const input = document.getElementById(`week-label-${i}`);
-                    if (input) input.value = '';
-                }
-            }
-        }
-        
-        // Initialize with meta-analysis example tasks
+        // Initialize with example tasks
         function initializeExampleTasks() {
             tasks = [
                 {
@@ -1071,6 +855,55 @@
             ];
         }
         
+        function generateWeekHeaders() {
+            const headerRow = document.querySelector('.gantt-header tr');
+            const existingHeaders = headerRow.querySelectorAll('.week-header');
+            existingHeaders.forEach(header => header.remove());
+            
+            for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                const th = document.createElement('th');
+                th.className = 'week-header';
+                th.textContent = CONFIG.weekLabels[i] || `Week ${i + 1}`;
+                headerRow.appendChild(th);
+            }
+        }
+        
+        function updateTimelineWeeks() {
+            const newTotal = parseInt(document.getElementById('total-weeks').value);
+            if (newTotal < 10 || newTotal > 52 || isNaN(newTotal)) {
+                alert('Please enter a number between 10 and 52 weeks');
+                document.getElementById('total-weeks').value = CONFIG.totalWeeks;
+                return;
+            }
+            
+            CONFIG.totalWeeks = newTotal;
+            while (CONFIG.weekLabels.length < newTotal) {
+                CONFIG.weekLabels.push(`Week ${CONFIG.weekLabels.length + 1}`);
+            }
+            
+            updateStartWeekOptions();
+            generateWeekHeaders();
+            renderChart();
+            updateProjectHeader();
+        }
+        
+        function updateStartWeekOptions() {
+            const selects = document.querySelectorAll('#start-week, #edit-start-week');
+            selects.forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '';
+                for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = CONFIG.weekLabels[i] || `Week ${i + 1}`;
+                    select.appendChild(option);
+                }
+                if (currentValue < CONFIG.totalWeeks) {
+                    select.value = currentValue;
+                }
+            });
+        }
+        
         function renderChart() {
             const tbody = document.getElementById('gantt-body');
             tbody.innerHTML = '';
@@ -1080,7 +913,6 @@
                 return;
             }
             
-            // Group tasks by category
             const groupedTasks = {};
             tasks.forEach(task => {
                 if (!groupedTasks[task.category]) {
@@ -1089,11 +921,10 @@
                 groupedTasks[task.category].push(task);
             });
             
-            // Render grouped tasks
             Object.keys(groupedTasks).forEach(category => {
                 const categoryTasks = groupedTasks[category];
                 
-                // Add category header if there are multiple tasks in this category
+                // Add category header if multiple tasks
                 if (categoryTasks.length > 1) {
                     const categoryRow = document.createElement('tr');
                     categoryRow.className = 'gantt-row category-header';
@@ -1108,7 +939,6 @@
                     `;
                     categoryRow.appendChild(categoryCell);
                     
-                    // Add empty timeline cells for category header
                     for (let week = 0; week < CONFIG.totalWeeks; week++) {
                         const cell = document.createElement('td');
                         cell.className = 'timeline-cell category-timeline';
@@ -1119,7 +949,7 @@
                 }
                 
                 // Add individual tasks
-                categoryTasks.forEach((task, index) => {
+                categoryTasks.forEach((task) => {
                     const row = document.createElement('tr');
                     row.className = 'gantt-row';
                     row.setAttribute('data-task-id', task.id);
@@ -1128,12 +958,10 @@
                         row.classList.add('selected');
                     }
                     
-                    // Task name cell
                     const nameCell = document.createElement('td');
                     nameCell.className = 'task-name-cell';
                     
                     if (categoryTasks.length > 1) {
-                        // Show as subtask
                         nameCell.innerHTML = `
                             <div class="subtask-content">
                                 <span class="subtask-indent">├</span>
@@ -1141,7 +969,6 @@
                             </div>
                         `;
                     } else {
-                        // Show as standalone task with category
                         nameCell.innerHTML = `
                             <div class="task-category">
                                 <span class="category-dot" style="background-color: ${task.color}"></span>
@@ -1159,7 +986,6 @@
                         const cell = document.createElement('td');
                         cell.className = 'timeline-cell';
                         
-                        // Only add task bar on the first week of the task
                         if (week === task.startWeek) {
                             const taskBar = document.createElement('div');
                             taskBar.className = 'task-bar';
@@ -1171,13 +997,8 @@
                             }
                             
                             taskBar.style.backgroundColor = task.color;
-                            
-                            // Calculate the full width of the bar across multiple cells
-                            const barWidth = (task.duration * 60) - 4;
                             taskBar.style.left = '2px';
-                            taskBar.style.width = `${barWidth}px`;
-                            
-                            // Just use the full task name - let CSS handle truncation
+                            taskBar.style.width = `${(task.duration * 60) - 4}px`;
                             taskBar.textContent = task.name;
                             
                             taskBar.setAttribute('data-task-id', task.id);
@@ -1191,7 +1012,7 @@
                                 updateProgress();
                             });
                             
-                            taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks\n${task.notes ? 'Notes: ' + task.notes : ''}`;
+                            taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks${task.notes ? '\nNotes: ' + task.notes : ''}`;
                             
                             cell.appendChild(taskBar);
                         }
@@ -1217,13 +1038,8 @@
             const color = document.getElementById('task-color').value;
             const notes = document.getElementById('task-notes').value.trim();
             
-            if (!name) {
-                alert('Please enter a task name');
-                return;
-            }
-            
-            if (!category) {
-                alert('Please enter a category');
+            if (!name || !category) {
+                alert('Please enter task name and category');
                 return;
             }
             
@@ -1258,7 +1074,6 @@
                 return;
             }
             
-            // Populate edit form
             document.getElementById('edit-task-name').value = selectedTask.name;
             document.getElementById('edit-task-category').value = selectedTask.category;
             document.getElementById('edit-task-color').value = selectedTask.color;
@@ -1276,7 +1091,6 @@
         
         function saveTaskEdit(event) {
             event.preventDefault();
-            
             if (!selectedTask) return;
             
             selectedTask.name = document.getElementById('edit-task-name').value;
@@ -1315,6 +1129,65 @@
             }
         }
         
+        function customizeWeekLabels() {
+            const modal = document.getElementById('weekLabelsModal');
+            const form = document.getElementById('week-labels-form');
+            
+            form.innerHTML = '';
+            for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                const div = document.createElement('div');
+                div.style.display = 'grid';
+                div.style.gridTemplateColumns = '100px 1fr';
+                div.style.gap = '12px';
+                div.style.alignItems = 'center';
+                
+                const label = document.createElement('label');
+                label.textContent = `Week ${i + 1}:`;
+                label.style.fontWeight = '500';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = `week-label-${i}`;
+                input.value = CONFIG.weekLabels[i] || '';
+                input.placeholder = `Week ${i + 1}`;
+                input.style.padding = '8px';
+                input.style.border = '1px solid var(--md-sys-color-outline)';
+                input.style.borderRadius = '4px';
+                
+                div.appendChild(label);
+                div.appendChild(input);
+                form.appendChild(div);
+            }
+            
+            modal.style.display = 'block';
+        }
+        
+        function closeWeekLabelsModal() {
+            document.getElementById('weekLabelsModal').style.display = 'none';
+        }
+        
+        function saveWeekLabels() {
+            for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                const input = document.getElementById(`week-label-${i}`);
+                CONFIG.weekLabels[i] = input.value.trim() || `Week ${i + 1}`;
+            }
+            
+            generateWeekHeaders();
+            updateStartWeekOptions();
+            closeWeekLabelsModal();
+        }
+        
+        function resetWeekLabels() {
+            if (confirm('Reset all week labels to default format?')) {
+                CONFIG.weekLabels = [];
+                for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                    CONFIG.weekLabels[i] = `Week ${i + 1}`;
+                    const input = document.getElementById(`week-label-${i}`);
+                    if (input) input.value = '';
+                }
+            }
+        }
+        
         function updateProgress() {
             const totalTasks = tasks.length;
             const completedTasks = tasks.filter(t => t.completed).length;
@@ -1325,12 +1198,29 @@
                 `${percentage}% Complete (${completedTasks} of ${totalTasks} tasks)`;
         }
         
+        function updateProjectHeader() {
+            document.getElementById('display-project-title').textContent = 
+                document.getElementById('project-title').value || 'Not specified';
+            document.getElementById('display-student-name').textContent = 
+                document.getElementById('student-name').value || 'Not specified';
+            document.getElementById('display-supervisor').textContent = 
+                document.getElementById('supervisor').value || 'Not specified';
+            document.getElementById('display-project-type').textContent = 
+                document.getElementById('project-type').value || 'Not specified';
+            document.getElementById('display-timeline').textContent = 
+                `${CONFIG.totalWeeks} weeks`;
+            document.getElementById('display-date').textContent = 
+                new Date().toLocaleDateString();
+        }
+        
         function saveProject() {
             const projectData = {
                 title: document.getElementById('project-title').value,
                 student: document.getElementById('student-name').value,
                 supervisor: document.getElementById('supervisor').value,
                 type: document.getElementById('project-type').value,
+                totalWeeks: CONFIG.totalWeeks,
+                weekLabels: CONFIG.weekLabels,
                 tasks: tasks,
                 created: new Date().toISOString()
             };
@@ -1361,23 +1251,28 @@
                     try {
                         const projectData = JSON.parse(e.target.result);
                         
-                        // Load project info
                         document.getElementById('project-title').value = projectData.title || '';
                         document.getElementById('student-name').value = projectData.student || '';
                         document.getElementById('supervisor').value = projectData.supervisor || '';
                         document.getElementById('project-type').value = projectData.type || '';
+                        document.getElementById('total-weeks').value = projectData.totalWeeks || 20;
                         
-                        // Load tasks
+                        CONFIG.totalWeeks = projectData.totalWeeks || 20;
+                        CONFIG.weekLabels = projectData.weekLabels || CONFIG.weekLabels;
+                        
                         tasks = projectData.tasks || [];
                         taskIdCounter = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
                         selectedTask = null;
                         
+                        generateWeekHeaders();
+                        updateStartWeekOptions();
                         renderChart();
                         updateProgress();
+                        updateProjectHeader();
                         
                         alert('Project loaded successfully!');
                     } catch (error) {
-                        alert('Error loading project file. Please check the format.');
+                        alert('Error loading project file.');
                     }
                 };
                 reader.readAsText(file);
@@ -1387,26 +1282,22 @@
         }
         
         function exportChart() {
-            alert('To export your timeline:\n\n1. Take a screenshot of the chart\n2. Use browser print function (Ctrl+P)\n3. Or use browser developer tools to capture');
+            alert('To export: Take a screenshot or use browser print (Ctrl+P) to save as PDF.');
         }
         
-        // Close modal when clicking outside
+        // Event listeners
         window.addEventListener('click', function(event) {
             const editModal = document.getElementById('editModal');
             const weekLabelsModal = document.getElementById('weekLabelsModal');
             
-            if (event.target === editModal) {
-                closeEditModal();
-            }
-            if (event.target === weekLabelsModal) {
-                closeWeekLabelsModal();
-            }
+            if (event.target === editModal) closeEditModal();
+            if (event.target === weekLabelsModal) closeWeekLabelsModal();
         });
         
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeEditModal();
+                closeWeekLabelsModal();
             }
             if (event.key === 'Delete' && selectedTask) {
                 deleteSelected();
@@ -1422,30 +1313,12 @@
             updateProgress();
             updateProjectHeader();
             
-            // Add event listeners to update project header when fields change
             document.getElementById('project-title').addEventListener('input', updateProjectHeader);
             document.getElementById('student-name').addEventListener('input', updateProjectHeader);
             document.getElementById('supervisor').addEventListener('input', updateProjectHeader);
             document.getElementById('project-type').addEventListener('change', updateProjectHeader);
-            document.getElementById('total-weeks').addEventListener('change', updateProjectHeader);
+            document.getElementById('total-weeks').addEventListener('change', updateTimelineWeeks);
         });
-        
-        // Update the project header display
-        function updateProjectHeader() {
-            const displayTitle = document.getElementById('display-project-title');
-            const displayStudent = document.getElementById('display-student-name');
-            const displaySupervisor = document.getElementById('display-supervisor');
-            const displayType = document.getElementById('display-project-type');
-            const displayTimeline = document.getElementById('display-timeline');
-            const displayDate = document.getElementById('display-date');
-            
-            if (displayTitle) displayTitle.textContent = document.getElementById('project-title').value || 'Not specified';
-            if (displayStudent) displayStudent.textContent = document.getElementById('student-name').value || 'Not specified';
-            if (displaySupervisor) displaySupervisor.textContent = document.getElementById('supervisor').value || 'Not specified';
-            if (displayType) displayType.textContent = document.getElementById('project-type').value || 'Not specified';
-            if (displayTimeline) displayTimeline.textContent = `${CONFIG.totalWeeks} weeks`;
-            if (displayDate) displayDate.textContent = new Date().toLocaleDateString();
-        }
     </script>
 </body>
 </html>

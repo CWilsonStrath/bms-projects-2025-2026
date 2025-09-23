@@ -177,18 +177,20 @@
         }
         
         .gantt-chart {
-            display: grid;
-            grid-template-columns: 350px 1fr;
+            display: flex;
             min-width: 1200px;
             background: white;
         }
         
         .task-list {
+            width: 350px;
+            min-width: 350px;
             border-right: 2px solid #dee2e6;
             background: #f8f9fa;
         }
         
         .timeline {
+            flex: 1;
             overflow-x: auto;
         }
         
@@ -568,13 +570,9 @@
         
         <div class="gantt-container">
             <div class="gantt-chart">
-                <div class="task-list">
-                    <div class="timeline-header" style="grid-template-columns: 1fr;">
-                        <div style="padding: 12px 20px; font-size: 14px; font-weight: 600;">Tasks</div>
-                    </div>
-                    <div id="task-names"></div>
-                </div>
-                <div class="timeline">
+                <!-- Header row that spans both sections -->
+                <div class="header-row">
+                    <div class="task-list-header">Tasks</div>
                     <div class="timeline-header">
                         <div class="week-header">Sep<br>W3</div>
                         <div class="week-header">Sep<br>W4</div>
@@ -587,7 +585,7 @@
                         <div class="week-header">Nov<br>W3</div>
                         <div class="week-header">Nov<br>W4</div>
                         <div class="week-header">Dec<br>W1</div>
-                        <div class="week-header">Dec W2</div>
+                        <div class="week-header">Dec<br>W2</div>
                         <div class="week-header">Jan<br>W2</div>
                         <div class="week-header">Jan<br>W3</div>
                         <div class="week-header">Jan<br>W4</div>
@@ -597,8 +595,9 @@
                         <div class="week-header">Feb<br>W4</div>
                         <div class="week-header">Mar<br>W1</div>
                     </div>
-                    <div id="task-timeline"></div>
                 </div>
+                <!-- Content rows -->
+                <div id="gantt-content"></div>
             </div>
         </div>
         
@@ -700,31 +699,30 @@
         let taskIdCounter = 1;
         
         function renderChart() {
-            const taskNames = document.getElementById('task-names');
-            const taskTimeline = document.getElementById('task-timeline');
-            
-            taskNames.innerHTML = '';
-            taskTimeline.innerHTML = '';
+            const ganttContent = document.getElementById('gantt-content');
+            ganttContent.innerHTML = '';
             
             if (tasks.length === 0) {
-                taskNames.innerHTML = '<div class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></div>';
-                taskTimeline.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><p>Your timeline will appear here</p></div>';
+                ganttContent.innerHTML = '<div class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></div>';
                 return;
             }
             
             tasks.forEach(task => {
+                // Create content row
+                const contentRow = document.createElement('div');
+                contentRow.className = 'content-row';
+                
                 // Task name cell
                 const nameCell = document.createElement('div');
                 nameCell.className = 'task-name-cell';
                 nameCell.innerHTML = `
                     <div class="task-category-dot" style="background-color: ${task.color}"></div>
                     <div>
-                        <div style="font-weight: 600;">${task.name}</div>
-                        <div style="font-size: 11px; color: #6c757d;">${task.category}</div>
+                        <div style="font-weight: 600; font-size: 13px;">${task.name}</div>
+                        <div style="font-size: 10px; color: #6c757d;">${task.category}</div>
                     </div>
                 `;
                 nameCell.addEventListener('click', () => selectTask(task));
-                taskNames.appendChild(nameCell);
                 
                 // Task timeline
                 const timelineRow = document.createElement('div');
@@ -743,13 +741,17 @@
                 taskBar.style.backgroundColor = task.color;
                 taskBar.style.left = `${task.startWeek * 60}px`;
                 taskBar.style.width = `${task.duration * 60}px`;
-                taskBar.textContent = task.duration > 2 ? task.name : '';
+                taskBar.textContent = task.duration > 2 ? task.name.substring(0, 15) + '...' : task.name.substring(0, 8);
                 taskBar.draggable = true;
+                taskBar.setAttribute('data-task-id', task.id);
                 taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks${task.notes ? '\nNotes: ' + task.notes : ''}`;
                 
                 taskBar.addEventListener('dragstart', (e) => handleDragStart(e, task));
                 taskBar.addEventListener('dragend', handleDragEnd);
-                taskBar.addEventListener('click', () => selectTask(task));
+                taskBar.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectTask(task);
+                });
                 
                 if (task.completed) {
                     taskBar.style.opacity = '0.6';
@@ -757,19 +759,28 @@
                 }
                 
                 timelineRow.appendChild(taskBar);
-                taskTimeline.appendChild(timelineRow);
+                
+                // Add both cells to the row
+                contentRow.appendChild(nameCell);
+                contentRow.appendChild(timelineRow);
+                
+                // Add row to content
+                ganttContent.appendChild(contentRow);
             });
             
             // Highlight selected task
             if (selectedTask) {
                 const taskIndex = tasks.indexOf(selectedTask);
                 if (taskIndex >= 0) {
-                    const nameCell = document.querySelectorAll('.task-name-cell')[taskIndex];
-                    const taskBar = document.querySelectorAll('.task-bar')[taskIndex];
-                    
-                    if (nameCell && taskBar) {
-                        nameCell.classList.add('selected');
-                        taskBar.classList.add('selected');
+                    const contentRows = document.querySelectorAll('.content-row');
+                    if (contentRows[taskIndex]) {
+                        const nameCell = contentRows[taskIndex].querySelector('.task-name-cell');
+                        const taskBar = contentRows[taskIndex].querySelector('.task-bar');
+                        
+                        if (nameCell && taskBar) {
+                            nameCell.classList.add('selected');
+                            taskBar.classList.add('selected');
+                        }
                     }
                 }
             }
@@ -1000,7 +1011,7 @@
         // Double-click to toggle task completion
         document.addEventListener('dblclick', (e) => {
             if (e.target.classList.contains('task-bar')) {
-                const taskId = parseInt(e.target.parentElement.querySelector('[draggable="true"]').getAttribute('data-task-id') || '0');
+                const taskId = parseInt(e.target.getAttribute('data-task-id'));
                 const task = tasks.find(t => t.id === taskId);
                 if (task) {
                     task.completed = !task.completed;
@@ -1031,8 +1042,126 @@
             }
         });
         
-        // Initialize empty chart
+        // Initialize with meta-analysis example tasks
+        function initializeExampleTasks() {
+            tasks = [
+                {
+                    id: 1,
+                    name: 'Research Question & Protocol Development',
+                    category: 'Planning',
+                    startWeek: 0,
+                    duration: 2,
+                    color: '#9b59b6',
+                    notes: 'Define PICO framework, develop search strategy, register protocol',
+                    completed: false
+                },
+                {
+                    id: 2,
+                    name: 'Systematic Literature Search',
+                    category: 'Literature Review',
+                    startWeek: 1,
+                    duration: 3,
+                    color: '#3498db',
+                    notes: 'Search PubMed, Embase, Cochrane Library, Web of Science',
+                    completed: false
+                },
+                {
+                    id: 3,
+                    name: 'Title & Abstract Screening',
+                    category: 'Study Selection',
+                    startWeek: 4,
+                    duration: 2,
+                    color: '#e74c3c',
+                    notes: 'Apply inclusion/exclusion criteria, dual screening recommended',
+                    completed: false
+                },
+                {
+                    id: 4,
+                    name: 'Full-Text Article Review',
+                    category: 'Study Selection',
+                    startWeek: 6,
+                    duration: 2,
+                    color: '#e74c3c',
+                    notes: 'Detailed assessment of eligibility, document exclusion reasons',
+                    completed: false
+                },
+                {
+                    id: 5,
+                    name: 'Data Extraction',
+                    category: 'Data Collection',
+                    startWeek: 8,
+                    duration: 3,
+                    color: '#f39c12',
+                    notes: 'Extract study characteristics, outcomes, quality metrics',
+                    completed: false
+                },
+                {
+                    id: 6,
+                    name: 'Quality Assessment (Risk of Bias)',
+                    category: 'Critical Appraisal',
+                    startWeek: 10,
+                    duration: 2,
+                    color: '#1abc9c',
+                    notes: 'Use Cochrane RoB tool or Newcastle-Ottawa Scale',
+                    completed: false
+                },
+                {
+                    id: 7,
+                    name: 'Statistical Analysis & Meta-Analysis',
+                    category: 'Data Analysis',
+                    startWeek: 12,
+                    duration: 3,
+                    color: '#e67e22',
+                    notes: 'Forest plots, heterogeneity assessment, sensitivity analysis',
+                    completed: false
+                },
+                {
+                    id: 8,
+                    name: 'Write Introduction & Methods',
+                    category: 'Writing',
+                    startWeek: 3,
+                    duration: 4,
+                    color: '#34495e',
+                    notes: 'Background, rationale, systematic review methodology',
+                    completed: false
+                },
+                {
+                    id: 9,
+                    name: 'Write Results Section',
+                    category: 'Writing',
+                    startWeek: 14,
+                    duration: 2,
+                    color: '#34495e',
+                    notes: 'PRISMA flow diagram, study characteristics, forest plots',
+                    completed: false
+                },
+                {
+                    id: 10,
+                    name: 'Write Discussion & Conclusion',
+                    category: 'Writing',
+                    startWeek: 16,
+                    duration: 2,
+                    color: '#34495e',
+                    notes: 'Interpret findings, limitations, clinical implications',
+                    completed: false
+                },
+                {
+                    id: 11,
+                    name: 'Final Review & Formatting',
+                    category: 'Finalization',
+                    startWeek: 18,
+                    duration: 2,
+                    color: '#95a5a6',
+                    notes: 'Proofreading, reference formatting, final checks',
+                    completed: false
+                }
+            ];
+            
+            taskIdCounter = 12;
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            initializeExampleTasks();
             renderChart();
             updateProgress();
         });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BM432 Interactive Gantt Chart Planner</title>
+    <title>BM432 Professional Gantt Chart</title>
     <style>
         * {
             margin: 0;
@@ -12,17 +12,17 @@
         }
         
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
             padding: 20px;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             overflow: hidden;
         }
         
@@ -34,8 +34,9 @@
         }
         
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
+            font-weight: 300;
         }
         
         .header p {
@@ -44,16 +45,16 @@
         }
         
         .controls {
-            padding: 20px;
-            border-bottom: 1px solid #e1e8ed;
+            padding: 25px;
+            border-bottom: 1px solid #e9ecef;
             background: #f8f9fa;
         }
         
         .project-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 20px;
+            margin-bottom: 25px;
         }
         
         .input-group {
@@ -62,40 +63,55 @@
         }
         
         .input-group label {
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: #2c3e50;
         }
         
         .input-group input, .input-group select {
-            padding: 10px;
+            padding: 12px;
             border: 2px solid #e1e8ed;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 14px;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
         }
         
         .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .task-controls {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 100px;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
         }
         
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         
         .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-primary {
@@ -113,271 +129,292 @@
             color: white;
         }
         
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         
         .gantt-container {
             overflow: auto;
             max-height: 70vh;
+            border: 1px solid #dee2e6;
         }
         
-        .gantt-table {
-            width: 100%;
+        .gantt-chart {
+            display: grid;
+            grid-template-columns: 300px 1fr;
             min-width: 1200px;
-            border-collapse: collapse;
             background: white;
         }
         
-        .gantt-table th {
+        .task-list {
+            border-right: 2px solid #dee2e6;
+            background: #f8f9fa;
+        }
+        
+        .timeline {
+            overflow-x: auto;
+        }
+        
+        .timeline-header {
+            display: grid;
+            grid-template-columns: repeat(20, 60px);
             background: #2c3e50;
             color: white;
-            padding: 12px 8px;
-            text-align: center;
-            font-size: 11px;
             position: sticky;
             top: 0;
             z-index: 10;
-            border-right: 1px solid #34495e;
-        }
-        
-        .gantt-table td {
-            border: 1px solid #dee2e6;
-            height: 40px;
-            text-align: center;
-            vertical-align: middle;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .gantt-table td:hover {
-            background-color: #f8f9fa !important;
-        }
-        
-        .task-name {
-            background: #f8f9fa;
-            text-align: left;
-            width: 250px;
-            padding: 10px 15px;
-            font-weight: 600;
-            position: sticky;
-            left: 0;
-            z-index: 5;
-            border-right: 2px solid #dee2e6;
-        }
-        
-        .task-group {
-            background: #e9ecef !important;
-            color: #495057;
-            font-weight: bold;
-            font-size: 13px;
-        }
-        
-        .task-subtask {
-            padding-left: 30px;
-            font-size: 12px;
-            background: white !important;
-        }
-        
-        .task-milestone {
-            font-weight: bold;
-            color: #dc3545;
         }
         
         .week-header {
-            font-size: 10px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            border-right: 1px solid #34495e;
             writing-mode: vertical-rl;
             text-orientation: mixed;
-            white-space: nowrap;
         }
         
-        .color-palette {
+        .task-row {
+            display: contents;
+        }
+        
+        .task-name-cell {
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+            background: white;
+            font-weight: 500;
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
             align-items: center;
+            min-height: 50px;
         }
         
-        .color-option {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+        .task-timeline {
+            display: grid;
+            grid-template-columns: repeat(20, 60px);
+            border-bottom: 1px solid #dee2e6;
+            min-height: 50px;
+            align-items: center;
+            position: relative;
+        }
+        
+        .task-bar {
+            height: 24px;
+            border-radius: 12px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
             cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
-        .color-option.active {
-            border-color: #2c3e50;
-            transform: scale(1.1);
+        .task-bar:hover {
+            transform: translateY(-50%) scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
-        .color-option:hover {
-            transform: scale(1.05);
+        .task-bar.dragging {
+            opacity: 0.7;
+            z-index: 1000;
         }
         
-        .selected-color {
-            background: #3498db;
-        }
-        
-        .progress-tracker {
-            background: #f8f9fa;
-            padding: 20px;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .progress-bar {
-            background: #e9ecef;
+        .milestone {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
             height: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
+            background: #dc3545;
+            transform: rotate(45deg);
+            border: 2px solid white;
+            cursor: pointer;
         }
         
-        .progress-fill {
-            background: linear-gradient(90deg, #28a745, #20c997);
-            height: 100%;
-            transition: width 0.3s ease;
+        .milestone::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -25px;
+            width: 70px;
+            height: 12px;
+            background: #dc3545;
+            color: white;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-45deg);
+            border-radius: 2px;
+        }
+        
+        .week-cell {
+            border-right: 1px solid #f0f0f0;
+            position: relative;
+            min-height: 50px;
+        }
+        
+        .today-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e74c3c;
+            z-index: 5;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
         .legend {
             display: flex;
-            gap: 20px;
+            gap: 30px;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 20px 0;
-            padding: 0 20px;
+            margin: 25px 0;
+            padding: 0 25px;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 13px;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
         }
         
         .legend-color {
-            width: 20px;
-            height: 15px;
-            border-radius: 3px;
-        }
-        
-        .notes {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 20px;
-            margin: 20px;
+            width: 24px;
+            height: 16px;
             border-radius: 8px;
         }
         
-        .notes h3 {
-            margin-bottom: 15px;
-            color: #856404;
+        .progress-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-top: 1px solid #dee2e6;
         }
         
-        .notes ul {
-            list-style-position: inside;
-            color: #856404;
+        .progress-bar {
+            background: #e9ecef;
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
         }
         
-        .notes li {
-            margin-bottom: 8px;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #20c997);
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
+            transition: width 0.5s ease;
+            position: relative;
         }
         
-        .modal-content {
+        .progress-text {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 12px;
         }
         
-        .close {
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+        .tips {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            margin: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .tips h3 {
+            margin-bottom: 15px;
+            color: #d35400;
+            font-size: 1.2rem;
+        }
+        
+        .tips ul {
+            list-style-position: inside;
+            color: #8b4513;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
         
         @media (max-width: 768px) {
-            .gantt-container {
-                font-size: 11px;
+            .gantt-chart {
+                grid-template-columns: 250px 1fr;
             }
             
-            .task-name {
-                width: 200px;
-                font-size: 11px;
-            }
-            
-            .controls {
-                padding: 15px;
-            }
-            
-            .project-info {
+            .task-controls {
                 grid-template-columns: 1fr;
             }
+            
+            .timeline-header {
+                grid-template-columns: repeat(20, 50px);
+            }
+            
+            .task-timeline {
+                grid-template-columns: repeat(20, 50px);
+            }
         }
         
-        .task-row {
-            cursor: move;
-        }
-        
-        .task-row.dragging {
-            opacity: 0.5;
-        }
-        
-        .task-row.drag-over {
-            border-top: 3px solid #007bff;
-        }
-        
-        .drag-handle {
-            cursor: move;
-            color: #6c757d;
+        .task-category {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
             margin-right: 8px;
-            user-select: none;
+            display: inline-block;
         }
+        
+        .category-research { background: #3498db; color: white; }
+        .category-experiment { background: #e74c3c; color: white; }
+        .category-writing { background: #f39c12; color: white; }
+        .category-presentation { background: #9b59b6; color: white; }
+        .category-training { background: #1abc9c; color: white; }
+        .category-buffer { background: #95a5a6; color: white; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>BM432 Gantt Chart Planner</h1>
-            <p>Interactive project timeline planning tool for final year projects</p>
+            <h1>BM432 Professional Gantt Chart</h1>
+            <p>Strategic timeline planning for final year projects</p>
         </div>
         
         <div class="controls">
             <div class="project-info">
                 <div class="input-group">
-                    <label for="project-title">Project Title:</label>
+                    <label for="project-title">Project Title</label>
                     <input type="text" id="project-title" placeholder="Enter your project title">
                 </div>
                 <div class="input-group">
-                    <label for="student-name">Student Name:</label>
+                    <label for="student-name">Student Name</label>
                     <input type="text" id="student-name" placeholder="Your name">
                 </div>
                 <div class="input-group">
-                    <label for="supervisor">Supervisor:</label>
+                    <label for="supervisor">Supervisor</label>
                     <input type="text" id="supervisor" placeholder="Supervisor name">
                 </div>
                 <div class="input-group">
-                    <label for="project-type">Project Type:</label>
+                    <label for="project-type">Project Type</label>
                     <select id="project-type">
                         <option value="">Select project type</option>
                         <option value="bioinformatics">Bioinformatics</option>
@@ -392,66 +429,75 @@
                 </div>
             </div>
             
-            <div class="color-palette">
-                <strong>Select Color:</strong>
-                <div class="color-option selected-color active" data-color="#3498db" title="Literature/Research"></div>
-                <div class="color-option" data-color="#e74c3c" style="background: #e74c3c;" title="Data/Experiments"></div>
-                <div class="color-option" data-color="#f39c12" style="background: #f39c12;" title="Writing"></div>
-                <div class="color-option" data-color="#9b59b6" style="background: #9b59b6;" title="Presentation"></div>
-                <div class="color-option" data-color="#1abc9c" style="background: #1abc9c;" title="Training/Setup"></div>
-                <div class="color-option" data-color="#95a5a6" style="background: #95a5a6;" title="Buffer/Review"></div>
+            <div class="task-controls">
+                <div class="input-group">
+                    <label for="task-name">Task Name</label>
+                    <input type="text" id="task-name" placeholder="Enter task name">
+                </div>
+                <div class="input-group">
+                    <label for="task-category">Category</label>
+                    <select id="task-category">
+                        <option value="research">Research</option>
+                        <option value="experiment">Experiments</option>
+                        <option value="writing">Writing</option>
+                        <option value="presentation">Presentation</option>
+                        <option value="training">Training</option>
+                        <option value="buffer">Buffer</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="task-duration">Duration (weeks)</label>
+                    <input type="number" id="task-duration" min="1" max="20" value="2">
+                </div>
+                <div class="input-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary" onclick="addTask()">+ Add Task</button>
+                </div>
             </div>
             
             <div class="action-buttons">
-                <button class="btn btn-primary" onclick="addTask()">Add Task</button>
-                <button class="btn btn-secondary" onclick="addSubtask()">Add Subtask</button>
-                <button class="btn btn-secondary" onclick="deleteTask()">Delete Task</button>
-                <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
-                <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
-                <button class="btn btn-success" onclick="exportToPDF()">Export PNG</button>
-                <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+                <button class="btn btn-secondary" onclick="addMilestone()">📅 Add Milestone</button>
+                <button class="btn btn-danger" onclick="deleteSelected()">🗑️ Delete</button>
+                <button class="btn btn-success" onclick="saveProject()">💾 Save Project</button>
+                <button class="btn btn-secondary" onclick="loadProject()">📁 Load Project</button>
+                <button class="btn btn-primary" onclick="exportChart()">📸 Export PNG</button>
             </div>
-        </div>
-        
-        <div class="progress-tracker">
-            <strong>Project Completion:</strong>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-            </div>
-            <span id="progress-text">0% Complete (0 of 0 tasks)</span>
         </div>
         
         <div class="gantt-container">
-            <table class="gantt-table" id="gantt-table">
-                <thead>
-                    <tr>
-                        <th class="task-name">Task</th>
-                        <th class="week-header">Sep W3</th>
-                        <th class="week-header">Sep W4</th>
-                        <th class="week-header">Oct W1</th>
-                        <th class="week-header">Oct W2</th>
-                        <th class="week-header">Oct W3</th>
-                        <th class="week-header">Oct W4</th>
-                        <th class="week-header">Nov W1</th>
-                        <th class="week-header">Nov W2</th>
-                        <th class="week-header">Nov W3</th>
-                        <th class="week-header">Nov W4</th>
-                        <th class="week-header">Dec W1</th>
-                        <th class="week-header">Dec W2</th>
-                        <th class="week-header">Jan W2</th>
-                        <th class="week-header">Jan W3</th>
-                        <th class="week-header">Jan W4</th>
-                        <th class="week-header">Feb W1</th>
-                        <th class="week-header">Feb W2</th>
-                        <th class="week-header">Feb W3</th>
-                        <th class="week-header">Feb W4</th>
-                        <th class="week-header">Mar W1</th>
-                    </tr>
-                </thead>
-                <tbody id="gantt-body">
-                    <!-- Content will be populated by JavaScript -->
-                </tbody>
-            </table>
+            <div class="gantt-chart">
+                <div class="task-list">
+                    <div class="timeline-header" style="grid-template-columns: 1fr;">
+                        <div style="padding: 12px 20px; font-size: 14px; font-weight: 600;">Tasks</div>
+                    </div>
+                    <div id="task-names"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-header">
+                        <div class="week-header">Sep<br>W3</div>
+                        <div class="week-header">Sep<br>W4</div>
+                        <div class="week-header">Oct<br>W1</div>
+                        <div class="week-header">Oct<br>W2</div>
+                        <div class="week-header">Oct<br>W3</div>
+                        <div class="week-header">Oct<br>W4</div>
+                        <div class="week-header">Nov<br>W1</div>
+                        <div class="week-header">Nov<br>W2</div>
+                        <div class="week-header">Nov<br>W3</div>
+                        <div class="week-header">Nov<br>W4</div>
+                        <div class="week-header">Dec<br>W1</div>
+                        <div class="week-header">Dec<br>W2</div>
+                        <div class="week-header">Jan<br>W2</div>
+                        <div class="week-header">Jan<br>W3</div>
+                        <div class="week-header">Jan<br>W4</div>
+                        <div class="week-header">Feb<br>W1</div>
+                        <div class="week-header">Feb<br>W2</div>
+                        <div class="week-header">Feb<br>W3</div>
+                        <div class="week-header">Feb<br>W4</div>
+                        <div class="week-header">Mar<br>W1</div>
+                    </div>
+                    <div id="task-timeline"></div>
+                </div>
+            </div>
         </div>
         
         <div class="legend">
@@ -481,514 +527,379 @@
             </div>
         </div>
         
-        <div class="notes">
-            <h3>Planning Tips:</h3>
-            <ul>
-                <li><strong>Click cells</strong> to add color coding for different time periods</li>
-                <li><strong>Build in buffer time</strong> before major deadlines for unexpected issues</li>
-                <li><strong>Consider dependencies</strong> - some tasks can't start until others are complete</li>
-                <li><strong>Weekly meetings</strong> help identify problems early and adjust timeline</li>
-                <li><strong>Start writing early</strong> - methods and introduction can be drafted during project work</li>
-                <li><strong>Save frequently</strong> using the Save Project button</li>
-            </ul>
+        <div class="progress-section">
+            <h3>Project Timeline Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                <div class="progress-text" id="progress-text">0% Planned</div>
+            </div>
         </div>
-    </div>
-    
-    <!-- Modal for save/load -->
-    <div id="saveModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeSaveModal()">&times;</span>
-            <h3>Save/Load Project</h3>
-            <div id="modal-body"></div>
+        
+        <div class="tips">
+            <h3>🎯 Professional Project Planning Tips</h3>
+            <ul>
+                <li><strong>Start with milestones:</strong> Mark key deadlines first (presentations, submissions)</li>
+                <li><strong>Work backwards:</strong> Plan completion dates before start dates</li>
+                <li><strong>Build in buffers:</strong> Add 20% extra time for unexpected challenges</li>
+                <li><strong>Parallel tasks:</strong> Identify what can run simultaneously vs. sequentially</li>
+                <li><strong>Weekly reviews:</strong> Adjust timeline based on actual progress</li>
+                <li><strong>Dependencies matter:</strong> Some tasks can't start until others finish</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        let selectedColor = '#3498db';
-        let projectData = {};
+        let tasks = [];
+        let selectedTask = null;
         let taskIdCounter = 1;
-        let selectedTaskRow = null;
+        let currentWeek = 2; // Starting at Sep W3
         
-        // Initialize the gantt chart with basic structure
-        function initializeGantt() {
-            const tbody = document.getElementById('gantt-body');
-            const defaultTasks = [
-                { type: 'group', name: 'LITERATURE REVIEW', id: 'group-lit' },
-                { type: 'subtask', name: 'Database searches', id: 'task-' + taskIdCounter++, parent: 'group-lit' },
-                { type: 'subtask', name: 'Read & analyze papers', id: 'task-' + taskIdCounter++, parent: 'group-lit' },
-                { type: 'milestone', name: 'MILESTONE: Introduction Due (Oct 20)', id: 'milestone-intro', week: 4 },
-                
-                { type: 'group', name: 'PROJECT WORK', id: 'group-work' },
-                { type: 'subtask', name: 'Data collection/experiments', id: 'task-' + taskIdCounter++, parent: 'group-work' },
-                { type: 'subtask', name: 'Data analysis', id: 'task-' + taskIdCounter++, parent: 'group-work' },
-                
-                { type: 'group', name: 'THESIS WRITING', id: 'group-thesis' },
-                { type: 'subtask', name: 'Write results section', id: 'task-' + taskIdCounter++, parent: 'group-thesis' },
-                { type: 'milestone', name: 'MILESTONE: Final Thesis (Mar 3)', id: 'milestone-final', week: 19 }
+        const categoryColors = {
+            'research': '#3498db',
+            'experiment': '#e74c3c', 
+            'writing': '#f39c12',
+            'presentation': '#9b59b6',
+            'training': '#1abc9c',
+            'buffer': '#95a5a6'
+        };
+        
+        // Initialize with sample tasks
+        function initializeChart() {
+            tasks = [
+                {
+                    id: 1,
+                    name: 'Literature Review',
+                    category: 'research',
+                    startWeek: 0,
+                    duration: 4,
+                    completed: false
+                },
+                {
+                    id: 2,
+                    name: 'Research Methodology',
+                    category: 'research',
+                    startWeek: 3,
+                    duration: 2,
+                    completed: false
+                },
+                {
+                    id: 3,
+                    name: 'Data Collection',
+                    category: 'experiment',
+                    startWeek: 5,
+                    duration: 6,
+                    completed: false
+                },
+                {
+                    id: 4,
+                    name: 'Data Analysis',
+                    category: 'experiment',
+                    startWeek: 9,
+                    duration: 4,
+                    completed: false
+                },
+                {
+                    id: 5,
+                    name: 'Write Introduction',
+                    category: 'writing',
+                    startWeek: 2,
+                    duration: 2,
+                    completed: false
+                },
+                {
+                    id: 6,
+                    name: 'Write Results',
+                    category: 'writing',
+                    startWeek: 12,
+                    duration: 3,
+                    completed: false
+                },
+                {
+                    id: 7,
+                    name: 'Final Thesis',
+                    category: 'writing',
+                    startWeek: 15,
+                    duration: 4,
+                    completed: false
+                }
             ];
             
-            renderTasks(defaultTasks);
+            renderChart();
+            updateProgress();
         }
         
-        function renderTasks(tasks) {
-            const tbody = document.getElementById('gantt-body');
-            let html = '';
+        function renderChart() {
+            const taskNames = document.getElementById('task-names');
+            const taskTimeline = document.getElementById('task-timeline');
+            
+            taskNames.innerHTML = '';
+            taskTimeline.innerHTML = '';
             
             tasks.forEach(task => {
-                html += '<tr class="task-row" draggable="true" data-task-id="' + task.id + '" data-task-type="' + task.type + '">';
+                // Task name cell
+                const nameCell = document.createElement('div');
+                nameCell.className = 'task-name-cell';
+                nameCell.innerHTML = `
+                    <span class="task-category category-${task.category}">${task.category.toUpperCase()}</span>
+                    <span>${task.name}</span>
+                `;
+                nameCell.addEventListener('click', () => selectTask(task));
+                taskNames.appendChild(nameCell);
                 
-                if (task.type === 'group') {
-                    html += `<td class="task-name task-group" contenteditable="true"><span class="drag-handle">≡</span>${task.name}</td>`;
-                    for (let i = 0; i < 20; i++) {
-                        html += '<td></td>';
-                    }
-                } else if (task.type === 'milestone') {
-                    html += `<td class="task-name task-milestone" contenteditable="true"><span class="drag-handle">≡</span>📅 ${task.name}</td>`;
-                    for (let i = 0; i < 20; i++) {
-                        if (i === task.week) {
-                            html += '<td class="milestone-cell">DEADLINE</td>';
-                        } else {
-                            html += '<td></td>';
-                        }
-                    }
-                } else {
-                    html += `<td class="task-name task-subtask" contenteditable="true"><span class="drag-handle">≡</span>□ ${task.name}</td>`;
-                    for (let i = 0; i < 20; i++) {
-                        html += `<td class="task-cell" data-task="${task.id}" data-week="${i}"></td>`;
-                    }
+                // Task timeline
+                const timelineRow = document.createElement('div');
+                timelineRow.className = 'task-timeline';
+                
+                // Add week cells
+                for (let week = 0; week < 20; week++) {
+                    const weekCell = document.createElement('div');
+                    weekCell.className = 'week-cell';
+                    timelineRow.appendChild(weekCell);
                 }
                 
-                html += '</tr>';
-            });
-            
-            tbody.innerHTML = html;
-            
-            // Add event listeners
-            addEventListeners();
-            addDragAndDropListeners();
-        }
-        
-        function addDragAndDropListeners() {
-            const rows = document.querySelectorAll('.task-row');
-            
-            rows.forEach(row => {
-                row.addEventListener('dragstart', function(e) {
-                    this.classList.add('dragging');
-                    e.dataTransfer.effectAllowed = 'move';
-                    e.dataTransfer.setData('text/html', this.outerHTML);
-                    e.dataTransfer.setData('text/plain', this.getAttribute('data-task-id'));
-                });
+                // Add task bar
+                const taskBar = document.createElement('div');
+                taskBar.className = 'task-bar';
+                taskBar.style.backgroundColor = categoryColors[task.category];
+                taskBar.style.left = `${task.startWeek * 60}px`;
+                taskBar.style.width = `${task.duration * 60}px`;
+                taskBar.textContent = task.name;
+                taskBar.draggable = true;
+                taskBar.addEventListener('dragstart', (e) => handleDragStart(e, task));
+                taskBar.addEventListener('dragend', handleDragEnd);
+                taskBar.addEventListener('click', () => selectTask(task));
                 
-                row.addEventListener('dragend', function(e) {
-                    this.classList.remove('dragging');
-                    
-                    // Remove drag-over class from all rows
-                    rows.forEach(r => r.classList.remove('drag-over'));
-                });
+                if (task.completed) {
+                    taskBar.style.opacity = '0.7';
+                    taskBar.style.textDecoration = 'line-through';
+                }
                 
-                row.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    e.dataTransfer.dropEffect = 'move';
-                    
-                    // Remove drag-over from all rows and add to current
-                    rows.forEach(r => r.classList.remove('drag-over'));
-                    this.classList.add('drag-over');
-                });
-                
-                row.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.classList.remove('drag-over');
-                    
-                    const draggedId = e.dataTransfer.getData('text/plain');
-                    const draggedRow = document.querySelector(`[data-task-id="${draggedId}"]`);
-                    
-                    if (draggedRow && draggedRow !== this) {
-                        // Reorder the tasks
-                        reorderTasks(draggedId, this.getAttribute('data-task-id'));
-                    }
-                });
-                
-                row.addEventListener('dragleave', function(e) {
-                    this.classList.remove('drag-over');
-                });
+                timelineRow.appendChild(taskBar);
+                taskTimeline.appendChild(timelineRow);
             });
         }
         
-        function reorderTasks(draggedTaskId, targetTaskId) {
-            const currentTasks = getCurrentTasks();
+        function selectTask(task) {
+            selectedTask = task;
             
-            // Find the dragged task and target task indices
-            const draggedIndex = currentTasks.findIndex(task => task.id === draggedTaskId);
-            const targetIndex = currentTasks.findIndex(task => task.id === targetTaskId);
+            // Remove previous selection
+            document.querySelectorAll('.task-name-cell').forEach(cell => {
+                cell.style.backgroundColor = 'white';
+                cell.style.borderLeft = 'none';
+            });
             
-            if (draggedIndex === -1 || targetIndex === -1) return;
+            document.querySelectorAll('.task-bar').forEach(bar => {
+                bar.style.border = 'none';
+            });
             
-            // Remove the dragged task from its current position
-            const draggedTask = currentTasks.splice(draggedIndex, 1)[0];
+            // Highlight selected task
+            const taskIndex = tasks.indexOf(task);
+            const nameCell = document.querySelectorAll('.task-name-cell')[taskIndex];
+            const taskBar = document.querySelectorAll('.task-bar')[taskIndex];
             
-            // Calculate new insertion index (accounting for the removed item)
-            let insertIndex = targetIndex;
-            if (draggedIndex < targetIndex) {
-                insertIndex = targetIndex - 1;
+            if (nameCell && taskBar) {
+                nameCell.style.backgroundColor = '#e3f2fd';
+                nameCell.style.borderLeft = '4px solid #2196f3';
+                taskBar.style.border = '2px solid #2196f3';
             }
-            
-            // Insert the dragged task at the new position
-            currentTasks.splice(insertIndex, 0, draggedTask);
-            
-            // Re-render the tasks
-            renderTasks(currentTasks);
-        }
-        
-        function addEventListeners() {
-            // Task cell clicks for coloring
-            document.querySelectorAll('.task-cell').forEach(cell => {
-                cell.addEventListener('click', function() {
-                    if (this.style.backgroundColor && this.style.backgroundColor !== '') {
-                        this.style.backgroundColor = '';
-                        this.style.color = '';
-                        this.textContent = '';
-                    } else {
-                        this.style.backgroundColor = selectedColor;
-                        this.style.color = 'white';
-                        this.textContent = '●';
-                    }
-                    updateProgress();
-                });
-            });
-            
-            // Row selection for editing/deleting
-            document.querySelectorAll('tr[data-task-id]').forEach(row => {
-                row.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('task-cell')) return; // Don't select when clicking cells
-                    
-                    // Remove previous selection
-                    if (selectedTaskRow) {
-                        selectedTaskRow.style.outline = '';
-                    }
-                    
-                    // Select new row
-                    selectedTaskRow = this;
-                    this.style.outline = '2px solid #007bff';
-                });
-            });
         }
         
         function addTask() {
-            const taskName = prompt('Enter task name:');
-            if (!taskName) return;
+            const name = document.getElementById('task-name').value.trim();
+            const category = document.getElementById('task-category').value;
+            const duration = parseInt(document.getElementById('task-duration').value);
             
-            const taskType = confirm('Is this a major task group? Click OK for major task, Cancel for regular task.') ? 'group' : 'subtask';
-            const taskId = taskType === 'group' ? 'group-' + taskIdCounter++ : 'task-' + taskIdCounter++;
+            if (!name) {
+                alert('Please enter a task name');
+                return;
+            }
+            
+            // Find next available start week
+            let startWeek = 0;
+            const sortedTasks = tasks.filter(t => t.category === category)
+                                   .sort((a, b) => a.startWeek - b.startWeek);
+            
+            if (sortedTasks.length > 0) {
+                const lastTask = sortedTasks[sortedTasks.length - 1];
+                startWeek = lastTask.startWeek + lastTask.duration;
+            }
             
             const newTask = {
-                type: taskType,
-                name: taskName,
-                id: taskId
+                id: taskIdCounter++,
+                name: name,
+                category: category,
+                startWeek: Math.min(startWeek, 20 - duration),
+                duration: duration,
+                completed: false
             };
             
-            // Add to current tasks
-            const currentTasks = getCurrentTasks();
+            tasks.push(newTask);
+            document.getElementById('task-name').value = '';
             
-            // Insert before milestones if possible
-            const insertIndex = currentTasks.findIndex(task => task.type === 'milestone' && task.id.includes('final'));
-            if (insertIndex !== -1) {
-                currentTasks.splice(insertIndex, 0, newTask);
-            } else {
-                currentTasks.push(newTask);
-            }
-            
-            renderTasks(currentTasks);
+            renderChart();
+            updateProgress();
         }
         
-        function addSubtask() {
-            if (!selectedTaskRow || selectedTaskRow.getAttribute('data-task-type') !== 'group') {
-                alert('Please select a major task group first by clicking on it.');
-                return;
-            }
+        function addMilestone() {
+            const name = prompt('Enter milestone name:');
+            if (!name) return;
             
-            const subtaskName = prompt('Enter subtask name:');
-            if (!subtaskName) return;
+            const week = prompt('Enter week number (1-20):', '10');
+            if (!week || isNaN(week) || week < 1 || week > 20) return;
             
-            const parentId = selectedTaskRow.getAttribute('data-task-id');
-            const newSubtask = {
-                type: 'subtask',
-                name: subtaskName,
-                id: 'task-' + taskIdCounter++,
-                parent: parentId
+            const milestone = {
+                id: taskIdCounter++,
+                name: name,
+                category: 'milestone',
+                startWeek: parseInt(week) - 1,
+                duration: 1,
+                completed: false
             };
             
-            const currentTasks = getCurrentTasks();
-            
-            // Find insertion point (after parent group)
-            const parentIndex = currentTasks.findIndex(task => task.id === parentId);
-            if (parentIndex !== -1) {
-                // Find last subtask of this group
-                let insertIndex = parentIndex + 1;
-                while (insertIndex < currentTasks.length && 
-                       currentTasks[insertIndex].type === 'subtask' && 
-                       currentTasks[insertIndex].parent === parentId) {
-                    insertIndex++;
-                }
-                currentTasks.splice(insertIndex, 0, newSubtask);
-            } else {
-                currentTasks.push(newSubtask);
-            }
-            
-            renderTasks(currentTasks);
+            tasks.push(milestone);
+            renderChart();
+            updateProgress();
         }
         
-        function deleteTask() {
-            if (!selectedTaskRow) {
-                alert('Please select a task to delete by clicking on it.');
+        function deleteSelected() {
+            if (!selectedTask) {
+                alert('Please select a task to delete');
                 return;
             }
             
-            const taskId = selectedTaskRow.getAttribute('data-task-id');
-            const taskType = selectedTaskRow.getAttribute('data-task-type');
-            
-            if (taskType === 'milestone') {
-                alert('Cannot delete milestone tasks.');
-                return;
-            }
-            
-            if (confirm('Are you sure you want to delete this task?')) {
-                const currentTasks = getCurrentTasks();
-                const filteredTasks = currentTasks.filter(task => {
-                    // Remove the task and its subtasks if it's a group
-                    if (taskType === 'group') {
-                        return task.id !== taskId && task.parent !== taskId;
-                    } else {
-                        return task.id !== taskId;
-                    }
-                });
-                
-                selectedTaskRow = null;
-                renderTasks(filteredTasks);
+            if (confirm(`Delete "${selectedTask.name}"?`)) {
+                tasks = tasks.filter(t => t.id !== selectedTask.id);
+                selectedTask = null;
+                renderChart();
+                updateProgress();
             }
         }
         
-        function getCurrentTasks() {
-            const tasks = [];
-            document.querySelectorAll('tr[data-task-id]').forEach(row => {
-                const taskName = row.querySelector('.task-name').textContent.replace(/^(□|📅)\s*/, '');
-                const taskType = row.getAttribute('data-task-type');
-                const taskId = row.getAttribute('data-task-id');
-                
-                let task = {
-                    type: taskType,
-                    name: taskName,
-                    id: taskId
-                };
-                
-                if (taskType === 'milestone') {
-                    // Try to extract week from milestone (simplified)
-                    const milestoneCell = row.querySelector('.milestone-cell');
-                    if (milestoneCell) {
-                        const weekIndex = Array.from(row.querySelectorAll('td')).indexOf(milestoneCell) - 1;
-                        task.week = weekIndex;
-                    }
-                }
-                
-                tasks.push(task);
-            });
-            return tasks;
+        function handleDragStart(e, task) {
+            e.dataTransfer.setData('text/plain', task.id.toString());
+            e.target.classList.add('dragging');
         }
         
-        // Color palette functionality
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelector('.color-option.active').classList.remove('active');
-                this.classList.add('active');
-                selectedColor = this.getAttribute('data-color');
-                document.querySelector('.selected-color').style.backgroundColor = selectedColor;
-            });
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+        
+        // Add drag and drop for timeline repositioning
+        document.getElementById('task-timeline').addEventListener('dragover', (e) => {
+            e.preventDefault();
         });
         
-        // Progress tracking
+        document.getElementById('task-timeline').addEventListener('drop', (e) => {
+            e.preventDefault();
+            const taskId = parseInt(e.dataTransfer.getData('text/plain'));
+            const task = tasks.find(t => t.id === taskId);
+            
+            if (task) {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const newStartWeek = Math.floor(x / 60);
+                
+                task.startWeek = Math.max(0, Math.min(newStartWeek, 20 - task.duration));
+                renderChart();
+            }
+        });
+        
         function updateProgress() {
-            const allCells = document.querySelectorAll('.task-cell[data-task]');
-            const coloredCells = document.querySelectorAll('.task-cell[data-task][style*="background"]');
-            
-            const totalTasks = Array.from(allCells).filter(cell => !cell.textContent.includes('●') || cell.style.backgroundColor === selectedColor).length;
-            const completedTasks = coloredCells.length;
-            
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(t => t.completed).length;
             const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
             
             document.getElementById('progress-fill').style.width = percentage + '%';
-            document.getElementById('progress-text').textContent = `${percentage}% Planned (${completedTasks} of ${totalTasks} task-weeks)`;
+            document.getElementById('progress-text').textContent = 
+                `${percentage}% Complete (${completedTasks}/${totalTasks} tasks)`;
         }
         
-        // Save project
         function saveProject() {
-            const projectInfo = {
+            const projectData = {
                 title: document.getElementById('project-title').value,
                 student: document.getElementById('student-name').value,
                 supervisor: document.getElementById('supervisor').value,
                 type: document.getElementById('project-type').value,
-                tasks: {}
+                tasks: tasks,
+                created: new Date().toISOString()
             };
             
-            document.querySelectorAll('.task-cell[data-task]').forEach(cell => {
-                const taskId = cell.getAttribute('data-task');
-                const week = cell.getAttribute('data-week');
-                const key = `${taskId}-${week}`;
-                
-                if (cell.style.backgroundColor) {
-                    projectInfo.tasks[key] = {
-                        color: cell.style.backgroundColor,
-                        text: cell.textContent
-                    };
-                }
-            });
+            const dataStr = JSON.stringify(projectData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
             
-            const dataStr = JSON.stringify(projectInfo, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${projectData.title || 'gantt-project'}-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
             
-            const exportFileDefaultName = `${projectInfo.title || 'gantt-chart'}-${new Date().toISOString().split('T')[0]}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
+            URL.revokeObjectURL(url);
         }
         
-        // Load project
         function loadProject() {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = '.json';
             
-            input.onchange = function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        try {
-                            const projectInfo = JSON.parse(e.target.result);
-                            
-                            // Load project info
-                            document.getElementById('project-title').value = projectInfo.title || '';
-                            document.getElementById('student-name').value = projectInfo.student || '';
-                            document.getElementById('supervisor').value = projectInfo.supervisor || '';
-                            document.getElementById('project-type').value = projectInfo.type || '';
-                            
-                            // Clear existing colors
-                            clearAll();
-                            
-                            // Load task colors
-                            Object.keys(projectInfo.tasks).forEach(key => {
-                                const taskData = projectInfo.tasks[key];
-                                const cell = document.querySelector(`[data-task="${key.split('-')[0]}"][data-week="${key.split('-')[1]}"]`);
-                                if (cell) {
-                                    cell.style.backgroundColor = taskData.color;
-                                    cell.style.color = 'white';
-                                    cell.textContent = taskData.text;
-                                }
-                            });
-                            
-                            updateProgress();
-                            alert('Project loaded successfully!');
-                        } catch (error) {
-                            alert('Error loading project file. Please check the file format.');
-                        }
-                    };
-                    reader.readAsText(file);
-                }
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const projectData = JSON.parse(e.target.result);
+                        
+                        // Load project info
+                        document.getElementById('project-title').value = projectData.title || '';
+                        document.getElementById('student-name').value = projectData.student || '';
+                        document.getElementById('supervisor').value = projectData.supervisor || '';
+                        document.getElementById('project-type').value = projectData.type || '';
+                        
+                        // Load tasks
+                        tasks = projectData.tasks || [];
+                        taskIdCounter = Math.max(...tasks.map(t => t.id)) + 1;
+                        
+                        renderChart();
+                        updateProgress();
+                        
+                        alert('Project loaded successfully!');
+                    } catch (error) {
+                        alert('Error loading project file. Please check the format.');
+                    }
+                };
+                reader.readAsText(file);
             };
             
             input.click();
         }
         
-        // Clear all
-        function clearAll() {
-            if (confirm('Are you sure you want to clear all task scheduling? This cannot be undone.')) {
-                document.querySelectorAll('.task-cell[data-task]').forEach(cell => {
-                    if (!cell.classList.contains('milestone-cell') && cell.textContent !== '●') {
-                        cell.style.backgroundColor = '';
-                        cell.style.color = '';
-                        cell.textContent = '';
-                    }
-                });
-                updateProgress();
-            }
+        function exportChart() {
+            const chartElement = document.querySelector('.gantt-chart');
+            
+            // Simple fallback export instruction
+            alert('To export your Gantt chart:\n\n' +
+                  '1. Right-click on the chart area\n' +
+                  '2. Select "Save image as..."\n' +
+                  '3. Or use your browser\'s print function\n\n' +
+                  'For best results, zoom out to fit the entire chart on screen first.');
         }
         
-        // Export to PNG
-        function exportToPDF() {
-            // Create a canvas element
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Get the gantt table
-            const table = document.getElementById('gantt-table');
-            const rect = table.getBoundingClientRect();
-            
-            // Set canvas size (landscape orientation)
-            canvas.width = Math.max(1400, rect.width);
-            canvas.height = Math.max(800, rect.height + 200); // Extra space for header
-            
-            // Fill white background
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Add project header
-            const projectTitle = document.getElementById('project-title').value || 'BM432 Project Timeline';
-            const studentName = document.getElementById('student-name').value;
-            const supervisor = document.getElementById('supervisor').value;
-            
-            ctx.fillStyle = '#2c3e50';
-            ctx.font = 'bold 24px Arial';
-            ctx.fillText(projectTitle, 20, 40);
-            
-            ctx.font = '16px Arial';
-            if (studentName) ctx.fillText(`Student: ${studentName}`, 20, 70);
-            if (supervisor) ctx.fillText(`Supervisor: ${supervisor}`, 20, 95);
-            
-            // Use html2canvas library if available, otherwise show instruction
-            if (typeof html2canvas !== 'undefined') {
-                html2canvas(table, {
-                    backgroundColor: 'white',
-                    width: table.scrollWidth,
-                    height: table.scrollHeight
-                }).then(function(tableCanvas) {
-                    // Draw the table on our main canvas
-                    ctx.drawImage(tableCanvas, 0, 120);
-                    
-                    // Download the image
-                    const link = document.createElement('a');
-                    link.download = `${projectTitle.replace(/\s+/g, '-')}-gantt-chart.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                });
-            } else {
-                // Fallback: Show instructions for manual screenshot
-                alert('For best results, take a screenshot of the Gantt chart:\n\n' +
-                      '1. Press F11 to enter fullscreen\n' +
-                      '2. Use Ctrl+Shift+S (or Cmd+Shift+4 on Mac)\n' +
-                      '3. Select the chart area\n' +
-                      '4. Save as PNG file\n\n' +
-                      'Or use browser\'s print function and save as PDF.');
+        // Double-click to toggle task completion
+        document.addEventListener('dblclick', (e) => {
+            if (e.target.classList.contains('task-bar')) {
+                const taskName = e.target.textContent;
+                const task = tasks.find(t => t.name === taskName);
+                if (task) {
+                    task.completed = !task.completed;
+                    renderChart();
+                    updateProgress();
+                }
             }
-        }
-        
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeGantt();
-            updateProgress();
         });
         
-        // Close modal functionality
-        function closeSaveModal() {
-            document.getElementById('saveModal').style.display = 'none';
-        }
-        
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('saveModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        }
+        // Initialize the chart
+        document.addEventListener('DOMContentLoaded', initializeChart);
     </script>
 </body>
 </html>

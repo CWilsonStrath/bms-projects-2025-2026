@@ -233,8 +233,12 @@
         
         .week-header {
             width: 60px;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
+            padding: 8px 4px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 500;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            line-height: 1.2;
         }
         
         .gantt-row {
@@ -279,31 +283,69 @@
             border-radius: 50%;
         }
         
+        .category-header {
+            background-color: var(--md-sys-color-surface-variant);
+            font-weight: 600;
+        }
+        
+        .category-cell {
+            background-color: var(--md-sys-color-surface-variant);
+        }
+        
+        .category-header-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        
+        .category-timeline {
+            background-color: var(--md-sys-color-surface-variant);
+        }
+        
+        .subtask-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .subtask-indent {
+            color: var(--md-sys-color-outline);
+            font-size: 12px;
+            font-family: monospace;
+            margin-top: 2px;
+        }
+        
         .timeline-cell {
             width: 60px;
             height: 60px;
             border-right: 1px solid var(--md-sys-color-outline-variant);
             position: relative;
             background: white;
+            overflow: visible;
         }
         
         .task-bar {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 24px;
+            top: 12px;
+            height: 36px;
             border-radius: 12px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            padding: 0 6px;
             color: white;
             font-size: 10px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: var(--md-elevation-1);
-            min-width: 40px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             overflow: hidden;
+            z-index: 1;
         }
         
         .task-bar:hover {
@@ -498,6 +540,10 @@
                         <option value="Computational">Computational</option>
                         <option value="Literature Review">Literature Review</option>
                     </select>
+                </div>
+                <div class="input-group">
+                    <label for="total-weeks">Timeline (weeks)</label>
+                    <input type="number" id="total-weeks" min="10" max="52" value="20" onchange="updateTimelineWeeks()">
                 </div>
             </div>
             
@@ -695,117 +741,224 @@
         let selectedTask = null;
         let taskIdCounter = 1;
         
+        // Configuration - easily adjustable
+        const CONFIG = {
+            totalWeeks: 20,
+            weekLabels: [
+                'Sep W3', 'Sep W4', 'Oct W1', 'Oct W2', 'Oct W3', 'Oct W4',
+                'Nov W1', 'Nov W2', 'Nov W3', 'Nov W4', 'Dec W1', 'Dec W2',
+                'Jan W2', 'Jan W3', 'Jan W4', 'Feb W1', 'Feb W2', 'Feb W3', 'Feb W4', 'Mar W1'
+            ]
+        };
+        
+        // Generate week headers dynamically
+        function generateWeekHeaders() {
+            const headerRow = document.querySelector('.gantt-header tr');
+            const taskHeader = headerRow.querySelector('.task-header');
+            
+            // Clear existing week headers
+            const existingHeaders = headerRow.querySelectorAll('.week-header');
+            existingHeaders.forEach(header => header.remove());
+            
+            // Add new week headers
+            for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                const th = document.createElement('th');
+                th.className = 'week-header';
+                th.textContent = CONFIG.weekLabels[i] || `Week ${i + 1}`;
+                headerRow.appendChild(th);
+            }
+        }
+        
+        // Update timeline when user changes number of weeks
+        function updateTimelineWeeks() {
+            const totalWeeksInput = document.getElementById('total-weeks');
+            const newTotal = parseInt(totalWeeksInput.value);
+            
+            if (newTotal < 10 || newTotal > 52 || isNaN(newTotal)) {
+                alert('Please enter a number between 10 and 52 weeks');
+                totalWeeksInput.value = CONFIG.totalWeeks;
+                return;
+            }
+            
+            // Update configuration
+            CONFIG.totalWeeks = newTotal;
+            
+            // Generate default week labels if we don't have enough
+            while (CONFIG.weekLabels.length < newTotal) {
+                CONFIG.weekLabels.push(`Week ${CONFIG.weekLabels.length + 1}`);
+            }
+            
+            // Update start week options in forms
+            updateStartWeekOptions();
+            
+            // Regenerate chart
+            generateWeekHeaders();
+            renderChart();
+        }
+        
+        // Update the start week dropdown options
+        function updateStartWeekOptions() {
+            const startWeekSelects = document.querySelectorAll('#start-week, #edit-start-week');
+            
+            startWeekSelects.forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '';
+                
+                for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = CONFIG.weekLabels[i] || `Week ${i + 1}`;
+                    select.appendChild(option);
+                }
+                
+                // Restore previous selection if still valid
+                if (currentValue < CONFIG.totalWeeks) {
+                    select.value = currentValue;
+                }
+            });
+        }
+        
         // Initialize with meta-analysis example tasks
         function initializeExampleTasks() {
             tasks = [
                 {
                     id: taskIdCounter++,
-                    name: 'Research Question & Protocol Development',
-                    category: 'Planning',
+                    name: 'Initial Topic Exploration & Reading',
+                    category: 'Exploratory Phase',
                     startWeek: 0,
                     duration: 2,
                     color: '#9C27B0',
-                    notes: 'Define PICO framework, develop search strategy, register protocol',
+                    notes: 'Broad reading to understand the topic and identify key themes',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Refine Research Question & Protocol',
+                    category: 'Exploratory Phase',
+                    startWeek: 3,
+                    duration: 1,
+                    color: '#9C27B0',
+                    notes: 'Define PICO framework and search strategy',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
                     name: 'Systematic Literature Search',
-                    category: 'Literature Review',
-                    startWeek: 1,
-                    duration: 3,
+                    category: 'Systematic Review',
+                    startWeek: 4,
+                    duration: 2,
                     color: '#1565C0',
-                    notes: 'Search PubMed, Embase, Cochrane Library, Web of Science',
+                    notes: 'Search databases using developed strategy',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
                     name: 'Title & Abstract Screening',
-                    category: 'Study Selection',
-                    startWeek: 4,
+                    category: 'Systematic Review',
+                    startWeek: 6,
                     duration: 2,
-                    color: '#D32F2F',
-                    notes: 'Apply inclusion/exclusion criteria, dual screening recommended',
+                    color: '#1565C0',
+                    notes: 'Apply inclusion/exclusion criteria systematically',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
                     name: 'Full-Text Article Review',
-                    category: 'Study Selection',
-                    startWeek: 6,
+                    category: 'Systematic Review',
+                    startWeek: 8,
                     duration: 2,
-                    color: '#D32F2F',
-                    notes: 'Detailed assessment of eligibility, document exclusion reasons',
+                    color: '#1565C0',
+                    notes: 'Detailed eligibility assessment',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
                     name: 'Data Extraction',
-                    category: 'Data Collection',
-                    startWeek: 8,
-                    duration: 3,
-                    color: '#F57C00',
-                    notes: 'Extract study characteristics, outcomes, quality metrics',
-                    completed: false
-                },
-                {
-                    id: taskIdCounter++,
-                    name: 'Quality Assessment (Risk of Bias)',
-                    category: 'Critical Appraisal',
+                    category: 'Data Processing',
                     startWeek: 10,
                     duration: 2,
-                    color: '#00796B',
-                    notes: 'Use Cochrane RoB tool or Newcastle-Ottawa Scale',
+                    color: '#F57C00',
+                    notes: 'Extract study characteristics and outcomes',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
-                    name: 'Statistical Analysis & Meta-Analysis',
-                    category: 'Data Analysis',
+                    name: 'Quality Assessment',
+                    category: 'Data Processing',
                     startWeek: 12,
-                    duration: 3,
-                    color: '#E64A19',
-                    notes: 'Forest plots, heterogeneity assessment, sensitivity analysis',
+                    duration: 2,
+                    color: '#F57C00',
+                    notes: 'Assess risk of bias in included studies',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
-                    name: 'Write Introduction & Methods',
-                    category: 'Writing',
-                    startWeek: 3,
-                    duration: 4,
+                    name: 'Statistical Analysis & Synthesis',
+                    category: 'Analysis',
+                    startWeek: 14,
+                    duration: 2,
+                    color: '#E64A19',
+                    notes: 'Quantitative synthesis if appropriate, or narrative synthesis',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Draft Introduction Chapter',
+                    category: 'Thesis Writing',
+                    startWeek: 1,
+                    duration: 3,
                     color: '#455A64',
-                    notes: 'Background, rationale, systematic review methodology',
+                    notes: 'Write background and rationale during exploratory phase',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Write Methods Section',
+                    category: 'Thesis Writing',
+                    startWeek: 4,
+                    duration: 3,
+                    color: '#455A64',
+                    notes: 'Document methodology as you implement it',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
                     name: 'Write Results Section',
-                    category: 'Writing',
-                    startWeek: 14,
+                    category: 'Thesis Writing',
+                    startWeek: 13,
                     duration: 2,
                     color: '#455A64',
-                    notes: 'PRISMA flow diagram, study characteristics, forest plots',
+                    notes: 'Document findings as data emerges',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
-                    name: 'Write Discussion & Conclusion',
-                    category: 'Writing',
-                    startWeek: 16,
+                    name: 'Update Results with Analysis',
+                    category: 'Thesis Writing',
+                    startWeek: 15,
                     duration: 2,
                     color: '#455A64',
-                    notes: 'Interpret findings, limitations, clinical implications',
+                    notes: 'Incorporate statistical findings into results chapter',
                     completed: false
                 },
                 {
                     id: taskIdCounter++,
-                    name: 'Final Review & Formatting',
-                    category: 'Finalization',
-                    startWeek: 18,
+                    name: 'Discussion & Conclusions',
+                    category: 'Thesis Writing',
+                    startWeek: 17,
                     duration: 2,
-                    color: '#616161',
-                    notes: 'Proofreading, reference formatting, final checks',
+                    color: '#455A64',
+                    notes: 'Interpret findings and discuss implications',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Final Review & Submission',
+                    category: 'Thesis Writing',
+                    startWeek: 19,
+                    duration: 1,
+                    color: '#455A64',
+                    notes: 'Proofread, format, and submit',
                     completed: false
                 }
             ];
@@ -816,78 +969,131 @@
             tbody.innerHTML = '';
             
             if (tasks.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="21" class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></td></tr>';
+                tbody.innerHTML = `<tr><td colspan="${CONFIG.totalWeeks + 1}" class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></td></tr>`;
                 return;
             }
             
-            tasks.forEach((task, index) => {
-                const row = document.createElement('tr');
-                row.className = 'gantt-row';
-                row.setAttribute('data-task-id', task.id);
-                
-                if (selectedTask && selectedTask.id === task.id) {
-                    row.classList.add('selected');
+            // Group tasks by category
+            const groupedTasks = {};
+            tasks.forEach(task => {
+                if (!groupedTasks[task.category]) {
+                    groupedTasks[task.category] = [];
                 }
+                groupedTasks[task.category].push(task);
+            });
+            
+            // Render grouped tasks
+            Object.keys(groupedTasks).forEach(category => {
+                const categoryTasks = groupedTasks[category];
                 
-                // Task name cell
-                const nameCell = document.createElement('td');
-                nameCell.className = 'task-name-cell';
-                nameCell.innerHTML = `
-                    <div class="task-title">${task.name}</div>
-                    <div class="task-category">
-                        <span class="category-dot" style="background-color: ${task.color}"></span>
-                        ${task.category}
-                    </div>
-                `;
-                nameCell.addEventListener('click', () => selectTask(task));
-                row.appendChild(nameCell);
-                
-                // Timeline cells
-                for (let week = 0; week < 20; week++) {
-                    const cell = document.createElement('td');
-                    cell.className = 'timeline-cell';
+                // Add category header if there are multiple tasks in this category
+                if (categoryTasks.length > 1) {
+                    const categoryRow = document.createElement('tr');
+                    categoryRow.className = 'gantt-row category-header';
                     
-                    // Add task bar if this week is within the task duration
-                    if (week >= task.startWeek && week < task.startWeek + task.duration) {
-                        const taskBar = document.createElement('div');
-                        taskBar.className = 'task-bar';
-                        if (selectedTask && selectedTask.id === task.id) {
-                            taskBar.classList.add('selected');
-                        }
-                        if (task.completed) {
-                            taskBar.classList.add('completed');
-                        }
-                        
-                        taskBar.style.backgroundColor = task.color;
-                        taskBar.style.left = '4px';
-                        taskBar.style.width = `${(task.duration * 60) - 8}px`;
-                        
-                        // Only show text on first cell of task
-                        if (week === task.startWeek) {
-                            taskBar.textContent = task.name.length > 12 ? task.name.substring(0, 12) + '...' : task.name;
-                        }
-                        
-                        taskBar.setAttribute('data-task-id', task.id);
-                        taskBar.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            selectTask(task);
-                        });
-                        taskBar.addEventListener('dblclick', () => {
-                            task.completed = !task.completed;
-                            renderChart();
-                            updateProgress();
-                        });
-                        
-                        taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks\n${task.notes ? 'Notes: ' + task.notes : ''}`;
-                        
-                        cell.appendChild(taskBar);
-                        break; // Only add the bar to the first cell
+                    const categoryCell = document.createElement('td');
+                    categoryCell.className = 'task-name-cell category-cell';
+                    categoryCell.innerHTML = `
+                        <div class="category-header-content">
+                            <span class="category-dot" style="background-color: ${categoryTasks[0].color}"></span>
+                            <strong>${category}</strong>
+                        </div>
+                    `;
+                    categoryRow.appendChild(categoryCell);
+                    
+                    // Add empty timeline cells for category header
+                    for (let week = 0; week < CONFIG.totalWeeks; week++) {
+                        const cell = document.createElement('td');
+                        cell.className = 'timeline-cell category-timeline';
+                        categoryRow.appendChild(cell);
                     }
                     
-                    row.appendChild(cell);
+                    tbody.appendChild(categoryRow);
                 }
                 
-                tbody.appendChild(row);
+                // Add individual tasks
+                categoryTasks.forEach((task, index) => {
+                    const row = document.createElement('tr');
+                    row.className = 'gantt-row';
+                    row.setAttribute('data-task-id', task.id);
+                    
+                    if (selectedTask && selectedTask.id === task.id) {
+                        row.classList.add('selected');
+                    }
+                    
+                    // Task name cell
+                    const nameCell = document.createElement('td');
+                    nameCell.className = 'task-name-cell';
+                    
+                    if (categoryTasks.length > 1) {
+                        // Show as subtask
+                        nameCell.innerHTML = `
+                            <div class="subtask-content">
+                                <span class="subtask-indent">├</span>
+                                <div class="task-title">${task.name}</div>
+                            </div>
+                        `;
+                    } else {
+                        // Show as standalone task with category
+                        nameCell.innerHTML = `
+                            <div class="task-category">
+                                <span class="category-dot" style="background-color: ${task.color}"></span>
+                                ${task.category}
+                            </div>
+                            <div class="task-title">${task.name}</div>
+                        `;
+                    }
+                    
+                    nameCell.addEventListener('click', () => selectTask(task));
+                    row.appendChild(nameCell);
+                    
+                    // Timeline cells
+                    for (let week = 0; week < CONFIG.totalWeeks; week++) {
+                        const cell = document.createElement('td');
+                        cell.className = 'timeline-cell';
+                        
+                        // Only add task bar on the first week of the task
+                        if (week === task.startWeek) {
+                            const taskBar = document.createElement('div');
+                            taskBar.className = 'task-bar';
+                            if (selectedTask && selectedTask.id === task.id) {
+                                taskBar.classList.add('selected');
+                            }
+                            if (task.completed) {
+                                taskBar.classList.add('completed');
+                            }
+                            
+                            taskBar.style.backgroundColor = task.color;
+                            
+                            // Calculate the full width of the bar across multiple cells
+                            const barWidth = (task.duration * 60) - 4;
+                            taskBar.style.left = '2px';
+                            taskBar.style.width = `${barWidth}px`;
+                            
+                            // Just use the full task name - let CSS handle truncation
+                            taskBar.textContent = task.name;
+                            
+                            taskBar.setAttribute('data-task-id', task.id);
+                            taskBar.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                selectTask(task);
+                            });
+                            taskBar.addEventListener('dblclick', () => {
+                                task.completed = !task.completed;
+                                renderChart();
+                                updateProgress();
+                            });
+                            
+                            taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks\n${task.notes ? 'Notes: ' + task.notes : ''}`;
+                            
+                            cell.appendChild(taskBar);
+                        }
+                        
+                        row.appendChild(cell);
+                    }
+                    
+                    tbody.appendChild(row);
+                });
             });
         }
         
@@ -1097,6 +1303,8 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            generateWeekHeaders();
+            updateStartWeekOptions();
             initializeExampleTasks();
             renderChart();
             updateProgress();

@@ -3,1220 +3,1168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BM432 Final Year Projects 2025-26</title>
+    <title>BM432 Flexible Gantt Chart</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            /* Material Design 3 Color System */
-            --md-sys-color-primary: #1565C0;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-primary-container: #D3E3FD;
-            --md-sys-color-on-primary-container: #001C3B;
-            
-            --md-sys-color-secondary: #5A6069;
-            --md-sys-color-on-secondary: #FFFFFF;
-            --md-sys-color-secondary-container: #DEE3EA;
-            --md-sys-color-on-secondary-container: #171B20;
-            
-            --md-sys-color-surface: #FEFBFF;
-            --md-sys-color-on-surface: #1B1B1F;
-            --md-sys-color-surface-variant: #E0E2EC;
-            --md-sys-color-on-surface-variant: #44474E;
-            
-            --md-sys-color-outline: #74777F;
-            --md-sys-color-outline-variant: #C4C6CF;
-            
-            /* Additional colors for new features */
-            --md-sys-color-success: #4CAF50;
-            --md-sys-color-on-success: #FFFFFF;
-            --md-sys-color-warning: #FF9800;
-            --md-sys-color-on-warning: #FFFFFF;
-            --md-sys-color-error: #F44336;
-            --md-sys-color-on-error: #FFFFFF;
-            
-            /* Material Design 3 Elevation Shadows */
-            --md-elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-            --md-elevation-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-        }
-
+        
         body {
-            font-family: 'Roboto', 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.5;
-            color: var(--md-sys-color-on-surface);
-            background-color: var(--md-sys-color-surface);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
         }
-
-        .header {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            padding: 24px 0;
-        }
-
+        
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 24px;
-            align-items: start;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 400;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.87;
-        }
-
-        /* Saved Projects Panel - Desktop: Always visible, Mobile: Bottom panel */
-        .saved-panel {
-            background-color: white;
+            background: white;
             border-radius: 12px;
-            box-shadow: var(--md-elevation-1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            padding: 25px;
+            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+        }
+        
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .input-group {
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 32px);
-            position: sticky;
-            top: 16px;
         }
-
-        /* Mobile saved panel */
-        @media (max-width: 1024px) {
-            .saved-panel {
-                position: fixed;
-                bottom: -100vh;
-                left: 0;
-                right: 0;
-                height: 100dvh;
-                max-height: 100dvh;
-                border-radius: 0;
-                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-                transition: bottom 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
-                top: auto;
-            }
-
-            .saved-panel.open {
-                bottom: 0;
-            }
-        }
-
-        .saved-panel-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            border-radius: 12px 12px 0 0;
-        }
-
-        @media (max-width: 1024px) {
-            .saved-panel-header {
-                border-radius: 0;
-            }
-        }
-
-        .saved-panel-title {
-            font-size: 20px;
-            font-weight: 500;
+        
+        .input-group label {
+            font-weight: 600;
             margin-bottom: 8px;
+            color: #2c3e50;
         }
-
-        .saved-panel-subtitle {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .saved-panel-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-        }
-
-        .saved-panel-actions {
-            padding: 16px;
-            border-top: 1px solid var(--md-sys-color-outline-variant);
-            background-color: var(--md-sys-color-surface-variant);
-        }
-
-        .saved-project-item {
-            background-color: var(--md-sys-color-surface);
-            border: 1px solid var(--md-sys-color-outline-variant);
-            border-radius: 8px;
+        
+        .input-group input, .input-group select, .input-group textarea {
             padding: 12px;
-            margin-bottom: 8px;
-            cursor: grab;
-            transition: all 0.2s;
-        }
-
-        .saved-project-item:hover {
-            background-color: var(--md-sys-color-primary-container);
-        }
-
-        .saved-project-item.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
-        }
-
-        .saved-project-rank {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            font-size: 12px;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .saved-project-title {
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
             font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
+            transition: all 0.3s ease;
         }
-
-        .saved-project-meta {
-            font-size: 12px;
-            color: var(--md-sys-color-on-surface-variant);
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
-        .saved-project-remove {
-            background: none;
-            border: none;
-            color: var(--md-sys-color-error);
-            cursor: pointer;
-            font-size: 18px;
-            float: right;
-            padding: 0;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
+        
+        .task-form {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            margin-bottom: 20px;
+        }
+        
+        .task-form h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 80px 100px;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 15px;
+        }
+        
+        .color-input {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 10px;
         }
-
-        .saved-project-remove:hover {
-            background-color: var(--md-sys-color-error);
-            color: var(--md-sys-color-on-error);
-        }
-
-        /* Panel Toggle Button - Only visible on mobile */
-        .saved-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            border: none;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            box-shadow: var(--md-elevation-3);
+        
+        .color-picker {
+            width: 50px;
+            height: 40px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
             cursor: pointer;
-            z-index: 999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-
-        .saved-toggle:hover {
+        
+        .color-picker:hover {
             transform: scale(1.1);
         }
-
-        @media (max-width: 1024px) {
-            .saved-toggle {
-                display: flex;
-            }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
-
-        .saved-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background-color: var(--md-sys-color-error);
-            color: var(--md-sys-color-on-error);
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .gantt-container {
+            overflow: auto;
+            max-height: 70vh;
+            border: 1px solid #dee2e6;
+        }
+        
+        .gantt-chart {
+            display: flex;
+            min-width: 1200px;
+            background: white;
+        }
+        
+        .task-list {
+            width: 350px;
+            min-width: 350px;
+            border-right: 2px solid #dee2e6;
+            background: #f8f9fa;
+        }
+        
+        .timeline {
+            flex: 1;
+            overflow-x: auto;
+        }
+        
+        .timeline-header {
+            display: grid;
+            grid-template-columns: repeat(20, 60px);
+            background: #2c3e50;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .week-header {
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            border-right: 1px solid #34495e;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        
+        .task-row {
+            display: contents;
+        }
+        
+        .task-name-cell {
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+            background: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            min-height: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .task-name-cell:hover {
+            background: #f8f9fa;
+        }
+        
+        .task-name-cell.selected {
+            background: #e3f2fd !important;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .task-category-dot {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .task-timeline {
+            display: grid;
+            grid-template-columns: repeat(20, 60px);
+            border-bottom: 1px solid #dee2e6;
+            min-height: 50px;
+            align-items: center;
+            position: relative;
+        }
+        
+        .task-bar {
+            height: 24px;
+            border-radius: 12px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            min-width: 40px;
         }
-
-        .filters {
-            padding: 16px 0;
-            margin: 16px 0;
+        
+        .task-bar:hover {
+            transform: translateY(-50%) scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-
-        .filters-header {
+        
+        .task-bar.selected {
+            border: 2px solid #2196f3;
+            z-index: 5;
+        }
+        
+        .week-cell {
+            border-right: 1px solid #f0f0f0;
+            position: relative;
+            min-height: 50px;
+        }
+        
+        .progress-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 12px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dee2e6;
         }
-
-        .reset-button {
-            background-color: var(--md-sys-color-surface-variant);
-            color: var(--md-sys-color-on-surface-variant);
-            border: 1px solid var(--md-sys-color-outline);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #2c3e50;
         }
-
-        .reset-button:hover {
-            background-color: var(--md-sys-color-outline-variant);
-        }
-
-        .reset-button:active {
-            transform: scale(0.98);
-        }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 16px;
-        }
-
-        .filter-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--md-sys-color-on-surface);
-            font-size: 14px;
-        }
-
-        .filter-group input,
-        .filter-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--md-sys-color-outline);
-            border-radius: 4px;
-            font-size: 14px;
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
-        }
-
-        .filter-group input:focus,
-        .filter-group select:focus {
-            outline: none;
-            border-color: var(--md-sys-color-primary);
-            border-width: 2px;
-            padding: 11px;
-        }
-
-        .results-summary {
-            text-align: center;
-            margin: 24px 0 16px 0;
-            font-size: 14px;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        /* Project Cards */
-        .project-card {
-            background-color: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: var(--md-elevation-1);
-            transition: all 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card.saved {
-            border: 2px solid var(--md-sys-color-primary);
-        }
-
-        .project-card:hover {
-            box-shadow: var(--md-elevation-3);
-            transform: translateY(-2px);
-        }
-
-        .card-header {
-            padding: 20px 20px 16px 20px;
-            position: relative;
-        }
-
-        .card-content {
-            padding: 0 20px 16px 20px;
-        }
-
-        .card-actions {
-            padding: 16px 20px 20px 20px;
-            border-top: 1px solid var(--md-sys-color-outline-variant);
-        }
-
-        .project-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--md-sys-color-on-surface);
-            margin-bottom: 12px;
-            line-height: 1.3;
-            padding-right: 40px;
-        }
-
-        /* Save Button */
-        .save-button {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: 2px solid var(--md-sys-color-primary);
-            color: var(--md-sys-color-primary);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-
-        .save-button.saved {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-        }
-
-        .save-button:hover {
-            transform: scale(1.1);
-        }
-
-        .project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .meta-chip {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* Project Type Colors */
-        .meta-chip.type[data-type*="Data Science"] {
-            background-color: #E8F4FD;
-            color: #1976D2;
-        }
-
-        .meta-chip.type[data-type*="Experimental"] {
-            background-color: #F3E5F5;
-            color: #7B1FA2;
-        }
-
-        .meta-chip.type[data-type*="Industrial"] {
-            background-color: #E1F5FE;
-            color: #0277BD;
-        }
-
-        .meta-chip.type[data-type*="Literature"] {
-            background-color: #E8F5E8;
-            color: #43A047;
-        }
-
-        .subject-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 16px;
-        }
-
-        .subject-chip {
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-            background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
-        }
-
-        /* Project Aim - Highlighted */
-        .project-aim {
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .project-aim strong {
-            font-weight: 500;
-        }
-
-        /* Expandable Details */
-        .project-details {
-            display: none;
-            padding: 16px 20px 0 20px;
-        }
-
-        .expanded .project-details {
-            display: block;
-        }
-
-        .section-label {
-            color: var(--md-sys-color-on-surface-variant);
-            margin-bottom: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .project-outline {
-            margin-bottom: 16px;
-            color: var(--md-sys-color-on-surface);
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        .techniques-section {
-            margin-bottom: 16px;
-        }
-
-        .techniques-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .technique-chip {
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-        }
-
-        .references-section {
-            margin-bottom: 16px;
-        }
-
-        .references-list {
-            font-size: 12px;
-            color: var(--md-sys-color-on-surface-variant);
-            line-height: 1.4;
-        }
-
-        .reference {
-            margin-bottom: 8px;
-            padding-left: 12px;
-            border-left: 2px solid var(--md-sys-color-outline-variant);
-        }
-
-        .supervisor-info {
-            font-size: 13px;
-            color: var(--md-sys-color-on-surface-variant);
-            margin-bottom: 12px;
-        }
-
-        .supervisor-info strong {
-            color: var(--md-sys-color-on-surface);
-            font-weight: 500;
-        }
-
-        /* Expand Button */
-        .expand-button {
+        
+        .close {
             background: none;
             border: none;
-            color: var(--md-sys-color-primary);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.2s;
-        }
-
-        .expand-button:hover {
-            color: var(--md-sys-color-on-surface);
-        }
-
-        .expand-icon {
-            transition: transform 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
-        }
-
-        .expanded .expand-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Export and Action Buttons */
-        .panel-button {
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            margin-bottom: 8px;
-            transition: all 0.2s;
-        }
-
-        .panel-button.primary {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-        }
-
-        .panel-button.secondary {
-            background-color: var(--md-sys-color-secondary);
-            color: var(--md-sys-color-on-secondary);
-        }
-
-        .panel-button.danger {
-            background-color: var(--md-sys-color-error);
-            color: var(--md-sys-color-on-error);
-        }
-
-        .panel-button:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--md-elevation-1);
-        }
-
-        .no-saved-projects {
-            text-align: center;
-            padding: 32px 16px;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .no-saved-projects h3 {
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-
-        .no-saved-projects p {
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 48px 24px;
-            background-color: var(--md-sys-color-surface-variant);
-            border-radius: 12px;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .sortable-ghost {
-            opacity: 0.4;
-        }
-
-        /* Close button for saved panel - Only visible on mobile */
-        .close-panel-button {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            color: var(--md-sys-color-on-primary);
-            cursor: pointer;
             font-size: 24px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: none;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
         }
-
-        .close-panel-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        
+        .close:hover {
+            background: #f8f9fa;
+            color: #dc3545;
         }
-
-        @media (max-width: 1024px) {
-            .close-panel-button {
-                display: flex;
+        
+        .modal-form {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .tips {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            margin: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .tips h3 {
+            margin-bottom: 15px;
+            color: #d35400;
+            font-size: 1.2rem;
+        }
+        
+        .tips ul {
+            list-style-position: inside;
+            color: #8b4513;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .gantt-chart {
+                grid-template-columns: 250px 1fr;
             }
-        }
-
-        @media (max-width: 1024px) {
-            .main-content {
+            
+            .form-grid {
                 grid-template-columns: 1fr;
             }
             
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .timeline-header {
+                grid-template-columns: repeat(20, 50px);
             }
             
-            .filter-grid {
-                grid-template-columns: 1fr;
+            .task-timeline {
+                grid-template-columns: repeat(20, 50px);
             }
-            
-            .container {
-                padding: 0 12px;
-            }
-
-            .saved-toggle {
-                display: flex;
-            }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="container">
-            <h1>BM432 Final Year Projects</h1>
-            <p>Biomolecular Science • 2025-2026</p>
-        </div>
-    </div>
-
-    <!-- Floating Toggle Button - Only visible on mobile -->
-    <button class="saved-toggle" onclick="toggleSavedPanel()">
-        +
-        <span class="saved-badge" id="savedBadge" style="display: none;">0</span>
-    </button>
-
     <div class="container">
-        <div class="main-content" style="margin-top: 32px;">
-            <div class="content-section">
-                <div class="filters">
-                    <div class="filters-header">
-                        <h2 style="font-size: 18px; font-weight: 500; color: var(--md-sys-color-on-surface); margin: 0;">Filter Projects</h2>
-                        <button class="reset-button" onclick="resetAllFilters()">Reset all filters</button>
-                    </div>
-                    <div class="filter-grid">
-                        <div class="filter-group">
-                            <label for="searchInput">Search projects</label>
-                            <input type="text" id="searchInput" placeholder="Search by title, keywords, techniques...">
-                        </div>
-                        <div class="filter-group">
-                            <label for="typeFilter">Project type</label>
-                            <select id="typeFilter">
-                                <option value="">All types</option>
-                                <option value="Data Science: Data Analysis">Data Analysis</option>
-                                <option value="Data Science: Bioinformatics">Bioinformatics</option>
-                                <option value="Data Science: Computational">Computational</option>
-                                <option value="Experimental Research Projects (Laboratory)">Laboratory Research</option>
-                                <option value="Industrial/Societal: Education">Education</option>
-                                <option value="Industrial/Societal: Knowledge Exchange">Knowledge Exchange</option>
-                                <option value="Industrial/Societal: SciComm & Public Engagement">Science Communication</option>
-                                <option value="Literature: Critical Analysis">Literature (Critical Analysis)</option>
-                                <option value="Literature: Meta-analysis">Meta-analysis</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="subjectFilter">Subject area</label>
-                            <select id="subjectFilter">
-                                <option value="">All subjects</option>
-                                <option value="Biochemistry">Biochemistry</option>
-                                <option value="Immunology">Immunology</option>
-                                <option value="Microbiology">Microbiology</option>
-                                <option value="Pharmacology">Pharmacology</option>
-                                <option value="Biomedical Science">Biomedical Science</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="supervisorFilter">Supervisor</label>
-                            <select id="supervisorFilter">
-                                <option value="">All supervisors</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="sortFilter">Sort by</label>
-                            <select id="sortFilter">
-                                <option value="random">Default order</option>
-                                <option value="title">Project title A-Z</option>
-                                <option value="supervisor">Supervisor A-Z</option>
-                                <option value="type">Project type</option>
-                                <option value="id">Project ID</option>
-                            </select>
-                        </div>
-                    </div>
+        <div class="header">
+            <h1>BM432 Flexible Gantt Chart</h1>
+            <p>Fully customizable timeline planning for final year projects</p>
+        </div>
+        
+        <div class="controls">
+            <div class="project-info">
+                <div class="input-group">
+                    <label for="project-title">Project Title</label>
+                    <input type="text" id="project-title" placeholder="Enter your project title">
                 </div>
-
-                <div class="results-summary">
-                    Showing <strong><span id="resultCount">0</span></strong> available projects
+                <div class="input-group">
+                    <label for="student-name">Student Name</label>
+                    <input type="text" id="student-name" placeholder="Your name">
                 </div>
-
-                <div class="projects-grid" id="projectsGrid">
-                    <!-- Projects will be loaded here -->
+                <div class="input-group">
+                    <label for="supervisor">Supervisor</label>
+                    <input type="text" id="supervisor" placeholder="Supervisor name">
                 </div>
-
-                <div class="no-results" id="noResults" style="display: none;">
-                    <h3>No projects found</h3>
-                    <p>Try adjusting your search criteria or filters to see more results.</p>
+                <div class="input-group">
+                    <label for="project-type">Project Type</label>
+                    <select id="project-type">
+                        <option value="">Select project type</option>
+                        <option value="bioinformatics">Bioinformatics</option>
+                        <option value="computational">Computational</option>
+                        <option value="laboratory">Laboratory Research</option>
+                        <option value="critical-analysis">Critical Analysis</option>
+                        <option value="data-analysis">Data Analysis</option>
+                        <option value="education">Education</option>
+                        <option value="knowledge-exchange">Knowledge Exchange</option>
+                        <option value="science-communication">Science Communication</option>
+                    </select>
                 </div>
             </div>
-
-            <!-- Saved Projects Panel - Always visible on desktop -->
-            <div class="saved-panel" id="savedPanel">
-                <div class="saved-panel-header">
-                    <button class="close-panel-button" onclick="toggleSavedPanel()">×</button>
-                    <div class="saved-panel-title">My Project Preferences</div>
-                    <div class="saved-panel-subtitle">Drag to reorder by preference • <span id="projectCount">0</span>/30 selected</div>
-                </div>
-                <div class="saved-panel-content">
-                    <div id="savedProjectsList">
-                        <div class="no-saved-projects">
-                            <h3>No projects saved yet</h3>
-                            <p>Click the heart icon on projects you're interested in to add them to your list.</p>
-                        </div>
+            
+            <div class="task-form">
+                <h3>Add New Task</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="task-name">Task Name</label>
+                        <input type="text" id="task-name" placeholder="Enter task name">
+                    </div>
+                    <div class="input-group">
+                        <label for="task-category">Category</label>
+                        <input type="text" id="task-category" placeholder="e.g. Research, Writing">
+                    </div>
+                    <div class="input-group">
+                        <label for="task-duration">Duration (weeks)</label>
+                        <input type="number" id="task-duration" min="1" max="20" value="2">
+                    </div>
+                    <div class="input-group">
+                        <label for="start-week">Start Week</label>
+                        <select id="start-week">
+                            <option value="0">Sep W3</option>
+                            <option value="1">Sep W4</option>
+                            <option value="2">Oct W1</option>
+                            <option value="3">Oct W2</option>
+                            <option value="4">Oct W3</option>
+                            <option value="5">Oct W4</option>
+                            <option value="6">Nov W1</option>
+                            <option value="7">Nov W2</option>
+                            <option value="8">Nov W3</option>
+                            <option value="9">Nov W4</option>
+                            <option value="10">Dec W1</option>
+                            <option value="11">Dec W2</option>
+                            <option value="12">Jan W2</option>
+                            <option value="13">Jan W3</option>
+                            <option value="14">Jan W4</option>
+                            <option value="15">Feb W1</option>
+                            <option value="16">Feb W2</option>
+                            <option value="17">Feb W3</option>
+                            <option value="18">Feb W4</option>
+                            <option value="19">Mar W1</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Color</label>
+                        <input type="color" id="task-color" class="color-picker" value="#3498db">
                     </div>
                 </div>
-                <div class="saved-panel-actions">
-                    <button class="panel-button primary" onclick="exportProjectList()">Submit via Microsoft Forms</button>
-                    <button class="panel-button secondary" onclick="copyProjectList()">Copy to Clipboard</button>
-                    <button class="panel-button danger" onclick="clearAllSaved()">Clear All</button>
+                <div class="input-group">
+                    <label for="task-notes">Notes (optional)</label>
+                    <textarea id="task-notes" rows="2" placeholder="Additional notes about this task"></textarea>
                 </div>
+                <button class="btn btn-primary" onclick="addTask()">Add Task</button>
             </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="editSelected()">Edit Task</button>
+                <button class="btn btn-danger" onclick="deleteSelected()">Delete Task</button>
+                <button class="btn btn-success" onclick="saveProject()">Save Project</button>
+                <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
+                <button class="btn btn-primary" onclick="exportChart()">Export PNG</button>
+                <button class="btn btn-secondary" onclick="clearAll()">Clear All Tasks</button>
+            </div>
+        </div>
+        
+        <div class="gantt-container">
+            <div class="gantt-chart">
+                <!-- Header row that spans both sections -->
+                <div class="header-row">
+                    <div class="task-list-header">Tasks</div>
+                    <div class="timeline-header">
+                        <div class="week-header">Sep<br>W3</div>
+                        <div class="week-header">Sep<br>W4</div>
+                        <div class="week-header">Oct<br>W1</div>
+                        <div class="week-header">Oct<br>W2</div>
+                        <div class="week-header">Oct<br>W3</div>
+                        <div class="week-header">Oct<br>W4</div>
+                        <div class="week-header">Nov<br>W1</div>
+                        <div class="week-header">Nov<br>W2</div>
+                        <div class="week-header">Nov<br>W3</div>
+                        <div class="week-header">Nov<br>W4</div>
+                        <div class="week-header">Dec<br>W1</div>
+                        <div class="week-header">Dec<br>W2</div>
+                        <div class="week-header">Jan<br>W2</div>
+                        <div class="week-header">Jan<br>W3</div>
+                        <div class="week-header">Jan<br>W4</div>
+                        <div class="week-header">Feb<br>W1</div>
+                        <div class="week-header">Feb<br>W2</div>
+                        <div class="week-header">Feb<br>W3</div>
+                        <div class="week-header">Feb<br>W4</div>
+                        <div class="week-header">Mar<br>W1</div>
+                    </div>
+                </div>
+                <!-- Content rows -->
+                <div id="gantt-content"></div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <h3>Project Timeline Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                <div class="progress-text" id="progress-text">0% Planned</div>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h3>Flexible Planning Features</h3>
+            <ul>
+                <li><strong>Custom Categories:</strong> Create any task type you need (not limited to presets)</li>
+                <li><strong>Color Coding:</strong> Choose any color for each task to match your workflow</li>
+                <li><strong>Drag & Drop:</strong> Move tasks around the timeline by dragging</li>
+                <li><strong>Notes:</strong> Add detailed notes to tasks for context</li>
+                <li><strong>Full Editing:</strong> Click any task to select, then edit all properties</li>
+                <li><strong>Save/Load:</strong> Projects save all your customizations</li>
+            </ul>
         </div>
     </div>
 
-    <!-- Load projects data -->
-    <script src="projects.js"></script>
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Task</h3>
+                <button class="close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form class="modal-form" onsubmit="saveTaskEdit(event)">
+                <div class="input-group">
+                    <label for="edit-task-name">Task Name</label>
+                    <input type="text" id="edit-task-name" required>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit-task-category">Category</label>
+                        <input type="text" id="edit-task-category" placeholder="Enter any category" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit-task-color">Color</label>
+                        <input type="color" id="edit-task-color" class="color-picker">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit-task-duration">Duration (weeks)</label>
+                        <input type="number" id="edit-task-duration" min="1" max="20" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit-start-week">Start Week</label>
+                        <select id="edit-start-week" required>
+                            <option value="0">Sep W3</option>
+                            <option value="1">Sep W4</option>
+                            <option value="2">Oct W1</option>
+                            <option value="3">Oct W2</option>
+                            <option value="4">Oct W3</option>
+                            <option value="5">Oct W4</option>
+                            <option value="6">Nov W1</option>
+                            <option value="7">Nov W2</option>
+                            <option value="8">Nov W3</option>
+                            <option value="9">Nov W4</option>
+                            <option value="10">Dec W1</option>
+                            <option value="11">Dec W2</option>
+                            <option value="12">Jan W2</option>
+                            <option value="13">Jan W3</option>
+                            <option value="14">Jan W4</option>
+                            <option value="15">Feb W1</option>
+                            <option value="16">Feb W2</option>
+                            <option value="17">Feb W3</option>
+                            <option value="18">Feb W4</option>
+                            <option value="19">Mar W1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="edit-task-notes">Notes</label>
+                    <textarea id="edit-task-notes" rows="3" placeholder="Additional notes about this task"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" id="edit-task-completed" style="margin-right: 8px;">
+                        Mark as completed
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Fallback if projects.js doesn't load
-        if (typeof projects === 'undefined') {
-            console.warn('projects.js not found. Using sample data.');
-            window.projects = [
-                {
-                    id: "BM001",
-                    title: "Sample Project - Replace with your data",
-                    type: "Data Science: Data Analysis",
-                    subjects: ["Biochemistry"],
-                    primarySupervisor: "Dr. Sample",
-                    secondarySupervisor: null,
-                    aim: "This is sample data. Replace with your actual projects.js file.",
-                    outline: "Create a projects.js file with your actual project data.",
-                    techniques: ["Replace", "With", "Real", "Data"]
+        let tasks = [];
+        let selectedTask = null;
+        let taskIdCounter = 1;
+        
+        function renderChart() {
+            const ganttContent = document.getElementById('gantt-content');
+            ganttContent.innerHTML = '';
+            
+            if (tasks.length === 0) {
+                ganttContent.innerHTML = '<div class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></div>';
+                return;
+            }
+            
+            tasks.forEach(task => {
+                // Create content row
+                const contentRow = document.createElement('div');
+                contentRow.className = 'content-row';
+                
+                // Task name cell
+                const nameCell = document.createElement('div');
+                nameCell.className = 'task-name-cell';
+                nameCell.innerHTML = `
+                    <div class="task-category-dot" style="background-color: ${task.color}"></div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 13px;">${task.name}</div>
+                        <div style="font-size: 10px; color: #6c757d;">${task.category}</div>
+                    </div>
+                `;
+                nameCell.addEventListener('click', () => selectTask(task));
+                
+                // Task timeline
+                const timelineRow = document.createElement('div');
+                timelineRow.className = 'task-timeline';
+                
+                // Add week cells
+                for (let week = 0; week < 20; week++) {
+                    const weekCell = document.createElement('div');
+                    weekCell.className = 'week-cell';
+                    timelineRow.appendChild(weekCell);
                 }
-            ];
-        }
-        
-        // Projects data is loaded from projects.js
-        let filteredProjects = [...projects];
-        let savedProjects = JSON.parse(localStorage.getItem('savedProjects')) || [];
-        
-        // Generate or retrieve daily seed for this user
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-        const seedKey = 'dailyProjectSeed_' + today;
-        
-        let randomSeed = localStorage.getItem(seedKey);
-        if (!randomSeed) {
-            randomSeed = Math.random();
-            localStorage.setItem(seedKey, randomSeed);
-        } else {
-            randomSeed = parseFloat(randomSeed);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            populateSupervisorFilter();
-            
-            // Apply initial random sort
-            shuffleArray(projects, randomSeed);
-            filteredProjects = [...projects];
-            
-            displayProjects(filteredProjects);
-            setupEventListeners();
-            updateSavedDisplay();
-            
-            // Make saved projects list sortable
-            initializeSortable();
-        });
-
-        function initializeSortable() {
-            // Simple drag and drop implementation
-            const savedList = document.getElementById('savedProjectsList');
-            
-            savedList.addEventListener('dragover', function(e) {
-                e.preventDefault();
+                
+                // Add task bar
+                const taskBar = document.createElement('div');
+                taskBar.className = 'task-bar';
+                taskBar.style.backgroundColor = task.color;
+                taskBar.style.left = `${task.startWeek * 60}px`;
+                taskBar.style.width = `${task.duration * 60}px`;
+                taskBar.textContent = task.duration > 2 ? task.name.substring(0, 15) + '...' : task.name.substring(0, 8);
+                taskBar.draggable = true;
+                taskBar.setAttribute('data-task-id', task.id);
+                taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks${task.notes ? '\nNotes: ' + task.notes : ''}`;
+                
+                taskBar.addEventListener('dragstart', (e) => handleDragStart(e, task));
+                taskBar.addEventListener('dragend', handleDragEnd);
+                taskBar.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectTask(task);
+                });
+                
+                if (task.completed) {
+                    taskBar.style.opacity = '0.6';
+                    taskBar.style.textDecoration = 'line-through';
+                }
+                
+                timelineRow.appendChild(taskBar);
+                
+                // Add both cells to the row
+                contentRow.appendChild(nameCell);
+                contentRow.appendChild(timelineRow);
+                
+                // Add row to content
+                ganttContent.appendChild(contentRow);
             });
             
-            savedList.addEventListener('drop', function(e) {
-                e.preventDefault();
-                
-                const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
-                const dropTarget = e.target.closest('.saved-project-item');
-                
-                if (dropTarget) {
-                    const dropIndex = parseInt(dropTarget.dataset.index);
-                    
-                    if (draggedIndex !== dropIndex) {
-                        // Reorder the savedProjects array
-                        const movedProject = savedProjects.splice(draggedIndex, 1)[0];
-                        savedProjects.splice(dropIndex, 0, movedProject);
+            // Highlight selected task
+            if (selectedTask) {
+                const taskIndex = tasks.indexOf(selectedTask);
+                if (taskIndex >= 0) {
+                    const contentRows = document.querySelectorAll('.content-row');
+                    if (contentRows[taskIndex]) {
+                        const nameCell = contentRows[taskIndex].querySelector('.task-name-cell');
+                        const taskBar = contentRows[taskIndex].querySelector('.task-bar');
                         
-                        // Save to localStorage and update display
-                        localStorage.setItem('savedProjects', JSON.stringify(savedProjects));
-                        updateSavedDisplay();
+                        if (nameCell && taskBar) {
+                            nameCell.classList.add('selected');
+                            taskBar.classList.add('selected');
+                        }
                     }
                 }
-            });
+            }
         }
-
-        function populateSupervisorFilter() {
-            const supervisorFilter = document.getElementById('supervisorFilter');
-            const supervisors = new Set();
-            
-            // Only add primary supervisors to the dropdown
-            projects.forEach(project => {
-                supervisors.add(project.primarySupervisor);
-            });
         
-            Array.from(supervisors).sort().forEach(supervisor => {
-                const option = document.createElement('option');
-                option.value = supervisor;
-                option.textContent = supervisor;
-                supervisorFilter.appendChild(option);
-            });
+        function selectTask(task) {
+            selectedTask = task;
+            renderChart(); // Re-render to show selection
         }
-
-        function resetAllFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('typeFilter').value = '';
-            document.getElementById('subjectFilter').value = '';
-            document.getElementById('supervisorFilter').value = '';
-            document.getElementById('sortFilter').value = 'random';
+        
+        function addTask() {
+            const name = document.getElementById('task-name').value.trim();
+            const category = document.getElementById('task-category').value.trim();
+            const duration = parseInt(document.getElementById('task-duration').value);
+            const startWeek = parseInt(document.getElementById('start-week').value);
+            const color = document.getElementById('task-color').value;
+            const notes = document.getElementById('task-notes').value.trim();
             
-            filterProjects();
-        }
-
-        function setupEventListeners() {
-            document.getElementById('searchInput').addEventListener('input', filterProjects);
-            document.getElementById('typeFilter').addEventListener('change', filterProjects);
-            document.getElementById('subjectFilter').addEventListener('change', filterProjects);
-            document.getElementById('supervisorFilter').addEventListener('change', filterProjects);
-            document.getElementById('sortFilter').addEventListener('change', filterProjects);
-        }
-
-        // Seeded random shuffle for consistent random order during session
-        function shuffleArray(array, seed) {
-            let currentIndex = array.length;
-            
-            // Simple seeded random number generator
-            function seededRandom() {
-                const x = Math.sin(seed++) * 10000;
-                return x - Math.floor(x);
-            }
-            
-            while (currentIndex !== 0) {
-                const randomIndex = Math.floor(seededRandom() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
-            
-            return array;
-        }
-
-        function sortProjects(projectArray, sortBy) {
-            switch (sortBy) {
-                case 'title':
-                    projectArray.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'supervisor':
-                    projectArray.sort((a, b) => a.primarySupervisor.localeCompare(b.primarySupervisor));
-                    break;
-                case 'type':
-                    projectArray.sort((a, b) => a.type.localeCompare(b.type));
-                    break;
-                case 'id':
-                    projectArray.sort((a, b) => a.id.localeCompare(b.id));
-                    break;
-                case 'random':
-                default:
-                    // Use the original random order established at page load
-                    const originalOrder = [...projects];
-                    shuffleArray(originalOrder, randomSeed);
-                    projectArray.sort((a, b) => {
-                        const indexA = originalOrder.findIndex(p => p.id === a.id);
-                        const indexB = originalOrder.findIndex(p => p.id === b.id);
-                        return indexA - indexB;
-                    });
-                    break;
-            }
-        }
-
-        function filterProjects() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const typeFilter = document.getElementById('typeFilter').value;
-            const subjectFilter = document.getElementById('subjectFilter').value;
-            const supervisorFilter = document.getElementById('supervisorFilter').value;
-            const sortFilter = document.getElementById('sortFilter').value;
-
-            filteredProjects = projects.filter(project => {
-                const matchesSearch = !searchTerm || 
-                    project.title.toLowerCase().includes(searchTerm) ||
-                    project.outline.toLowerCase().includes(searchTerm) ||
-                    project.aim.toLowerCase().includes(searchTerm) ||
-                    project.type.toLowerCase().includes(searchTerm) ||
-                    project.primarySupervisor.toLowerCase().includes(searchTerm) ||
-                    (project.secondarySupervisor && project.secondarySupervisor.toLowerCase().includes(searchTerm)) ||
-                    project.subjects.some(subject => subject.toLowerCase().includes(searchTerm)) ||
-                    project.techniques.some(tech => tech.toLowerCase().includes(searchTerm));
-
-                const matchesType = !typeFilter || project.type === typeFilter;
-                const matchesSubject = !subjectFilter || project.subjects.includes(subjectFilter);
-                const matchesSupervisor = !supervisorFilter || 
-                    project.primarySupervisor === supervisorFilter ||
-                    (project.secondarySupervisor && project.secondarySupervisor.includes(supervisorFilter));
-
-                return matchesSearch && matchesType && matchesSubject && matchesSupervisor;
-            });
-
-            // Apply sorting
-            sortProjects(filteredProjects, sortFilter);
-            displayProjects(filteredProjects);
-        }
-
-        function toggleSavedPanel() {
-            const panel = document.getElementById('savedPanel');
-            panel.classList.toggle('open');
-        }
-
-        function toggleSaveProject(projectId) {
-            const index = savedProjects.findIndex(p => p.id === projectId);
-            
-            if (index > -1) {
-                // Remove from saved
-                savedProjects.splice(index, 1);
-            } else {
-                // Add to saved
-                const project = projects.find(p => p.id === projectId);
-                if (project) {
-                    savedProjects.push(project);
-                }
-            }
-            
-            localStorage.setItem('savedProjects', JSON.stringify(savedProjects));
-            updateSavedDisplay();
-            displayProjects(filteredProjects); // Refresh display to update save buttons
-        }
-
-        function updateSavedDisplay() {
-            const badge = document.getElementById('savedBadge');
-            const savedList = document.getElementById('savedProjectsList');
-            const projectCount = document.getElementById('projectCount');
-            
-            // Update counter in header
-            if (projectCount) {
-                projectCount.textContent = savedProjects.length;
-            }
-            
-            // Update badge
-            if (savedProjects.length > 0) {
-                badge.textContent = savedProjects.length;
-                badge.style.display = 'flex';
-            } else {
-                badge.style.display = 'none';
-            }
-            
-            // Update saved projects list
-            if (savedProjects.length === 0) {
-                savedList.innerHTML = `
-                    <div class="no-saved-projects">
-                        <h3>No projects saved yet</h3>
-                        <p>Click the heart icon on projects you're interested in to add them to your list.</p>
-                    </div>
-                `;
-            } else {
-                savedList.innerHTML = savedProjects.map((project, index) => `
-                    <div class="saved-project-item" draggable="true" data-index="${index}" 
-                         ondragstart="event.dataTransfer.setData('text/plain', ${index})"
-                         ondragenter="event.target.closest('.saved-project-item').classList.add('dragging')"
-                         ondragleave="event.target.closest('.saved-project-item').classList.remove('dragging')">
-                        <button class="saved-project-remove" onclick="toggleSaveProject('${project.id}')">×</button>
-                        <div class="saved-project-rank">${index + 1}</div>
-                        <div class="saved-project-title">${project.title}</div>
-                        <div class="saved-project-meta">ID: ${project.id} • ${project.primarySupervisor}</div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function exportProjectList() {
-            if (savedProjects.length === 0) {
-                alert('No projects saved to export!');
+            if (!name) {
+                alert('Please enter a task name');
                 return;
             }
             
-            if (savedProjects.length < 30) {
-                const confirmed = confirm(`You have only selected ${savedProjects.length} projects. Students are expected to rank 30 projects for the best chance of assignment.\n\nDo you want to continue anyway?`);
-                if (!confirmed) {
-                    return;
-                }
-            }
-            
-            const projectIds = savedProjects.map(p => p.id).join('\n');
-            
-            // Create formatted text for easy form filling
-            const formattedText = projectIds;
-            const instructionText = `Instructions:
-1. Your project preferences are copied to clipboard
-2. In the Microsoft Form, paste them in the "Project Preferences" field
-3. Add your Student ID
-4. Submit the form
-
-Project IDs (in order of preference):
-${projectIds}`;
-            
-            const formsUrl = 'https://forms.office.com/e/vnjxNDXfhd';
-            
-            // Copy to clipboard and open form
-            navigator.clipboard.writeText(formattedText).then(() => {
-                window.open(formsUrl, '_blank');
-                alert('Project IDs copied to clipboard! Paste them into the "Project Preferences" field in the form that just opened.');
-            }).catch(() => {
-                window.open(formsUrl, '_blank');
-                alert(instructionText);
-            });
-        }
-
-        function copyProjectList() {
-            if (savedProjects.length === 0) {
-                alert('No projects saved to copy!');
+            if (!category) {
+                alert('Please enter a category');
                 return;
             }
             
-            const projectIds = savedProjects.map(p => p.id).join(', ');
-            navigator.clipboard.writeText(projectIds).then(() => {
-                alert('Project IDs copied to clipboard!');
-            }).catch(() => {
-                alert('Failed to copy to clipboard. Please try the export function instead.');
-            });
+            const newTask = {
+                id: taskIdCounter++,
+                name: name,
+                category: category,
+                startWeek: startWeek,
+                duration: duration,
+                color: color,
+                notes: notes,
+                completed: false
+            };
+            
+            tasks.push(newTask);
+            
+            // Clear form
+            document.getElementById('task-name').value = '';
+            document.getElementById('task-category').value = '';
+            document.getElementById('task-duration').value = '2';
+            document.getElementById('start-week').value = '0';
+            document.getElementById('task-color').value = '#3498db';
+            document.getElementById('task-notes').value = '';
+            
+            renderChart();
+            updateProgress();
         }
-
-        function clearAllSaved() {
-            if (confirm('Are you sure you want to clear all saved projects?')) {
-                savedProjects = [];
-                localStorage.setItem('savedProjects', JSON.stringify(savedProjects));
-                updateSavedDisplay();
-                displayProjects(filteredProjects);
-            }
-        }
-
-        function toggleCard(cardElement) {
-            cardElement.classList.toggle('expanded');
-            const button = cardElement.querySelector('.expand-button .expand-text');
-            const isExpanded = cardElement.classList.contains('expanded');
-            button.textContent = isExpanded ? 'Show less' : 'Show details';
-        }
-
-        function displayProjects(projectsToShow) {
-            const projectsGrid = document.getElementById('projectsGrid');
-            const noResults = document.getElementById('noResults');
-            const resultCount = document.getElementById('resultCount');
-
-            resultCount.textContent = projectsToShow.length;
-
-            if (projectsToShow.length === 0) {
-                projectsGrid.style.display = 'none';
-                noResults.style.display = 'block';
+        
+        function editSelected() {
+            if (!selectedTask) {
+                alert('Please select a task to edit');
                 return;
             }
-
-            projectsGrid.style.display = 'grid';
-            noResults.style.display = 'none';
-
-            projectsGrid.innerHTML = projectsToShow.map((project, index) => {
-                const isSaved = savedProjects.some(p => p.id === project.id);
+            
+            // Populate the edit form
+            document.getElementById('edit-task-name').value = selectedTask.name;
+            document.getElementById('edit-task-category').value = selectedTask.category;
+            document.getElementById('edit-task-color').value = selectedTask.color;
+            document.getElementById('edit-task-duration').value = selectedTask.duration;
+            document.getElementById('edit-start-week').value = selectedTask.startWeek;
+            document.getElementById('edit-task-notes').value = selectedTask.notes || '';
+            document.getElementById('edit-task-completed').checked = selectedTask.completed;
+            
+            // Show the modal
+            document.getElementById('editModal').style.display = 'block';
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+        
+        function saveTaskEdit(event) {
+            event.preventDefault();
+            
+            if (!selectedTask) return;
+            
+            // Update the selected task
+            selectedTask.name = document.getElementById('edit-task-name').value;
+            selectedTask.category = document.getElementById('edit-task-category').value;
+            selectedTask.color = document.getElementById('edit-task-color').value;
+            selectedTask.duration = parseInt(document.getElementById('edit-task-duration').value);
+            selectedTask.startWeek = parseInt(document.getElementById('edit-start-week').value);
+            selectedTask.notes = document.getElementById('edit-task-notes').value;
+            selectedTask.completed = document.getElementById('edit-task-completed').checked;
+            
+            // Re-render the chart and close modal
+            renderChart();
+            updateProgress();
+            closeEditModal();
+        }
+        
+        function deleteSelected() {
+            if (!selectedTask) {
+                alert('Please select a task to delete');
+                return;
+            }
+            
+            if (confirm(`Delete "${selectedTask.name}"?`)) {
+                tasks = tasks.filter(t => t.id !== selectedTask.id);
+                selectedTask = null;
+                renderChart();
+                updateProgress();
+            }
+        }
+        
+        function clearAll() {
+            if (confirm('Delete all tasks? This cannot be undone.')) {
+                tasks = [];
+                selectedTask = null;
+                renderChart();
+                updateProgress();
+            }
+        }
+        
+        function handleDragStart(e, task) {
+            e.dataTransfer.setData('text/plain', task.id.toString());
+            e.target.style.opacity = '0.7';
+        }
+        
+        function handleDragEnd(e) {
+            e.target.style.opacity = '1';
+        }
+        
+        // Add drag and drop for timeline repositioning
+        document.getElementById('task-timeline').addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        
+        document.getElementById('task-timeline').addEventListener('drop', (e) => {
+            e.preventDefault();
+            const taskId = parseInt(e.dataTransfer.getData('text/plain'));
+            const task = tasks.find(t => t.id === taskId);
+            
+            if (task) {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const newStartWeek = Math.floor(x / 60);
                 
-                return `
-                    <div class="project-card ${isSaved ? 'saved' : ''}" id="card-${index}">
-                        <div class="card-header">
-                            <button class="save-button ${isSaved ? 'saved' : ''}" onclick="toggleSaveProject('${project.id}')" title="${isSaved ? 'Remove from saved' : 'Save project'}">
-                                ${isSaved ? '−' : '+'}
-                            </button>
-                            <h3 class="project-title">${project.title}</h3>
-                            
-                            <div class="project-meta">
-                                <div class="meta-chip type" data-type="${project.type}">${project.type}</div>
-                            </div>
-
-                            <div class="subject-tags">
-                                ${project.subjects.map(subject => `
-                                    <div class="subject-chip">${subject}</div>
-                                `).join('')}
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <div class="project-aim">
-                                <strong>Aim:</strong> ${project.aim}
-                            </div>
-
-                            <div class="techniques-section">
-                                <div class="section-label">Key techniques</div>
-                                <div class="techniques-list">
-                                    ${project.techniques.map(technique => `
-                                        <div class="technique-chip">${technique}</div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-details">
-                            <div class="project-outline">
-                                <div class="section-label">Project outline</div>
-                                ${project.outline}
-                            </div>
-
-                            ${project.references ? `
-                            <div class="references-section">
-                                <div class="section-label">Key references</div>
-                                <div class="references-list">
-                                    ${project.references.map(ref => `<div class="reference">${ref}</div>`).join('')}
-                                </div>
-                            </div>
-                            ` : ''}
-                        </div>
-
-                        <div class="card-actions">
-                            <div class="supervisor-info">
-                                <strong>Project ID:</strong> ${project.id}<br>
-                                <strong>Primary supervisor:</strong> ${project.primarySupervisor}<br>
-                                <strong>Secondary supervisor:</strong> ${project.secondarySupervisor || 'N/A'}
-                            </div>
-                            
-                            <button class="expand-button" onclick="toggleCard(document.getElementById('card-${index}'))">
-                                <span class="expand-text">Show details</span>
-                                <span class="expand-icon">▼</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+                task.startWeek = Math.max(0, Math.min(newStartWeek, 20 - task.duration));
+                renderChart();
+            }
+        });
+        
+        function updateProgress() {
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(t => t.completed).length;
+            const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = 
+                `${percentage}% Complete (${completedTasks}/${totalTasks} tasks)`;
         }
+        
+        function saveProject() {
+            const projectData = {
+                title: document.getElementById('project-title').value,
+                student: document.getElementById('student-name').value,
+                supervisor: document.getElementById('supervisor').value,
+                type: document.getElementById('project-type').value,
+                tasks: tasks,
+                created: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(projectData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${projectData.title || 'gantt-project'}-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        function loadProject() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const projectData = JSON.parse(e.target.result);
+                        
+                        // Load project info
+                        document.getElementById('project-title').value = projectData.title || '';
+                        document.getElementById('student-name').value = projectData.student || '';
+                        document.getElementById('supervisor').value = projectData.supervisor || '';
+                        document.getElementById('project-type').value = projectData.type || '';
+                        
+                        // Load tasks
+                        tasks = projectData.tasks || [];
+                        taskIdCounter = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+                        selectedTask = null;
+                        
+                        renderChart();
+                        updateProgress();
+                        
+                        alert('Project loaded successfully!');
+                    } catch (error) {
+                        alert('Error loading project file. Please check the format.');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+        
+        function exportChart() {
+            alert('To export your Gantt chart:\n\n' +
+                  '1. Right-click on the chart area\n' +
+                  '2. Select "Save image as..."\n' +
+                  '3. Or use your browser\'s print function\n\n' +
+                  'For best results, zoom out to fit the entire chart on screen first.');
+        }
+        
+        // Double-click to toggle task completion
+        document.addEventListener('dblclick', (e) => {
+            if (e.target.classList.contains('task-bar')) {
+                const taskId = parseInt(e.target.getAttribute('data-task-id'));
+                const task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.completed = !task.completed;
+                    renderChart();
+                    updateProgress();
+                }
+            }
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                closeEditModal();
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEditModal();
+            }
+            if (event.key === 'Delete' && selectedTask) {
+                deleteSelected();
+            }
+            if (event.key === 'Enter' && event.ctrlKey && selectedTask) {
+                editSelected();
+            }
+        });
+        
+        // Initialize with meta-analysis example tasks
+        function initializeExampleTasks() {
+            tasks = [
+                {
+                    id: 1,
+                    name: 'Research Question & Protocol Development',
+                    category: 'Planning',
+                    startWeek: 0,
+                    duration: 2,
+                    color: '#9b59b6',
+                    notes: 'Define PICO framework, develop search strategy, register protocol',
+                    completed: false
+                },
+                {
+                    id: 2,
+                    name: 'Systematic Literature Search',
+                    category: 'Literature Review',
+                    startWeek: 1,
+                    duration: 3,
+                    color: '#3498db',
+                    notes: 'Search PubMed, Embase, Cochrane Library, Web of Science',
+                    completed: false
+                },
+                {
+                    id: 3,
+                    name: 'Title & Abstract Screening',
+                    category: 'Study Selection',
+                    startWeek: 4,
+                    duration: 2,
+                    color: '#e74c3c',
+                    notes: 'Apply inclusion/exclusion criteria, dual screening recommended',
+                    completed: false
+                },
+                {
+                    id: 4,
+                    name: 'Full-Text Article Review',
+                    category: 'Study Selection',
+                    startWeek: 6,
+                    duration: 2,
+                    color: '#e74c3c',
+                    notes: 'Detailed assessment of eligibility, document exclusion reasons',
+                    completed: false
+                },
+                {
+                    id: 5,
+                    name: 'Data Extraction',
+                    category: 'Data Collection',
+                    startWeek: 8,
+                    duration: 3,
+                    color: '#f39c12',
+                    notes: 'Extract study characteristics, outcomes, quality metrics',
+                    completed: false
+                },
+                {
+                    id: 6,
+                    name: 'Quality Assessment (Risk of Bias)',
+                    category: 'Critical Appraisal',
+                    startWeek: 10,
+                    duration: 2,
+                    color: '#1abc9c',
+                    notes: 'Use Cochrane RoB tool or Newcastle-Ottawa Scale',
+                    completed: false
+                },
+                {
+                    id: 7,
+                    name: 'Statistical Analysis & Meta-Analysis',
+                    category: 'Data Analysis',
+                    startWeek: 12,
+                    duration: 3,
+                    color: '#e67e22',
+                    notes: 'Forest plots, heterogeneity assessment, sensitivity analysis',
+                    completed: false
+                },
+                {
+                    id: 8,
+                    name: 'Write Introduction & Methods',
+                    category: 'Writing',
+                    startWeek: 3,
+                    duration: 4,
+                    color: '#34495e',
+                    notes: 'Background, rationale, systematic review methodology',
+                    completed: false
+                },
+                {
+                    id: 9,
+                    name: 'Write Results Section',
+                    category: 'Writing',
+                    startWeek: 14,
+                    duration: 2,
+                    color: '#34495e',
+                    notes: 'PRISMA flow diagram, study characteristics, forest plots',
+                    completed: false
+                },
+                {
+                    id: 10,
+                    name: 'Write Discussion & Conclusion',
+                    category: 'Writing',
+                    startWeek: 16,
+                    duration: 2,
+                    color: '#34495e',
+                    notes: 'Interpret findings, limitations, clinical implications',
+                    completed: false
+                },
+                {
+                    id: 11,
+                    name: 'Final Review & Formatting',
+                    category: 'Finalization',
+                    startWeek: 18,
+                    duration: 2,
+                    color: '#95a5a6',
+                    notes: 'Proofreading, reference formatting, final checks',
+                    completed: false
+                }
+            ];
+            
+            taskIdCounter = 12;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeExampleTasks();
+            renderChart();
+            updateProgress();
+        });
     </script>
 </body>
 </html>

@@ -602,6 +602,7 @@
             <div class="action-buttons">
                 <button class="btn btn-secondary" onclick="editSelected()">Edit Task</button>
                 <button class="btn btn-error" onclick="deleteSelected()">Delete Task</button>
+                <button class="btn btn-secondary" onclick="customizeWeekLabels()">Customize Week Labels</button>
                 <button class="btn btn-success" onclick="saveProject()">Save Project</button>
                 <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
                 <button class="btn btn-primary" onclick="exportChart()">Export Chart</button>
@@ -651,17 +652,26 @@
             </div>
             <p id="progress-text">0% Complete (0 of 0 tasks)</p>
         </div>
-        
-        <div class="tips">
-            <h3>Meta-Analysis Project Planning Tips</h3>
-            <ul>
-                <li><strong>Start early:</strong> Systematic reviews require extensive time for literature searching and screening</li>
-                <li><strong>Parallel processing:</strong> Begin writing methods while conducting searches</li>
-                <li><strong>Quality assessment:</strong> Allow adequate time for risk of bias evaluation</li>
-                <li><strong>Statistical analysis:</strong> Plan for learning meta-analysis software (RevMan, R, etc.)</li>
-                <li><strong>PRISMA compliance:</strong> Ensure all reporting guidelines are met</li>
-                <li><strong>Buffer time:</strong> Meta-analyses often take longer than expected</li>
-            </ul>
+    </div>
+
+    <!-- Week Labels Customization Modal -->
+    <div id="weekLabelsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Customize Week Labels</h3>
+                <button class="close-btn" onclick="closeWeekLabelsModal()">&times;</button>
+            </div>
+            <div style="margin-bottom: 16px; color: var(--md-sys-color-on-surface-variant); font-size: 14px;">
+                Edit the labels for each week in your timeline. Leave blank to use default "Week #" format.
+            </div>
+            <div id="week-labels-form" style="display: grid; gap: 12px; max-height: 400px; overflow-y: auto;">
+                <!-- Week label inputs will be generated here -->
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="resetWeekLabels()">Reset to Defaults</button>
+                <button type="button" class="btn btn-secondary" onclick="closeWeekLabelsModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveWeekLabels()">Save Labels</button>
+            </div>
         </div>
     </div>
 
@@ -816,6 +826,71 @@
                     select.value = currentValue;
                 }
             });
+        }
+        
+        // Open week labels customization modal
+        function customizeWeekLabels() {
+            const modal = document.getElementById('weekLabelsModal');
+            const form = document.getElementById('week-labels-form');
+            
+            // Generate input fields for each week
+            form.innerHTML = '';
+            for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                const div = document.createElement('div');
+                div.style.display = 'grid';
+                div.style.gridTemplateColumns = '100px 1fr';
+                div.style.gap = '12px';
+                div.style.alignItems = 'center';
+                
+                const label = document.createElement('label');
+                label.textContent = `Week ${i + 1}:`;
+                label.style.fontWeight = '500';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = `week-label-${i}`;
+                input.value = CONFIG.weekLabels[i] || '';
+                input.placeholder = `Week ${i + 1}`;
+                input.style.padding = '8px';
+                input.style.border = '1px solid var(--md-sys-color-outline)';
+                input.style.borderRadius = '4px';
+                
+                div.appendChild(label);
+                div.appendChild(input);
+                form.appendChild(div);
+            }
+            
+            modal.style.display = 'block';
+        }
+        
+        // Close week labels modal
+        function closeWeekLabelsModal() {
+            document.getElementById('weekLabelsModal').style.display = 'none';
+        }
+        
+        // Save week labels
+        function saveWeekLabels() {
+            for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                const input = document.getElementById(`week-label-${i}`);
+                CONFIG.weekLabels[i] = input.value.trim() || `Week ${i + 1}`;
+            }
+            
+            // Update the chart and form options
+            generateWeekHeaders();
+            updateStartWeekOptions();
+            closeWeekLabelsModal();
+        }
+        
+        // Reset week labels to default
+        function resetWeekLabels() {
+            if (confirm('Reset all week labels to default format (Week 1, Week 2, etc.)?')) {
+                CONFIG.weekLabels = [];
+                for (let i = 0; i < CONFIG.totalWeeks; i++) {
+                    CONFIG.weekLabels[i] = `Week ${i + 1}`;
+                    const input = document.getElementById(`week-label-${i}`);
+                    if (input) input.value = '';
+                }
+            }
         }
         
         // Initialize with meta-analysis example tasks
@@ -1285,9 +1360,14 @@
         
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
-            const modal = document.getElementById('editModal');
-            if (event.target === modal) {
+            const editModal = document.getElementById('editModal');
+            const weekLabelsModal = document.getElementById('weekLabelsModal');
+            
+            if (event.target === editModal) {
                 closeEditModal();
+            }
+            if (event.target === weekLabelsModal) {
+                closeWeekLabelsModal();
             }
         });
         
@@ -1308,7 +1388,31 @@
             initializeExampleTasks();
             renderChart();
             updateProgress();
+            updateProjectHeader();
+            
+            // Add event listeners to update project header when fields change
+            document.getElementById('project-title').addEventListener('input', updateProjectHeader);
+            document.getElementById('student-name').addEventListener('input', updateProjectHeader);
+            document.getElementById('supervisor').addEventListener('input', updateProjectHeader);
+            document.getElementById('project-type').addEventListener('change', updateProjectHeader);
+            document.getElementById('total-weeks').addEventListener('change', updateProjectHeader);
         });
+        
+        // Update the project header display
+        function updateProjectHeader() {
+            document.getElementById('display-project-title').textContent = 
+                document.getElementById('project-title').value || 'Not specified';
+            document.getElementById('display-student-name').textContent = 
+                document.getElementById('student-name').value || 'Not specified';
+            document.getElementById('display-supervisor').textContent = 
+                document.getElementById('supervisor').value || 'Not specified';
+            document.getElementById('display-project-type').textContent = 
+                document.getElementById('project-type').value || 'Not specified';
+            document.getElementById('display-timeline').textContent = 
+                `${CONFIG.totalWeeks} weeks`;
+            document.getElementById('display-date').textContent = 
+                new Date().toLocaleDateString();
+        }
     </script>
 </body>
 </html>

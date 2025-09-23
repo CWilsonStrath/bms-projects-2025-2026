@@ -194,8 +194,40 @@
             background: white;
             border-radius: 12px;
             box-shadow: var(--md-elevation-1);
-            overflow: hidden;
             margin-bottom: 24px;
+        }
+        
+        .project-header {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 2px solid var(--md-sys-color-primary);
+        }
+        
+        .project-header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            font-size: 14px;
+        }
+        
+        .project-header-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .project-header-label {
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+        
+        .project-header-value {
+            font-weight: 500;
         }
         
         .gantt-chart {

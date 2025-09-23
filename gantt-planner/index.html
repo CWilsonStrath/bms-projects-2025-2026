@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BM432 Professional Gantt Chart</title>
+    <title>BM432 Flexible Gantt Chart</title>
     <style>
         * {
             margin: 0;
@@ -68,7 +68,7 @@
             color: #2c3e50;
         }
         
-        .input-group input, .input-group select {
+        .input-group input, .input-group select, .input-group textarea {
             padding: 12px;
             border: 2px solid #e1e8ed;
             border-radius: 8px;
@@ -76,28 +76,59 @@
             transition: all 0.3s ease;
         }
         
-        .input-group input:focus, .input-group select:focus {
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
-        .task-controls {
+        .task-form {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            margin-bottom: 20px;
+        }
+        
+        .task-form h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        .form-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 100px;
+            grid-template-columns: 2fr 1fr 1fr 80px 100px;
             gap: 15px;
             align-items: end;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
+            margin-bottom: 15px;
+        }
+        
+        .color-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .color-picker {
+            width: 50px;
+            height: 40px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .color-picker:hover {
+            transform: scale(1.1);
         }
         
         .action-buttons {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            margin-top: 20px;
         }
         
         .btn {
@@ -147,7 +178,7 @@
         
         .gantt-chart {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 350px 1fr;
             min-width: 1200px;
             background: white;
         }
@@ -193,6 +224,25 @@
             display: flex;
             align-items: center;
             min-height: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .task-name-cell:hover {
+            background: #f8f9fa;
+        }
+        
+        .task-name-cell.selected {
+            background: #e3f2fd !important;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .task-category-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
         }
         
         .task-timeline {
@@ -219,6 +269,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            min-width: 40px;
         }
         
         .task-bar:hover {
@@ -226,79 +277,15 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
-        .task-bar.dragging {
-            opacity: 0.7;
-            z-index: 1000;
-        }
-        
-        .milestone {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            background: #dc3545;
-            transform: rotate(45deg);
-            border: 2px solid white;
-            cursor: pointer;
-        }
-        
-        .milestone::after {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: -25px;
-            width: 70px;
-            height: 12px;
-            background: #dc3545;
-            color: white;
-            font-size: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(-45deg);
-            border-radius: 2px;
+        .task-bar.selected {
+            border: 2px solid #2196f3;
+            z-index: 5;
         }
         
         .week-cell {
             border-right: 1px solid #f0f0f0;
             position: relative;
             min-height: 50px;
-        }
-        
-        .today-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #e74c3c;
-            z-index: 5;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .legend {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 25px 0;
-            padding: 0 25px;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .legend-color {
-            width: 24px;
-            height: 16px;
-            border-radius: 8px;
         }
         
         .progress-section {
@@ -333,30 +320,6 @@
             font-size: 12px;
         }
         
-        .tips {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 25px;
-            margin: 25px;
-            border-radius: 12px;
-            border-left: 5px solid #f39c12;
-        }
-        
-        .tips h3 {
-            margin-bottom: 15px;
-            color: #d35400;
-            font-size: 1.2rem;
-        }
-        
-        .tips ul {
-            list-style-position: inside;
-            color: #8b4513;
-        }
-        
-        .tips li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-        
         .modal {
             display: none;
             position: fixed;
@@ -382,10 +345,12 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             animation: slideIn 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
         @keyframes slideIn {
@@ -448,12 +413,36 @@
             border-top: 1px solid #dee2e6;
         }
         
+        .tips {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            margin: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .tips h3 {
+            margin-bottom: 15px;
+            color: #d35400;
+            font-size: 1.2rem;
+        }
+        
+        .tips ul {
+            list-style-position: inside;
+            color: #8b4513;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
         @media (max-width: 768px) {
             .gantt-chart {
                 grid-template-columns: 250px 1fr;
             }
             
-            .task-controls {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -466,28 +455,23 @@
             }
         }
         
-        .task-category {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            margin-right: 8px;
-            display: inline-block;
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
         }
         
-        .category-research { background: #3498db; color: white; }
-        .category-experiment { background: #e74c3c; color: white; }
-        .category-writing { background: #f39c12; color: white; }
-        .category-presentation { background: #9b59b6; color: white; }
-        .category-training { background: #1abc9c; color: white; }
-        .category-buffer { background: #95a5a6; color: white; }
+        .empty-state h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>BM432 Professional Gantt Chart</h1>
-            <p>Strategic timeline planning for final year projects</p>
+            <h1>BM432 Flexible Gantt Chart</h1>
+            <p>Fully customizable timeline planning for final year projects</p>
         </div>
         
         <div class="controls">
@@ -520,39 +504,65 @@
                 </div>
             </div>
             
-            <div class="task-controls">
-                <div class="input-group">
-                    <label for="task-name">Task Name</label>
-                    <input type="text" id="task-name" placeholder="Enter task name">
+            <div class="task-form">
+                <h3>Add New Task</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="task-name">Task Name</label>
+                        <input type="text" id="task-name" placeholder="Enter task name">
+                    </div>
+                    <div class="input-group">
+                        <label for="task-category">Category</label>
+                        <input type="text" id="task-category" placeholder="e.g. Research, Writing">
+                    </div>
+                    <div class="input-group">
+                        <label for="task-duration">Duration (weeks)</label>
+                        <input type="number" id="task-duration" min="1" max="20" value="2">
+                    </div>
+                    <div class="input-group">
+                        <label for="start-week">Start Week</label>
+                        <select id="start-week">
+                            <option value="0">Sep W3</option>
+                            <option value="1">Sep W4</option>
+                            <option value="2">Oct W1</option>
+                            <option value="3">Oct W2</option>
+                            <option value="4">Oct W3</option>
+                            <option value="5">Oct W4</option>
+                            <option value="6">Nov W1</option>
+                            <option value="7">Nov W2</option>
+                            <option value="8">Nov W3</option>
+                            <option value="9">Nov W4</option>
+                            <option value="10">Dec W1</option>
+                            <option value="11">Dec W2</option>
+                            <option value="12">Jan W2</option>
+                            <option value="13">Jan W3</option>
+                            <option value="14">Jan W4</option>
+                            <option value="15">Feb W1</option>
+                            <option value="16">Feb W2</option>
+                            <option value="17">Feb W3</option>
+                            <option value="18">Feb W4</option>
+                            <option value="19">Mar W1</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Color</label>
+                        <input type="color" id="task-color" class="color-picker" value="#3498db">
+                    </div>
                 </div>
                 <div class="input-group">
-                    <label for="task-category">Category</label>
-                    <select id="task-category">
-                        <option value="research">Research</option>
-                        <option value="experiment">Experiments</option>
-                        <option value="writing">Writing</option>
-                        <option value="presentation">Presentation</option>
-                        <option value="training">Training</option>
-                        <option value="buffer">Buffer</option>
-                    </select>
+                    <label for="task-notes">Notes (optional)</label>
+                    <textarea id="task-notes" rows="2" placeholder="Additional notes about this task"></textarea>
                 </div>
-                <div class="input-group">
-                    <label for="task-duration">Duration (weeks)</label>
-                    <input type="number" id="task-duration" min="1" max="20" value="2">
-                </div>
-                <div class="input-group">
-                    <label>&nbsp;</label>
-                    <button class="btn btn-primary" onclick="addTask()">+ Add Task</button>
-                </div>
+                <button class="btn btn-primary" onclick="addTask()">Add Task</button>
             </div>
             
             <div class="action-buttons">
-                <button class="btn btn-secondary" onclick="addMilestone()">📅 Add Milestone</button>
-                <button class="btn btn-secondary" onclick="editSelected()">✏️ Edit Task</button>
-                <button class="btn btn-danger" onclick="deleteSelected()">🗑️ Delete</button>
-                <button class="btn btn-success" onclick="saveProject()">💾 Save Project</button>
-                <button class="btn btn-secondary" onclick="loadProject()">📁 Load Project</button>
-                <button class="btn btn-primary" onclick="exportChart()">📸 Export PNG</button>
+                <button class="btn btn-secondary" onclick="editSelected()">Edit Task</button>
+                <button class="btn btn-danger" onclick="deleteSelected()">Delete Task</button>
+                <button class="btn btn-success" onclick="saveProject()">Save Project</button>
+                <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
+                <button class="btn btn-primary" onclick="exportChart()">Export PNG</button>
+                <button class="btn btn-secondary" onclick="clearAll()">Clear All Tasks</button>
             </div>
         </div>
         
@@ -577,7 +587,7 @@
                         <div class="week-header">Nov<br>W3</div>
                         <div class="week-header">Nov<br>W4</div>
                         <div class="week-header">Dec<br>W1</div>
-                        <div class="week-header">Dec<br>W2</div>
+                        <div class="week-header">Dec W2</div>
                         <div class="week-header">Jan<br>W2</div>
                         <div class="week-header">Jan<br>W3</div>
                         <div class="week-header">Jan<br>W4</div>
@@ -592,33 +602,6 @@
             </div>
         </div>
         
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color" style="background: #3498db;"></div>
-                <span>Literature/Research</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #e74c3c;"></div>
-                <span>Data/Experiments</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #f39c12;"></div>
-                <span>Writing</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #9b59b6;"></div>
-                <span>Presentation</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #1abc9c;"></div>
-                <span>Training/Setup</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #95a5a6;"></div>
-                <span>Buffer/Review</span>
-            </div>
-        </div>
-        
         <div class="progress-section">
             <h3>Project Timeline Progress</h3>
             <div class="progress-bar">
@@ -628,14 +611,14 @@
         </div>
         
         <div class="tips">
-            <h3>🎯 Professional Project Planning Tips</h3>
+            <h3>Flexible Planning Features</h3>
             <ul>
-                <li><strong>Start with milestones:</strong> Mark key deadlines first (presentations, submissions)</li>
-                <li><strong>Work backwards:</strong> Plan completion dates before start dates</li>
-                <li><strong>Build in buffers:</strong> Add 20% extra time for unexpected challenges</li>
-                <li><strong>Parallel tasks:</strong> Identify what can run simultaneously vs. sequentially</li>
-                <li><strong>Weekly reviews:</strong> Adjust timeline based on actual progress</li>
-                <li><strong>Dependencies matter:</strong> Some tasks can't start until others finish</li>
+                <li><strong>Custom Categories:</strong> Create any task type you need (not limited to presets)</li>
+                <li><strong>Color Coding:</strong> Choose any color for each task to match your workflow</li>
+                <li><strong>Drag & Drop:</strong> Move tasks around the timeline by dragging</li>
+                <li><strong>Notes:</strong> Add detailed notes to tasks for context</li>
+                <li><strong>Full Editing:</strong> Click any task to select, then edit all properties</li>
+                <li><strong>Save/Load:</strong> Projects save all your customizations</li>
             </ul>
         </div>
     </div>
@@ -655,21 +638,18 @@
                 <div class="form-row">
                     <div class="input-group">
                         <label for="edit-task-category">Category</label>
-                        <select id="edit-task-category" required>
-                            <option value="research">Research</option>
-                            <option value="experiment">Experiments</option>
-                            <option value="writing">Writing</option>
-                            <option value="presentation">Presentation</option>
-                            <option value="training">Training</option>
-                            <option value="buffer">Buffer</option>
-                        </select>
+                        <input type="text" id="edit-task-category" placeholder="Enter any category" required>
                     </div>
+                    <div class="input-group">
+                        <label for="edit-task-color">Color</label>
+                        <input type="color" id="edit-task-color" class="color-picker">
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="input-group">
                         <label for="edit-task-duration">Duration (weeks)</label>
                         <input type="number" id="edit-task-duration" min="1" max="20" required>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="input-group">
                         <label for="edit-start-week">Start Week</label>
                         <select id="edit-start-week" required>
@@ -695,12 +675,16 @@
                             <option value="19">Mar W1</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>
-                            <input type="checkbox" id="edit-task-completed" style="margin-right: 8px;">
-                            Mark as completed
-                        </label>
-                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="edit-task-notes">Notes</label>
+                    <textarea id="edit-task-notes" rows="3" placeholder="Additional notes about this task"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" id="edit-task-completed" style="margin-right: 8px;">
+                        Mark as completed
+                    </label>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
@@ -714,81 +698,6 @@
         let tasks = [];
         let selectedTask = null;
         let taskIdCounter = 1;
-        let currentWeek = 2; // Starting at Sep W3
-        
-        const categoryColors = {
-            'research': '#3498db',
-            'experiment': '#e74c3c', 
-            'writing': '#f39c12',
-            'presentation': '#9b59b6',
-            'training': '#1abc9c',
-            'buffer': '#95a5a6'
-        };
-        
-        // Initialize with sample tasks
-        function initializeChart() {
-            tasks = [
-                {
-                    id: 1,
-                    name: 'Literature Review',
-                    category: 'research',
-                    startWeek: 0,
-                    duration: 4,
-                    completed: false
-                },
-                {
-                    id: 2,
-                    name: 'Research Methodology',
-                    category: 'research',
-                    startWeek: 3,
-                    duration: 2,
-                    completed: false
-                },
-                {
-                    id: 3,
-                    name: 'Data Collection',
-                    category: 'experiment',
-                    startWeek: 5,
-                    duration: 6,
-                    completed: false
-                },
-                {
-                    id: 4,
-                    name: 'Data Analysis',
-                    category: 'experiment',
-                    startWeek: 9,
-                    duration: 4,
-                    completed: false
-                },
-                {
-                    id: 5,
-                    name: 'Write Introduction',
-                    category: 'writing',
-                    startWeek: 2,
-                    duration: 2,
-                    completed: false
-                },
-                {
-                    id: 6,
-                    name: 'Write Results',
-                    category: 'writing',
-                    startWeek: 12,
-                    duration: 3,
-                    completed: false
-                },
-                {
-                    id: 7,
-                    name: 'Final Thesis',
-                    category: 'writing',
-                    startWeek: 15,
-                    duration: 4,
-                    completed: false
-                }
-            ];
-            
-            renderChart();
-            updateProgress();
-        }
         
         function renderChart() {
             const taskNames = document.getElementById('task-names');
@@ -797,13 +706,22 @@
             taskNames.innerHTML = '';
             taskTimeline.innerHTML = '';
             
+            if (tasks.length === 0) {
+                taskNames.innerHTML = '<div class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></div>';
+                taskTimeline.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><p>Your timeline will appear here</p></div>';
+                return;
+            }
+            
             tasks.forEach(task => {
                 // Task name cell
                 const nameCell = document.createElement('div');
                 nameCell.className = 'task-name-cell';
                 nameCell.innerHTML = `
-                    <span class="task-category category-${task.category}">${task.category.toUpperCase()}</span>
-                    <span>${task.name}</span>
+                    <div class="task-category-dot" style="background-color: ${task.color}"></div>
+                    <div>
+                        <div style="font-weight: 600;">${task.name}</div>
+                        <div style="font-size: 11px; color: #6c757d;">${task.category}</div>
+                    </div>
                 `;
                 nameCell.addEventListener('click', () => selectTask(task));
                 taskNames.appendChild(nameCell);
@@ -822,119 +740,87 @@
                 // Add task bar
                 const taskBar = document.createElement('div');
                 taskBar.className = 'task-bar';
-                taskBar.style.backgroundColor = categoryColors[task.category];
+                taskBar.style.backgroundColor = task.color;
                 taskBar.style.left = `${task.startWeek * 60}px`;
                 taskBar.style.width = `${task.duration * 60}px`;
-                taskBar.textContent = task.name;
+                taskBar.textContent = task.duration > 2 ? task.name : '';
                 taskBar.draggable = true;
+                taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks${task.notes ? '\nNotes: ' + task.notes : ''}`;
+                
                 taskBar.addEventListener('dragstart', (e) => handleDragStart(e, task));
                 taskBar.addEventListener('dragend', handleDragEnd);
                 taskBar.addEventListener('click', () => selectTask(task));
                 
                 if (task.completed) {
-                    taskBar.style.opacity = '0.7';
+                    taskBar.style.opacity = '0.6';
                     taskBar.style.textDecoration = 'line-through';
                 }
                 
                 timelineRow.appendChild(taskBar);
                 taskTimeline.appendChild(timelineRow);
             });
+            
+            // Highlight selected task
+            if (selectedTask) {
+                const taskIndex = tasks.indexOf(selectedTask);
+                if (taskIndex >= 0) {
+                    const nameCell = document.querySelectorAll('.task-name-cell')[taskIndex];
+                    const taskBar = document.querySelectorAll('.task-bar')[taskIndex];
+                    
+                    if (nameCell && taskBar) {
+                        nameCell.classList.add('selected');
+                        taskBar.classList.add('selected');
+                    }
+                }
+            }
         }
         
         function selectTask(task) {
             selectedTask = task;
-            
-            // Remove previous selection
-            document.querySelectorAll('.task-name-cell').forEach(cell => {
-                cell.style.backgroundColor = 'white';
-                cell.style.borderLeft = 'none';
-            });
-            
-            document.querySelectorAll('.task-bar').forEach(bar => {
-                bar.style.border = 'none';
-            });
-            
-            // Highlight selected task
-            const taskIndex = tasks.indexOf(task);
-            const nameCell = document.querySelectorAll('.task-name-cell')[taskIndex];
-            const taskBar = document.querySelectorAll('.task-bar')[taskIndex];
-            
-            if (nameCell && taskBar) {
-                nameCell.style.backgroundColor = '#e3f2fd';
-                nameCell.style.borderLeft = '4px solid #2196f3';
-                taskBar.style.border = '2px solid #2196f3';
-            }
+            renderChart(); // Re-render to show selection
         }
         
         function addTask() {
             const name = document.getElementById('task-name').value.trim();
-            const category = document.getElementById('task-category').value;
+            const category = document.getElementById('task-category').value.trim();
             const duration = parseInt(document.getElementById('task-duration').value);
+            const startWeek = parseInt(document.getElementById('start-week').value);
+            const color = document.getElementById('task-color').value;
+            const notes = document.getElementById('task-notes').value.trim();
             
             if (!name) {
                 alert('Please enter a task name');
                 return;
             }
             
-            // Find next available start week
-            let startWeek = 0;
-            const sortedTasks = tasks.filter(t => t.category === category)
-                                   .sort((a, b) => a.startWeek - b.startWeek);
-            
-            if (sortedTasks.length > 0) {
-                const lastTask = sortedTasks[sortedTasks.length - 1];
-                startWeek = lastTask.startWeek + lastTask.duration;
+            if (!category) {
+                alert('Please enter a category');
+                return;
             }
             
             const newTask = {
                 id: taskIdCounter++,
                 name: name,
                 category: category,
-                startWeek: Math.min(startWeek, 20 - duration),
+                startWeek: startWeek,
                 duration: duration,
+                color: color,
+                notes: notes,
                 completed: false
             };
             
             tasks.push(newTask);
+            
+            // Clear form
             document.getElementById('task-name').value = '';
+            document.getElementById('task-category').value = '';
+            document.getElementById('task-duration').value = '2';
+            document.getElementById('start-week').value = '0';
+            document.getElementById('task-color').value = '#3498db';
+            document.getElementById('task-notes').value = '';
             
             renderChart();
             updateProgress();
-        }
-        
-        function addMilestone() {
-            const name = prompt('Enter milestone name:');
-            if (!name) return;
-            
-            const week = prompt('Enter week number (1-20):', '10');
-            if (!week || isNaN(week) || week < 1 || week > 20) return;
-            
-            const milestone = {
-                id: taskIdCounter++,
-                name: name,
-                category: 'milestone',
-                startWeek: parseInt(week) - 1,
-                duration: 1,
-                completed: false
-            };
-            
-            tasks.push(milestone);
-            renderChart();
-            updateProgress();
-        }
-        
-        function deleteSelected() {
-            if (!selectedTask) {
-                alert('Please select a task to delete');
-                return;
-            }
-            
-            if (confirm(`Delete "${selectedTask.name}"?`)) {
-                tasks = tasks.filter(t => t.id !== selectedTask.id);
-                selectedTask = null;
-                renderChart();
-                updateProgress();
-            }
         }
         
         function editSelected() {
@@ -946,8 +832,10 @@
             // Populate the edit form
             document.getElementById('edit-task-name').value = selectedTask.name;
             document.getElementById('edit-task-category').value = selectedTask.category;
+            document.getElementById('edit-task-color').value = selectedTask.color;
             document.getElementById('edit-task-duration').value = selectedTask.duration;
             document.getElementById('edit-start-week').value = selectedTask.startWeek;
+            document.getElementById('edit-task-notes').value = selectedTask.notes || '';
             document.getElementById('edit-task-completed').checked = selectedTask.completed;
             
             // Show the modal
@@ -966,26 +854,48 @@
             // Update the selected task
             selectedTask.name = document.getElementById('edit-task-name').value;
             selectedTask.category = document.getElementById('edit-task-category').value;
+            selectedTask.color = document.getElementById('edit-task-color').value;
             selectedTask.duration = parseInt(document.getElementById('edit-task-duration').value);
             selectedTask.startWeek = parseInt(document.getElementById('edit-start-week').value);
+            selectedTask.notes = document.getElementById('edit-task-notes').value;
             selectedTask.completed = document.getElementById('edit-task-completed').checked;
             
             // Re-render the chart and close modal
             renderChart();
             updateProgress();
             closeEditModal();
+        }
+        
+        function deleteSelected() {
+            if (!selectedTask) {
+                alert('Please select a task to delete');
+                return;
+            }
             
-            // Re-select the edited task
-            setTimeout(() => selectTask(selectedTask), 100);
+            if (confirm(`Delete "${selectedTask.name}"?`)) {
+                tasks = tasks.filter(t => t.id !== selectedTask.id);
+                selectedTask = null;
+                renderChart();
+                updateProgress();
+            }
+        }
+        
+        function clearAll() {
+            if (confirm('Delete all tasks? This cannot be undone.')) {
+                tasks = [];
+                selectedTask = null;
+                renderChart();
+                updateProgress();
+            }
         }
         
         function handleDragStart(e, task) {
             e.dataTransfer.setData('text/plain', task.id.toString());
-            e.target.classList.add('dragging');
+            e.target.style.opacity = '0.7';
         }
         
         function handleDragEnd(e) {
-            e.target.classList.remove('dragging');
+            e.target.style.opacity = '1';
         }
         
         // Add drag and drop for timeline repositioning
@@ -1062,7 +972,8 @@
                         
                         // Load tasks
                         tasks = projectData.tasks || [];
-                        taskIdCounter = Math.max(...tasks.map(t => t.id)) + 1;
+                        taskIdCounter = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+                        selectedTask = null;
                         
                         renderChart();
                         updateProgress();
@@ -1079,9 +990,6 @@
         }
         
         function exportChart() {
-            const chartElement = document.querySelector('.gantt-chart');
-            
-            // Simple fallback export instruction
             alert('To export your Gantt chart:\n\n' +
                   '1. Right-click on the chart area\n' +
                   '2. Select "Save image as..."\n' +
@@ -1092,8 +1000,8 @@
         // Double-click to toggle task completion
         document.addEventListener('dblclick', (e) => {
             if (e.target.classList.contains('task-bar')) {
-                const taskName = e.target.textContent;
-                const task = tasks.find(t => t.name === taskName);
+                const taskId = parseInt(e.target.parentElement.querySelector('[draggable="true"]').getAttribute('data-task-id') || '0');
+                const task = tasks.find(t => t.id === taskId);
                 if (task) {
                     task.completed = !task.completed;
                     renderChart();
@@ -1101,9 +1009,6 @@
                 }
             }
         });
-        
-        // Initialize the chart
-        document.addEventListener('DOMContentLoaded', initializeChart);
         
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
@@ -1124,6 +1029,12 @@
             if (event.key === 'Enter' && event.ctrlKey && selectedTask) {
                 editSelected();
             }
+        });
+        
+        // Initialize empty chart
+        document.addEventListener('DOMContentLoaded', function() {
+            renderChart();
+            updateProgress();
         });
     </script>
 </body>

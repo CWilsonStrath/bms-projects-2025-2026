@@ -1282,7 +1282,82 @@
         }
         
         function exportChart() {
-            alert('To export: Take a screenshot or use browser print (Ctrl+P) to save as PDF.');
+            // Create a canvas to draw the chart
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size for high resolution
+            const chartElement = document.querySelector('.gantt-container');
+            const rect = chartElement.getBoundingClientRect();
+            
+            canvas.width = Math.max(1400, rect.width * 2); // High resolution
+            canvas.height = Math.max(800, rect.height * 2);
+            
+            // Scale context for high DPI
+            ctx.scale(2, 2);
+            
+            // White background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width / 2, canvas.height / 2);
+            
+            // Try html2canvas if available, otherwise show instructions
+            if (typeof html2canvas !== 'undefined') {
+                html2canvas(chartElement, {
+                    backgroundColor: '#FFFFFF',
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(function(canvas) {
+                    // Download the image
+                    const link = document.createElement('a');
+                    const projectTitle = document.getElementById('project-title').value || 'gantt-chart';
+                    const studentName = document.getElementById('student-name').value || 'student';
+                    link.download = `${projectTitle.replace(/\s+/g, '-')}-${studentName.replace(/\s+/g, '-')}-timeline.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            } else {
+                // Fallback instructions for manual screenshot
+                const instructions = `To save as image for your thesis:
+
+METHOD 1 - Browser Screenshot (Recommended):
+1. Right-click on the chart below
+2. Select "Save image as..." or "Copy image"
+3. Save as PNG file
+
+METHOD 2 - Full Screenshot:
+1. Press F11 for fullscreen
+2. Use Snipping Tool (Windows) or Screenshot (Mac)
+3. Select the chart area
+4. Save as PNG file
+
+METHOD 3 - Print to PDF then convert:
+1. Press Ctrl+P (or Cmd+P on Mac)
+2. Save as PDF
+3. Use online PDF to PNG converter
+
+The chart includes your name and project details for thesis submission.`;
+
+                alert(instructions);
+                
+                // Also try to trigger browser's native image save
+                setTimeout(() => {
+                    const printWindow = window.open('', '_blank');
+                    printWindow.document.write(`
+                        <html>
+                        <head><title>Gantt Chart Export</title></head>
+                        <body>
+                        ${chartElement.outerHTML}
+                        <style>
+                        body { margin: 0; font-family: Arial, sans-serif; }
+                        .gantt-container { box-shadow: none; margin: 0; }
+                        </style>
+                        </body>
+                        </html>
+                    `);
+                    printWindow.document.close();
+                }, 500);
+            }
         }
         
         // Event listeners

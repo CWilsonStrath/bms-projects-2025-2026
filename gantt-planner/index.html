@@ -357,6 +357,97 @@
             line-height: 1.5;
         }
         
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close:hover {
+            background: #f8f9fa;
+            color: #dc3545;
+        }
+        
+        .modal-form {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
         @media (max-width: 768px) {
             .gantt-chart {
                 grid-template-columns: 250px 1fr;
@@ -457,6 +548,7 @@
             
             <div class="action-buttons">
                 <button class="btn btn-secondary" onclick="addMilestone()">📅 Add Milestone</button>
+                <button class="btn btn-secondary" onclick="editSelected()">✏️ Edit Task</button>
                 <button class="btn btn-danger" onclick="deleteSelected()">🗑️ Delete</button>
                 <button class="btn btn-success" onclick="saveProject()">💾 Save Project</button>
                 <button class="btn btn-secondary" onclick="loadProject()">📁 Load Project</button>
@@ -545,6 +637,76 @@
                 <li><strong>Weekly reviews:</strong> Adjust timeline based on actual progress</li>
                 <li><strong>Dependencies matter:</strong> Some tasks can't start until others finish</li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Task</h3>
+                <button class="close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form class="modal-form" onsubmit="saveTaskEdit(event)">
+                <div class="input-group">
+                    <label for="edit-task-name">Task Name</label>
+                    <input type="text" id="edit-task-name" required>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit-task-category">Category</label>
+                        <select id="edit-task-category" required>
+                            <option value="research">Research</option>
+                            <option value="experiment">Experiments</option>
+                            <option value="writing">Writing</option>
+                            <option value="presentation">Presentation</option>
+                            <option value="training">Training</option>
+                            <option value="buffer">Buffer</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit-task-duration">Duration (weeks)</label>
+                        <input type="number" id="edit-task-duration" min="1" max="20" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit-start-week">Start Week</label>
+                        <select id="edit-start-week" required>
+                            <option value="0">Sep W3</option>
+                            <option value="1">Sep W4</option>
+                            <option value="2">Oct W1</option>
+                            <option value="3">Oct W2</option>
+                            <option value="4">Oct W3</option>
+                            <option value="5">Oct W4</option>
+                            <option value="6">Nov W1</option>
+                            <option value="7">Nov W2</option>
+                            <option value="8">Nov W3</option>
+                            <option value="9">Nov W4</option>
+                            <option value="10">Dec W1</option>
+                            <option value="11">Dec W2</option>
+                            <option value="12">Jan W2</option>
+                            <option value="13">Jan W3</option>
+                            <option value="14">Jan W4</option>
+                            <option value="15">Feb W1</option>
+                            <option value="16">Feb W2</option>
+                            <option value="17">Feb W3</option>
+                            <option value="18">Feb W4</option>
+                            <option value="19">Mar W1</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" id="edit-task-completed" style="margin-right: 8px;">
+                            Mark as completed
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -775,6 +937,48 @@
             }
         }
         
+        function editSelected() {
+            if (!selectedTask) {
+                alert('Please select a task to edit');
+                return;
+            }
+            
+            // Populate the edit form
+            document.getElementById('edit-task-name').value = selectedTask.name;
+            document.getElementById('edit-task-category').value = selectedTask.category;
+            document.getElementById('edit-task-duration').value = selectedTask.duration;
+            document.getElementById('edit-start-week').value = selectedTask.startWeek;
+            document.getElementById('edit-task-completed').checked = selectedTask.completed;
+            
+            // Show the modal
+            document.getElementById('editModal').style.display = 'block';
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+        
+        function saveTaskEdit(event) {
+            event.preventDefault();
+            
+            if (!selectedTask) return;
+            
+            // Update the selected task
+            selectedTask.name = document.getElementById('edit-task-name').value;
+            selectedTask.category = document.getElementById('edit-task-category').value;
+            selectedTask.duration = parseInt(document.getElementById('edit-task-duration').value);
+            selectedTask.startWeek = parseInt(document.getElementById('edit-start-week').value);
+            selectedTask.completed = document.getElementById('edit-task-completed').checked;
+            
+            // Re-render the chart and close modal
+            renderChart();
+            updateProgress();
+            closeEditModal();
+            
+            // Re-select the edited task
+            setTimeout(() => selectTask(selectedTask), 100);
+        }
+        
         function handleDragStart(e, task) {
             e.dataTransfer.setData('text/plain', task.id.toString());
             e.target.classList.add('dragging');
@@ -900,6 +1104,27 @@
         
         // Initialize the chart
         document.addEventListener('DOMContentLoaded', initializeChart);
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                closeEditModal();
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEditModal();
+            }
+            if (event.key === 'Delete' && selectedTask) {
+                deleteSelected();
+            }
+            if (event.key === 'Enter' && event.ctrlKey && selectedTask) {
+                editSelected();
+            }
+        });
     </script>
 </body>
 </html>

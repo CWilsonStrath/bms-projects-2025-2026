@@ -3,58 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BM432 Flexible Gantt Chart</title>
+    <title>BM432 Project Timeline Planner</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            /* Material Design 3 Color System */
+            --md-sys-color-primary: #1565C0;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #D3E3FD;
+            --md-sys-color-on-primary-container: #001C3B;
+            
+            --md-sys-color-secondary: #5A6069;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #DEE3EA;
+            --md-sys-color-on-secondary-container: #171B20;
+            
+            --md-sys-color-surface: #FEFBFF;
+            --md-sys-color-on-surface: #1B1B1F;
+            --md-sys-color-surface-variant: #E0E2EC;
+            --md-sys-color-on-surface-variant: #44474E;
+            
+            --md-sys-color-outline: #74777F;
+            --md-sys-color-outline-variant: #C4C6CF;
+            
+            --md-sys-color-success: #4CAF50;
+            --md-sys-color-warning: #FF9800;
+            --md-sys-color-error: #F44336;
+            
+            /* Material Design 3 Elevation Shadows */
+            --md-elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --md-elevation-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+        }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
+            font-family: 'Roboto', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: var(--md-sys-color-on-surface);
+            background-color: var(--md-sys-color-surface);
+        }
+        
+        .header {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 24px 0;
         }
         
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
+            padding: 0 16px;
         }
         
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 300;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 8px;
         }
         
         .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
+            font-size: 16px;
+            opacity: 0.87;
         }
         
         .controls {
-            padding: 25px;
-            border-bottom: 1px solid #e9ecef;
-            background: #f8f9fa;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-1);
+            padding: 24px;
+            margin: 24px 0;
         }
         
         .project-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
         
         .input-group {
@@ -63,72 +91,58 @@
         }
         
         .input-group label {
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 8px;
-            color: #2c3e50;
+            color: var(--md-sys-color-on-surface);
+            font-size: 14px;
         }
         
         .input-group input, .input-group select, .input-group textarea {
             padding: 12px;
-            border: 2px solid #e1e8ed;
-            border-radius: 8px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
             font-size: 14px;
-            transition: all 0.3s ease;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            transition: all 0.2s;
         }
         
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--md-sys-color-primary);
+            border-width: 2px;
+            padding: 11px;
         }
         
         .task-form {
-            background: white;
-            padding: 25px;
+            background: var(--md-sys-color-primary-container);
             border-radius: 12px;
-            border: 2px solid #e9ecef;
+            padding: 20px;
             margin-bottom: 20px;
         }
         
         .task-form h3 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 10px;
+            color: var(--md-sys-color-on-primary-container);
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 16px;
         }
         
         .form-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 80px 100px;
-            gap: 15px;
+            gap: 16px;
             align-items: end;
-            margin-bottom: 15px;
-        }
-        
-        .color-input {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 16px;
         }
         
         .color-picker {
-            width: 50px;
+            width: 60px;
             height: 40px;
-            border: 2px solid #e1e8ed;
-            border-radius: 6px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .color-picker:hover {
-            transform: scale(1.1);
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            transition: all 0.2s;
         }
         
         .btn {
@@ -137,189 +151,195 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
         
         .btn-primary {
-            background: #667eea;
-            color: white;
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
         }
         
         .btn-secondary {
-            background: #6c757d;
-            color: white;
+            background-color: var(--md-sys-color-secondary);
+            color: var(--md-sys-color-on-secondary);
         }
         
         .btn-success {
-            background: #28a745;
+            background-color: var(--md-sys-color-success);
             color: white;
         }
         
-        .btn-danger {
-            background: #dc3545;
+        .btn-error {
+            background-color: var(--md-sys-color-error);
             color: white;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+            box-shadow: var(--md-elevation-1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
         }
         
         .gantt-container {
-            overflow: auto;
-            max-height: 70vh;
-            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-1);
+            overflow: hidden;
+            margin-bottom: 24px;
         }
         
         .gantt-chart {
-            display: flex;
-            min-width: 1200px;
-            background: white;
-        }
-        
-        .task-list {
-            width: 350px;
-            min-width: 350px;
-            border-right: 2px solid #dee2e6;
-            background: #f8f9fa;
-        }
-        
-        .timeline {
-            flex: 1;
             overflow-x: auto;
         }
         
-        .timeline-header {
-            display: grid;
-            grid-template-columns: repeat(20, 60px);
-            background: #2c3e50;
-            color: white;
+        .gantt-table {
+            width: 100%;
+            min-width: 1400px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .gantt-header {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
             position: sticky;
             top: 0;
             z-index: 10;
         }
         
-        .week-header {
-            padding: 12px 8px;
+        .gantt-header th {
+            padding: 16px 8px;
             text-align: center;
-            font-size: 11px;
-            font-weight: 600;
-            border-right: 1px solid #34495e;
+            font-size: 12px;
+            font-weight: 500;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gantt-header th.task-header {
+            width: 300px;
+            text-align: left;
+            padding-left: 20px;
+        }
+        
+        .week-header {
+            width: 60px;
             writing-mode: vertical-rl;
             text-orientation: mixed;
         }
         
-        .task-row {
-            display: contents;
+        .gantt-row {
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            transition: background-color 0.2s;
+        }
+        
+        .gantt-row:hover {
+            background-color: var(--md-sys-color-surface-variant);
+        }
+        
+        .gantt-row.selected {
+            background-color: var(--md-sys-color-primary-container);
         }
         
         .task-name-cell {
-            padding: 15px 20px;
-            border-bottom: 1px solid #dee2e6;
-            background: white;
+            width: 300px;
+            padding: 16px 20px;
+            border-right: 2px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface);
+            cursor: pointer;
+        }
+        
+        .task-title {
             font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .task-category {
+            font-size: 11px;
+            color: var(--md-sys-color-on-surface-variant);
             display: flex;
             align-items: center;
-            min-height: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            gap: 6px;
         }
         
-        .task-name-cell:hover {
-            background: #f8f9fa;
-        }
-        
-        .task-name-cell.selected {
-            background: #e3f2fd !important;
-            border-left: 4px solid #2196f3;
-        }
-        
-        .task-category-dot {
-            width: 12px;
-            height: 12px;
+        .category-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            margin-right: 10px;
-            flex-shrink: 0;
         }
         
-        .task-timeline {
-            display: grid;
-            grid-template-columns: repeat(20, 60px);
-            border-bottom: 1px solid #dee2e6;
-            min-height: 50px;
-            align-items: center;
+        .timeline-cell {
+            width: 60px;
+            height: 60px;
+            border-right: 1px solid var(--md-sys-color-outline-variant);
             position: relative;
+            background: white;
         }
         
         .task-bar {
-            height: 24px;
-            border-radius: 12px;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
+            height: 24px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            box-shadow: var(--md-elevation-1);
             min-width: 40px;
+            overflow: hidden;
         }
         
         .task-bar:hover {
             transform: translateY(-50%) scale(1.02);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: var(--md-elevation-3);
         }
         
         .task-bar.selected {
-            border: 2px solid #2196f3;
-            z-index: 5;
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary);
         }
         
-        .week-cell {
-            border-right: 1px solid #f0f0f0;
-            position: relative;
-            min-height: 50px;
+        .task-bar.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
         }
         
         .progress-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-top: 1px solid #dee2e6;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-1);
+            padding: 24px;
+            margin-bottom: 24px;
         }
         
         .progress-bar {
-            background: #e9ecef;
-            height: 24px;
-            border-radius: 12px;
+            background: var(--md-sys-color-surface-variant);
+            height: 8px;
+            border-radius: 4px;
             overflow: hidden;
-            margin: 15px 0;
-            position: relative;
+            margin: 16px 0;
         }
         
         .progress-fill {
-            background: linear-gradient(90deg, #28a745, #20c997);
+            background: var(--md-sys-color-success);
             height: 100%;
             transition: width 0.5s ease;
-            position: relative;
-        }
-        
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 12px;
         }
         
         .modal {
@@ -331,12 +351,6 @@
             height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 2000;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
         
         .modal-content {
@@ -345,19 +359,13 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 30px;
+            padding: 24px;
             border-radius: 12px;
             max-width: 600px;
             width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s ease;
+            box-shadow: var(--md-elevation-3);
             max-height: 80vh;
             overflow-y: auto;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translate(-50%, -60%); opacity: 0; }
-            to { transform: translate(-50%, -50%); opacity: 1; }
         }
         
         .modal-header {
@@ -365,117 +373,107 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
         }
         
         .modal-header h3 {
-            margin: 0;
-            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
         }
         
-        .close {
+        .close-btn {
             background: none;
             border: none;
             font-size: 24px;
             cursor: pointer;
-            color: #6c757d;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            color: var(--md-sys-color-on-surface-variant);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
         }
         
-        .close:hover {
-            background: #f8f9fa;
-            color: #dc3545;
-        }
-        
-        .modal-form {
-            display: grid;
-            gap: 20px;
+        .close-btn:hover {
+            background: var(--md-sys-color-surface-variant);
         }
         
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 16px;
         }
         
         .modal-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: flex-end;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #dee2e6;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--md-sys-color-outline-variant);
         }
         
         .tips {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 25px;
-            margin: 25px;
+            background: var(--md-sys-color-secondary-container);
             border-radius: 12px;
-            border-left: 5px solid #f39c12;
+            padding: 20px;
+            margin-top: 24px;
         }
         
         .tips h3 {
-            margin-bottom: 15px;
-            color: #d35400;
-            font-size: 1.2rem;
+            color: var(--md-sys-color-on-secondary-container);
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 500;
         }
         
         .tips ul {
+            color: var(--md-sys-color-on-secondary-container);
             list-style-position: inside;
-            color: #8b4513;
         }
         
         .tips li {
             margin-bottom: 8px;
-            line-height: 1.5;
+            line-height: 1.4;
         }
         
         @media (max-width: 768px) {
-            .gantt-chart {
-                grid-template-columns: 250px 1fr;
-            }
-            
             .form-grid {
                 grid-template-columns: 1fr;
             }
             
-            .timeline-header {
-                grid-template-columns: repeat(20, 50px);
+            .gantt-table {
+                min-width: 800px;
             }
             
-            .task-timeline {
-                grid-template-columns: repeat(20, 50px);
+            .week-header {
+                width: 40px;
+            }
+            
+            .timeline-cell {
+                width: 40px;
             }
         }
         
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-        
-        .empty-state h3 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
+            padding: 40px;
+            color: var(--md-sys-color-on-surface-variant);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>BM432 Flexible Gantt Chart</h1>
-            <p>Fully customizable timeline planning for final year projects</p>
+    <div class="header">
+        <div class="container">
+            <h1>BM432 Project Timeline Planner</h1>
+            <p>Strategic planning tool for final year projects • 2025-2026</p>
         </div>
-        
+    </div>
+
+    <div class="container">
         <div class="controls">
             <div class="project-info">
                 <div class="input-group">
@@ -494,14 +492,11 @@
                     <label for="project-type">Project Type</label>
                     <select id="project-type">
                         <option value="">Select project type</option>
-                        <option value="bioinformatics">Bioinformatics</option>
-                        <option value="computational">Computational</option>
-                        <option value="laboratory">Laboratory Research</option>
-                        <option value="critical-analysis">Critical Analysis</option>
-                        <option value="data-analysis">Data Analysis</option>
-                        <option value="education">Education</option>
-                        <option value="knowledge-exchange">Knowledge Exchange</option>
-                        <option value="science-communication">Science Communication</option>
+                        <option value="Meta-analysis">Meta-analysis</option>
+                        <option value="Laboratory Research">Laboratory Research</option>
+                        <option value="Data Analysis">Data Analysis</option>
+                        <option value="Computational">Computational</option>
+                        <option value="Literature Review">Literature Review</option>
                     </select>
                 </div>
             </div>
@@ -515,7 +510,7 @@
                     </div>
                     <div class="input-group">
                         <label for="task-category">Category</label>
-                        <input type="text" id="task-category" placeholder="e.g. Research, Writing">
+                        <input type="text" id="task-category" placeholder="e.g. Literature, Analysis">
                     </div>
                     <div class="input-group">
                         <label for="task-duration">Duration (weeks)</label>
@@ -548,7 +543,7 @@
                     </div>
                     <div class="input-group">
                         <label>Color</label>
-                        <input type="color" id="task-color" class="color-picker" value="#3498db">
+                        <input type="color" id="task-color" class="color-picker" value="#1565C0">
                     </div>
                 </div>
                 <div class="input-group">
@@ -560,64 +555,66 @@
             
             <div class="action-buttons">
                 <button class="btn btn-secondary" onclick="editSelected()">Edit Task</button>
-                <button class="btn btn-danger" onclick="deleteSelected()">Delete Task</button>
+                <button class="btn btn-error" onclick="deleteSelected()">Delete Task</button>
                 <button class="btn btn-success" onclick="saveProject()">Save Project</button>
                 <button class="btn btn-secondary" onclick="loadProject()">Load Project</button>
-                <button class="btn btn-primary" onclick="exportChart()">Export PNG</button>
-                <button class="btn btn-secondary" onclick="clearAll()">Clear All Tasks</button>
+                <button class="btn btn-primary" onclick="exportChart()">Export Chart</button>
+                <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
             </div>
         </div>
         
         <div class="gantt-container">
             <div class="gantt-chart">
-                <!-- Header row that spans both sections -->
-                <div class="header-row">
-                    <div class="task-list-header">Tasks</div>
-                    <div class="timeline-header">
-                        <div class="week-header">Sep<br>W3</div>
-                        <div class="week-header">Sep<br>W4</div>
-                        <div class="week-header">Oct<br>W1</div>
-                        <div class="week-header">Oct<br>W2</div>
-                        <div class="week-header">Oct<br>W3</div>
-                        <div class="week-header">Oct<br>W4</div>
-                        <div class="week-header">Nov<br>W1</div>
-                        <div class="week-header">Nov<br>W2</div>
-                        <div class="week-header">Nov<br>W3</div>
-                        <div class="week-header">Nov<br>W4</div>
-                        <div class="week-header">Dec<br>W1</div>
-                        <div class="week-header">Dec<br>W2</div>
-                        <div class="week-header">Jan<br>W2</div>
-                        <div class="week-header">Jan<br>W3</div>
-                        <div class="week-header">Jan<br>W4</div>
-                        <div class="week-header">Feb<br>W1</div>
-                        <div class="week-header">Feb<br>W2</div>
-                        <div class="week-header">Feb<br>W3</div>
-                        <div class="week-header">Feb<br>W4</div>
-                        <div class="week-header">Mar<br>W1</div>
-                    </div>
-                </div>
-                <!-- Content rows -->
-                <div id="gantt-content"></div>
+                <table class="gantt-table" id="gantt-table">
+                    <thead class="gantt-header">
+                        <tr>
+                            <th class="task-header">Task</th>
+                            <th class="week-header">Sep<br>W3</th>
+                            <th class="week-header">Sep<br>W4</th>
+                            <th class="week-header">Oct<br>W1</th>
+                            <th class="week-header">Oct<br>W2</th>
+                            <th class="week-header">Oct<br>W3</th>
+                            <th class="week-header">Oct<br>W4</th>
+                            <th class="week-header">Nov<br>W1</th>
+                            <th class="week-header">Nov<br>W2</th>
+                            <th class="week-header">Nov<br>W3</th>
+                            <th class="week-header">Nov<br>W4</th>
+                            <th class="week-header">Dec<br>W1</th>
+                            <th class="week-header">Dec<br>W2</th>
+                            <th class="week-header">Jan<br>W2</th>
+                            <th class="week-header">Jan<br>W3</th>
+                            <th class="week-header">Jan<br>W4</th>
+                            <th class="week-header">Feb<br>W1</th>
+                            <th class="week-header">Feb<br>W2</th>
+                            <th class="week-header">Feb<br>W3</th>
+                            <th class="week-header">Feb<br>W4</th>
+                            <th class="week-header">Mar<br>W1</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gantt-body">
+                        <!-- Tasks will be rendered here -->
+                    </tbody>
+                </table>
             </div>
         </div>
         
         <div class="progress-section">
-            <h3>Project Timeline Progress</h3>
+            <h3>Project Progress</h3>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-                <div class="progress-text" id="progress-text">0% Planned</div>
             </div>
+            <p id="progress-text">0% Complete (0 of 0 tasks)</p>
         </div>
         
         <div class="tips">
-            <h3>Flexible Planning Features</h3>
+            <h3>Meta-Analysis Project Planning Tips</h3>
             <ul>
-                <li><strong>Custom Categories:</strong> Create any task type you need (not limited to presets)</li>
-                <li><strong>Color Coding:</strong> Choose any color for each task to match your workflow</li>
-                <li><strong>Drag & Drop:</strong> Move tasks around the timeline by dragging</li>
-                <li><strong>Notes:</strong> Add detailed notes to tasks for context</li>
-                <li><strong>Full Editing:</strong> Click any task to select, then edit all properties</li>
-                <li><strong>Save/Load:</strong> Projects save all your customizations</li>
+                <li><strong>Start early:</strong> Systematic reviews require extensive time for literature searching and screening</li>
+                <li><strong>Parallel processing:</strong> Begin writing methods while conducting searches</li>
+                <li><strong>Quality assessment:</strong> Allow adequate time for risk of bias evaluation</li>
+                <li><strong>Statistical analysis:</strong> Plan for learning meta-analysis software (RevMan, R, etc.)</li>
+                <li><strong>PRISMA compliance:</strong> Ensure all reporting guidelines are met</li>
+                <li><strong>Buffer time:</strong> Meta-analyses often take longer than expected</li>
             </ul>
         </div>
     </div>
@@ -627,9 +624,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Edit Task</h3>
-                <button class="close" onclick="closeEditModal()">&times;</button>
+                <button class="close-btn" onclick="closeEditModal()">&times;</button>
             </div>
-            <form class="modal-form" onsubmit="saveTaskEdit(event)">
+            <form onsubmit="saveTaskEdit(event)">
                 <div class="input-group">
                     <label for="edit-task-name">Task Name</label>
                     <input type="text" id="edit-task-name" required>
@@ -637,7 +634,7 @@
                 <div class="form-row">
                     <div class="input-group">
                         <label for="edit-task-category">Category</label>
-                        <input type="text" id="edit-task-category" placeholder="Enter any category" required>
+                        <input type="text" id="edit-task-category" required>
                     </div>
                     <div class="input-group">
                         <label for="edit-task-color">Color</label>
@@ -677,7 +674,7 @@
                 </div>
                 <div class="input-group">
                     <label for="edit-task-notes">Notes</label>
-                    <textarea id="edit-task-notes" rows="3" placeholder="Additional notes about this task"></textarea>
+                    <textarea id="edit-task-notes" rows="3"></textarea>
                 </div>
                 <div class="input-group">
                     <label>
@@ -698,97 +695,205 @@
         let selectedTask = null;
         let taskIdCounter = 1;
         
+        // Initialize with meta-analysis example tasks
+        function initializeExampleTasks() {
+            tasks = [
+                {
+                    id: taskIdCounter++,
+                    name: 'Research Question & Protocol Development',
+                    category: 'Planning',
+                    startWeek: 0,
+                    duration: 2,
+                    color: '#9C27B0',
+                    notes: 'Define PICO framework, develop search strategy, register protocol',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Systematic Literature Search',
+                    category: 'Literature Review',
+                    startWeek: 1,
+                    duration: 3,
+                    color: '#1565C0',
+                    notes: 'Search PubMed, Embase, Cochrane Library, Web of Science',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Title & Abstract Screening',
+                    category: 'Study Selection',
+                    startWeek: 4,
+                    duration: 2,
+                    color: '#D32F2F',
+                    notes: 'Apply inclusion/exclusion criteria, dual screening recommended',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Full-Text Article Review',
+                    category: 'Study Selection',
+                    startWeek: 6,
+                    duration: 2,
+                    color: '#D32F2F',
+                    notes: 'Detailed assessment of eligibility, document exclusion reasons',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Data Extraction',
+                    category: 'Data Collection',
+                    startWeek: 8,
+                    duration: 3,
+                    color: '#F57C00',
+                    notes: 'Extract study characteristics, outcomes, quality metrics',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Quality Assessment (Risk of Bias)',
+                    category: 'Critical Appraisal',
+                    startWeek: 10,
+                    duration: 2,
+                    color: '#00796B',
+                    notes: 'Use Cochrane RoB tool or Newcastle-Ottawa Scale',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Statistical Analysis & Meta-Analysis',
+                    category: 'Data Analysis',
+                    startWeek: 12,
+                    duration: 3,
+                    color: '#E64A19',
+                    notes: 'Forest plots, heterogeneity assessment, sensitivity analysis',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Write Introduction & Methods',
+                    category: 'Writing',
+                    startWeek: 3,
+                    duration: 4,
+                    color: '#455A64',
+                    notes: 'Background, rationale, systematic review methodology',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Write Results Section',
+                    category: 'Writing',
+                    startWeek: 14,
+                    duration: 2,
+                    color: '#455A64',
+                    notes: 'PRISMA flow diagram, study characteristics, forest plots',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Write Discussion & Conclusion',
+                    category: 'Writing',
+                    startWeek: 16,
+                    duration: 2,
+                    color: '#455A64',
+                    notes: 'Interpret findings, limitations, clinical implications',
+                    completed: false
+                },
+                {
+                    id: taskIdCounter++,
+                    name: 'Final Review & Formatting',
+                    category: 'Finalization',
+                    startWeek: 18,
+                    duration: 2,
+                    color: '#616161',
+                    notes: 'Proofreading, reference formatting, final checks',
+                    completed: false
+                }
+            ];
+        }
+        
         function renderChart() {
-            const ganttContent = document.getElementById('gantt-content');
-            ganttContent.innerHTML = '';
+            const tbody = document.getElementById('gantt-body');
+            tbody.innerHTML = '';
             
             if (tasks.length === 0) {
-                ganttContent.innerHTML = '<div class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></div>';
+                tbody.innerHTML = '<tr><td colspan="21" class="empty-state"><h3>No tasks yet</h3><p>Add your first task above to get started</p></td></tr>';
                 return;
             }
             
-            tasks.forEach(task => {
-                // Create content row
-                const contentRow = document.createElement('div');
-                contentRow.className = 'content-row';
+            tasks.forEach((task, index) => {
+                const row = document.createElement('tr');
+                row.className = 'gantt-row';
+                row.setAttribute('data-task-id', task.id);
+                
+                if (selectedTask && selectedTask.id === task.id) {
+                    row.classList.add('selected');
+                }
                 
                 // Task name cell
-                const nameCell = document.createElement('div');
+                const nameCell = document.createElement('td');
                 nameCell.className = 'task-name-cell';
                 nameCell.innerHTML = `
-                    <div class="task-category-dot" style="background-color: ${task.color}"></div>
-                    <div>
-                        <div style="font-weight: 600; font-size: 13px;">${task.name}</div>
-                        <div style="font-size: 10px; color: #6c757d;">${task.category}</div>
+                    <div class="task-title">${task.name}</div>
+                    <div class="task-category">
+                        <span class="category-dot" style="background-color: ${task.color}"></span>
+                        ${task.category}
                     </div>
                 `;
                 nameCell.addEventListener('click', () => selectTask(task));
+                row.appendChild(nameCell);
                 
-                // Task timeline
-                const timelineRow = document.createElement('div');
-                timelineRow.className = 'task-timeline';
-                
-                // Add week cells
+                // Timeline cells
                 for (let week = 0; week < 20; week++) {
-                    const weekCell = document.createElement('div');
-                    weekCell.className = 'week-cell';
-                    timelineRow.appendChild(weekCell);
-                }
-                
-                // Add task bar
-                const taskBar = document.createElement('div');
-                taskBar.className = 'task-bar';
-                taskBar.style.backgroundColor = task.color;
-                taskBar.style.left = `${task.startWeek * 60}px`;
-                taskBar.style.width = `${task.duration * 60}px`;
-                taskBar.textContent = task.duration > 2 ? task.name.substring(0, 15) + '...' : task.name.substring(0, 8);
-                taskBar.draggable = true;
-                taskBar.setAttribute('data-task-id', task.id);
-                taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks${task.notes ? '\nNotes: ' + task.notes : ''}`;
-                
-                taskBar.addEventListener('dragstart', (e) => handleDragStart(e, task));
-                taskBar.addEventListener('dragend', handleDragEnd);
-                taskBar.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    selectTask(task);
-                });
-                
-                if (task.completed) {
-                    taskBar.style.opacity = '0.6';
-                    taskBar.style.textDecoration = 'line-through';
-                }
-                
-                timelineRow.appendChild(taskBar);
-                
-                // Add both cells to the row
-                contentRow.appendChild(nameCell);
-                contentRow.appendChild(timelineRow);
-                
-                // Add row to content
-                ganttContent.appendChild(contentRow);
-            });
-            
-            // Highlight selected task
-            if (selectedTask) {
-                const taskIndex = tasks.indexOf(selectedTask);
-                if (taskIndex >= 0) {
-                    const contentRows = document.querySelectorAll('.content-row');
-                    if (contentRows[taskIndex]) {
-                        const nameCell = contentRows[taskIndex].querySelector('.task-name-cell');
-                        const taskBar = contentRows[taskIndex].querySelector('.task-bar');
-                        
-                        if (nameCell && taskBar) {
-                            nameCell.classList.add('selected');
+                    const cell = document.createElement('td');
+                    cell.className = 'timeline-cell';
+                    
+                    // Add task bar if this week is within the task duration
+                    if (week >= task.startWeek && week < task.startWeek + task.duration) {
+                        const taskBar = document.createElement('div');
+                        taskBar.className = 'task-bar';
+                        if (selectedTask && selectedTask.id === task.id) {
                             taskBar.classList.add('selected');
                         }
+                        if (task.completed) {
+                            taskBar.classList.add('completed');
+                        }
+                        
+                        taskBar.style.backgroundColor = task.color;
+                        taskBar.style.left = '4px';
+                        taskBar.style.width = `${(task.duration * 60) - 8}px`;
+                        
+                        // Only show text on first cell of task
+                        if (week === task.startWeek) {
+                            taskBar.textContent = task.name.length > 12 ? task.name.substring(0, 12) + '...' : task.name;
+                        }
+                        
+                        taskBar.setAttribute('data-task-id', task.id);
+                        taskBar.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            selectTask(task);
+                        });
+                        taskBar.addEventListener('dblclick', () => {
+                            task.completed = !task.completed;
+                            renderChart();
+                            updateProgress();
+                        });
+                        
+                        taskBar.title = `${task.name}\nCategory: ${task.category}\nDuration: ${task.duration} weeks\n${task.notes ? 'Notes: ' + task.notes : ''}`;
+                        
+                        cell.appendChild(taskBar);
+                        break; // Only add the bar to the first cell
                     }
+                    
+                    row.appendChild(cell);
                 }
-            }
+                
+                tbody.appendChild(row);
+            });
         }
         
         function selectTask(task) {
             selectedTask = task;
-            renderChart(); // Re-render to show selection
+            renderChart();
         }
         
         function addTask() {
@@ -827,7 +932,7 @@
             document.getElementById('task-category').value = '';
             document.getElementById('task-duration').value = '2';
             document.getElementById('start-week').value = '0';
-            document.getElementById('task-color').value = '#3498db';
+            document.getElementById('task-color').value = '#1565C0';
             document.getElementById('task-notes').value = '';
             
             renderChart();
@@ -840,7 +945,7 @@
                 return;
             }
             
-            // Populate the edit form
+            // Populate edit form
             document.getElementById('edit-task-name').value = selectedTask.name;
             document.getElementById('edit-task-category').value = selectedTask.category;
             document.getElementById('edit-task-color').value = selectedTask.color;
@@ -849,7 +954,6 @@
             document.getElementById('edit-task-notes').value = selectedTask.notes || '';
             document.getElementById('edit-task-completed').checked = selectedTask.completed;
             
-            // Show the modal
             document.getElementById('editModal').style.display = 'block';
         }
         
@@ -862,7 +966,6 @@
             
             if (!selectedTask) return;
             
-            // Update the selected task
             selectedTask.name = document.getElementById('edit-task-name').value;
             selectedTask.category = document.getElementById('edit-task-category').value;
             selectedTask.color = document.getElementById('edit-task-color').value;
@@ -871,10 +974,9 @@
             selectedTask.notes = document.getElementById('edit-task-notes').value;
             selectedTask.completed = document.getElementById('edit-task-completed').checked;
             
-            // Re-render the chart and close modal
+            closeEditModal();
             renderChart();
             updateProgress();
-            closeEditModal();
         }
         
         function deleteSelected() {
@@ -900,35 +1002,6 @@
             }
         }
         
-        function handleDragStart(e, task) {
-            e.dataTransfer.setData('text/plain', task.id.toString());
-            e.target.style.opacity = '0.7';
-        }
-        
-        function handleDragEnd(e) {
-            e.target.style.opacity = '1';
-        }
-        
-        // Add drag and drop for timeline repositioning
-        document.getElementById('task-timeline').addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-        
-        document.getElementById('task-timeline').addEventListener('drop', (e) => {
-            e.preventDefault();
-            const taskId = parseInt(e.dataTransfer.getData('text/plain'));
-            const task = tasks.find(t => t.id === taskId);
-            
-            if (task) {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const newStartWeek = Math.floor(x / 60);
-                
-                task.startWeek = Math.max(0, Math.min(newStartWeek, 20 - task.duration));
-                renderChart();
-            }
-        });
-        
         function updateProgress() {
             const totalTasks = tasks.length;
             const completedTasks = tasks.filter(t => t.completed).length;
@@ -936,7 +1009,7 @@
             
             document.getElementById('progress-fill').style.width = percentage + '%';
             document.getElementById('progress-text').textContent = 
-                `${percentage}% Complete (${completedTasks}/${totalTasks} tasks)`;
+                `${percentage}% Complete (${completedTasks} of ${totalTasks} tasks)`;
         }
         
         function saveProject() {
@@ -955,7 +1028,7 @@
             
             const link = document.createElement('a');
             link.href = url;
-            link.download = `${projectData.title || 'gantt-project'}-${new Date().toISOString().split('T')[0]}.json`;
+            link.download = `${projectData.title || 'project-timeline'}-${new Date().toISOString().split('T')[0]}.json`;
             link.click();
             
             URL.revokeObjectURL(url);
@@ -1001,25 +1074,8 @@
         }
         
         function exportChart() {
-            alert('To export your Gantt chart:\n\n' +
-                  '1. Right-click on the chart area\n' +
-                  '2. Select "Save image as..."\n' +
-                  '3. Or use your browser\'s print function\n\n' +
-                  'For best results, zoom out to fit the entire chart on screen first.');
+            alert('To export your timeline:\n\n1. Take a screenshot of the chart\n2. Use browser print function (Ctrl+P)\n3. Or use browser developer tools to capture');
         }
-        
-        // Double-click to toggle task completion
-        document.addEventListener('dblclick', (e) => {
-            if (e.target.classList.contains('task-bar')) {
-                const taskId = parseInt(e.target.getAttribute('data-task-id'));
-                const task = tasks.find(t => t.id === taskId);
-                if (task) {
-                    task.completed = !task.completed;
-                    renderChart();
-                    updateProgress();
-                }
-            }
-        });
         
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
@@ -1037,129 +1093,9 @@
             if (event.key === 'Delete' && selectedTask) {
                 deleteSelected();
             }
-            if (event.key === 'Enter' && event.ctrlKey && selectedTask) {
-                editSelected();
-            }
         });
         
-        // Initialize with meta-analysis example tasks
-        function initializeExampleTasks() {
-            tasks = [
-                {
-                    id: 1,
-                    name: 'Research Question & Protocol Development',
-                    category: 'Planning',
-                    startWeek: 0,
-                    duration: 2,
-                    color: '#9b59b6',
-                    notes: 'Define PICO framework, develop search strategy, register protocol',
-                    completed: false
-                },
-                {
-                    id: 2,
-                    name: 'Systematic Literature Search',
-                    category: 'Literature Review',
-                    startWeek: 1,
-                    duration: 3,
-                    color: '#3498db',
-                    notes: 'Search PubMed, Embase, Cochrane Library, Web of Science',
-                    completed: false
-                },
-                {
-                    id: 3,
-                    name: 'Title & Abstract Screening',
-                    category: 'Study Selection',
-                    startWeek: 4,
-                    duration: 2,
-                    color: '#e74c3c',
-                    notes: 'Apply inclusion/exclusion criteria, dual screening recommended',
-                    completed: false
-                },
-                {
-                    id: 4,
-                    name: 'Full-Text Article Review',
-                    category: 'Study Selection',
-                    startWeek: 6,
-                    duration: 2,
-                    color: '#e74c3c',
-                    notes: 'Detailed assessment of eligibility, document exclusion reasons',
-                    completed: false
-                },
-                {
-                    id: 5,
-                    name: 'Data Extraction',
-                    category: 'Data Collection',
-                    startWeek: 8,
-                    duration: 3,
-                    color: '#f39c12',
-                    notes: 'Extract study characteristics, outcomes, quality metrics',
-                    completed: false
-                },
-                {
-                    id: 6,
-                    name: 'Quality Assessment (Risk of Bias)',
-                    category: 'Critical Appraisal',
-                    startWeek: 10,
-                    duration: 2,
-                    color: '#1abc9c',
-                    notes: 'Use Cochrane RoB tool or Newcastle-Ottawa Scale',
-                    completed: false
-                },
-                {
-                    id: 7,
-                    name: 'Statistical Analysis & Meta-Analysis',
-                    category: 'Data Analysis',
-                    startWeek: 12,
-                    duration: 3,
-                    color: '#e67e22',
-                    notes: 'Forest plots, heterogeneity assessment, sensitivity analysis',
-                    completed: false
-                },
-                {
-                    id: 8,
-                    name: 'Write Introduction & Methods',
-                    category: 'Writing',
-                    startWeek: 3,
-                    duration: 4,
-                    color: '#34495e',
-                    notes: 'Background, rationale, systematic review methodology',
-                    completed: false
-                },
-                {
-                    id: 9,
-                    name: 'Write Results Section',
-                    category: 'Writing',
-                    startWeek: 14,
-                    duration: 2,
-                    color: '#34495e',
-                    notes: 'PRISMA flow diagram, study characteristics, forest plots',
-                    completed: false
-                },
-                {
-                    id: 10,
-                    name: 'Write Discussion & Conclusion',
-                    category: 'Writing',
-                    startWeek: 16,
-                    duration: 2,
-                    color: '#34495e',
-                    notes: 'Interpret findings, limitations, clinical implications',
-                    completed: false
-                },
-                {
-                    id: 11,
-                    name: 'Final Review & Formatting',
-                    category: 'Finalization',
-                    startWeek: 18,
-                    duration: 2,
-                    color: '#95a5a6',
-                    notes: 'Proofreading, reference formatting, final checks',
-                    completed: false
-                }
-            ];
-            
-            taskIdCounter = 12;
-        }
-        
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             initializeExampleTasks();
             renderChart();

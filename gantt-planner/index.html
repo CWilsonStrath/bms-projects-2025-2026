@@ -994,7 +994,7 @@
                             // Fix positioning for first column and all others
                             const barWidth = (task.duration * 60) - 4;
                             taskBar.style.left = '2px';
-                            taskBar.style.width = `${Math.min(barWidth, 56)}px`; // Constrain to cell if needed
+                            taskBar.style.width = `${barWidth}px`;
                             taskBar.textContent = task.name;
                             
                             taskBar.setAttribute('data-task-id', task.id);
